@@ -9,48 +9,57 @@ interface FilmCardProps {
 }
 
 export default function FilmCard({ film }: FilmCardProps) {
+  const [isHovered, setIsHovered] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
+  const showDetails = isHovered || isOpen;
+
   return (
-    <article
-      className="group cursor-pointer"
-      onClick={() => setIsOpen(!isOpen)}
-    >
-      <div className="relative aspect-[2/3] overflow-hidden">
-        <Image
-          src={film.poster}
-          alt={`${film.title} poster`}
-          fill
-          className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
-          sizes="(max-width: 768px) 50vw, 20vw"
-        />
-      </div>
-
-      <div className="mt-3">
-        <h3 className="text-lg font-medium">
-          {film.title}
-        </h3>
-
-        <p className="text-sm">
-          {film.role}
-        </p>
-
-        <div
-          className={`
-            overflow-hidden transition-all duration-300
-            group-hover:max-h-20 group-hover:opacity-100
-            ${isOpen ? "max-h-20 opacity-100" : "max-h-0 opacity-0"}
-          `}
-        >
-          <p className="mt-2 text-sm">
-            {film.format}, {film.year}
-          </p>
-
-          <p className="text-sm">
-            {film.productionCompany}
-          </p>
+    <article>
+      <button
+        type="button"
+        className="w-full text-left"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        onClick={() => setIsOpen((current) => !current)}
+        aria-expanded={isOpen}
+      >
+        <div className="relative aspect-[2/3] overflow-hidden bg-black/5">
+          <Image
+            src={film.poster}
+            alt={`${film.title} poster`}
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
+          />
         </div>
-      </div>
+
+        <div className="pt-4">
+          <h3 className="text-base font-medium leading-tight tracking-tight">
+            {film.title}
+          </h3>
+
+          <p className="mt-1 text-sm leading-snug opacity-60">
+            {film.role}
+          </p>
+
+          <div className="relative mt-3 h-10">
+            <div
+              className={`absolute inset-0 transition-opacity duration-300 ${
+                showDetails ? "opacity-60" : "opacity-0"
+              }`}
+            >
+              <p className="text-xs uppercase tracking-[0.08em]">
+                {film.format} · {film.year}
+              </p>
+
+              <p className="mt-1 text-xs">
+                {film.productionCompany}
+              </p>
+            </div>
+          </div>
+        </div>
+      </button>
     </article>
   );
 }
