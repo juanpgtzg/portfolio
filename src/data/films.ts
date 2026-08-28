@@ -1,0 +1,49 @@
+import type { Film } from "@/types/film";
+
+export const films: Film[] = [
+  {
+    id: 1,
+    title: "A Shot at Love",
+    role: "Location Sound Mixer & Boom Operator",
+    format: "Web Miniseries",
+    year: 2025,
+    productionCompany: "Chera TV",
+    poster: "/images/films/a-shot-at-love.jpg",
+  },
+  {
+    id: 2,
+    title: "Riley Marshall",
+    role: "Location Sound Mixer & Boom Operator",
+    format: "Short Film",
+    year: 2025,
+    productionCompany: "FC Productions",
+    poster: "/images/films/riley-marshall.jpg",
+  },
+  {
+    id: 3,
+    title: "Nudos",
+    role: "Location Sound Mixer & Boom Operator",
+    format: "Short Film",
+    year: 2025,
+    productionCompany: "King Penacho Productions",
+    poster: "/images/films/nudos.jpg",
+  },
+  {
+    id: 4,
+    title: "Lupe Q and the Galactic Earworms",
+    role: "Location Sound Mixer & Boom Operator",
+    format: "Feature Film",
+    year: 2025,
+    productionCompany: "Spacepunks Productions",
+    poster: "/images/films/lupe-q-and-the-galactic-earworms.jpg",
+  },
+  {
+    id: 5,
+    title: "Pumpkinhead",
+    role: "Boom Operator",
+    format: "Feature Film",
+    year: 2025,
+    productionCompany: "R.L. Stine’s TV Production",
+    poster: "/images/films/pumpkinhead.jpg",
+  },
+];
