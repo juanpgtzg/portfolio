@@ -1,11 +1,12 @@
 import FilmCard from "@/components/sound/FilmCard";
 import { films } from "@/data/films";
+import AdditionalCredits from "@/components/sound/AdditionalCredits";
 
 export default function FilmGrid() {
   return (
     <section>
-      <div className="mb-10">
-        <p className="mb-2 text-sm uppercase tracking-[0.2em] opacity-50">
+      <div className="mb-6">
+        <p className="mb-2 text-xs uppercase tracking-[0.2em] opacity-50">
           Production Sound
         </p>
 
@@ -14,7 +15,7 @@ export default function FilmGrid() {
         </h2>
       </div>
 
-      <div className="grid grid-cols-2 gap-x-5 gap-y-12 md:grid-cols-3 md:gap-x-7 lg:grid-cols-5">
+      <div className="grid grid-cols-2 gap-x-5 gap-y-10 md:grid-cols-3 md:gap-x-7 lg:grid-cols-5">
         {films.map((film) => (
           <FilmCard
             key={film.id}
@@ -22,6 +23,9 @@ export default function FilmGrid() {
           />
         ))}
       </div>
+
+      <AdditionalCredits />
+      
     </section>
   );
 }

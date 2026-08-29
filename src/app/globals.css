@@ -1,11 +1,45 @@
 @import "tailwindcss";
 
+/* =========================================================
+   JUAN GUTIERREZ — PORTFOLIO DESIGN SYSTEM
+   Retro / editorial / audio equipment inspired
+   ========================================================= */
+
 :root {
-  --background: #f2f0e9;
-  --foreground: #171717;
-  --muted: #6d6a63;
-  --border: #cbc7bc;
+  /* Main surfaces */
+  --paper: #f1ede4;
+  --paper-light: #f7f3eb;
+  --paper-dark: #e6ded0;
+
+  /* Ink */
+  --ink: #3c302d;
+  --ink-soft: #756964;
+
+  /* Structure */
+  --line: #514440;
+  --line-light: rgba(60, 48, 45, 0.18);
+
+  /* Accent palette */
+  --pink: #e8c7ca;
+  --lilac: #d8cff0;
+  --sage: #dce7dd;
+  --yellow: #ead46f;
+
+  /* Compatibility with our existing components */
+  --background: var(--paper);
+  --foreground: var(--ink);
+  --muted: var(--ink-soft);
+  --border: var(--line-light);
+
+  /* Corners */
+  --radius-small: 8px;
+  --radius-medium: 14px;
+  --radius-large: 22px;
 }
+
+/* =========================================================
+   BASE
+   ========================================================= */
 
 * {
   box-sizing: border-box;
@@ -17,9 +51,17 @@ html {
 
 body {
   margin: 0;
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+
+  background: var(--paper);
+  color: var(--ink);
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 a {
@@ -27,7 +69,354 @@ a {
   text-decoration: none;
 }
 
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  color: inherit;
+}
+
 ::selection {
-  background: var(--foreground);
-  color: var(--background);
+  background: var(--pink);
+  color: var(--ink);
+}
+
+/* =========================================================
+   GLOBAL TYPOGRAPHIC CHARACTER
+   ========================================================= */
+
+h1,
+h2,
+h3 {
+  margin-top: 0;
+
+  font-family:
+    "Courier New",
+    Courier,
+    ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    Monaco,
+    Consolas,
+    monospace;
+
+  color: var(--ink);
+}
+
+/*
+  Large headings should feel tighter and more mechanical,
+  like the references rather than a modern editorial font.
+*/
+
+h1 {
+  letter-spacing: -0.055em;
+}
+
+h2 {
+  letter-spacing: -0.04em;
+}
+
+h3 {
+  letter-spacing: -0.025em;
+}
+
+p {
+  color: inherit;
+}
+
+/* Give horizontal separators the warmer ink color */
+
+hr {
+  border-color: var(--line-light);
+}
+
+/* =========================================================
+   STRUCTURE
+   ========================================================= */
+
+/*
+  Basic outlined panel.
+
+  Eventually useful for:
+  - players
+  - podcast sections
+  - information blocks
+  - selected film information
+*/
+
+.retro-panel {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-small);
+  background: var(--paper-light);
+}
+
+/*
+  Softer panel where we don't want such a strong outline.
+*/
+
+.retro-panel-soft {
+  border: 1px solid var(--line-light);
+  border-radius: var(--radius-small);
+  background: var(--paper-light);
+}
+
+/* Standard divider */
+
+.retro-divider {
+  width: 100%;
+  border: 0;
+  border-top: 1px solid var(--line-light);
+}
+
+/* Stronger structural line */
+
+.retro-divider-strong {
+  width: 100%;
+  border: 0;
+  border-top: 1px solid var(--line);
+}
+
+/* =========================================================
+   TABS / TAGS
+   ========================================================= */
+
+.retro-tag {
+  display: inline-flex;
+  align-items: center;
+
+  min-height: 26px;
+
+  padding: 4px 10px;
+
+  border: 1px solid var(--line);
+  border-radius: 999px;
+
+  font-family:
+    "Courier New",
+    Courier,
+    ui-monospace,
+    monospace;
+
+  font-size: 0.68rem;
+  font-weight: 600;
+
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.retro-tag-pink {
+  background: var(--pink);
+}
+
+.retro-tag-lilac {
+  background: var(--lilac);
+}
+
+.retro-tag-sage {
+  background: var(--sage);
+}
+
+.retro-tag-yellow {
+  background: var(--yellow);
+}
+
+/* =========================================================
+   BUTTON FOUNDATION
+   ========================================================= */
+
+.retro-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 40px;
+
+  padding: 8px 14px;
+
+  border: 1px solid var(--line);
+  border-radius: var(--radius-small);
+
+  background: var(--paper-light);
+  color: var(--ink);
+
+  font-family:
+    "Courier New",
+    Courier,
+    ui-monospace,
+    monospace;
+
+  font-size: 0.75rem;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background-color 150ms ease,
+    color 150ms ease,
+    transform 100ms ease;
+}
+
+.retro-button:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.retro-button:active {
+  transform: translateY(1px);
+}
+
+/* =========================================================
+   MEDIA / AUDIO UI
+   ========================================================= */
+
+.retro-media-frame {
+  overflow: hidden;
+
+  border: 1px solid var(--line);
+  border-radius: var(--radius-small);
+
+  background: #000;
+}
+
+.retro-controls {
+  border-top: 1px solid var(--line);
+  background: var(--paper-light);
+}
+
+/* =========================================================
+   SMALL DETAILS
+   ========================================================= */
+
+/*
+  A very subtle texture.
+
+  We should use this selectively rather than covering
+  every element with visual noise.
+*/
+
+.retro-texture {
+  background-image:
+    radial-gradient(
+      rgba(60, 48, 45, 0.08) 0.5px,
+      transparent 0.5px
+    );
+
+  background-size: 5px 5px;
+}
+
+/* Remove animations for users who request reduced motion */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+/* =========================================================
+   RANGE / AUDIO CONTROLS
+   ========================================================= */
+
+input[type="range"] {
+  appearance: none;
+  -webkit-appearance: none;
+
+  height: 16px;
+  background: transparent;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 2px;
+  border-radius: 0;
+  background: var(--line);
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+
+  width: 12px;
+  height: 12px;
+
+  margin-top: -5px;
+
+  border: 1px solid var(--line);
+  border-radius: 50%;
+
+  background: var(--ink);
+}
+
+input[type="range"]::-moz-range-track {
+  height: 2px;
+  background: var(--line);
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+
+  border: 1px solid var(--line);
+  border-radius: 50%;
+
+  background: var(--ink);
+}
+
+/* =========================================================
+   ADDITIONAL CREDITS MARQUEE
+   ========================================================= */
+
+.credits-marquee-track {
+  transform: translateX(0);
+}
+
+/*
+  Only move when someone interacts with it.
+*/
+
+@media (hover: hover) and (pointer: fine) {
+  .credits-marquee:hover .credits-marquee-track,
+  .credits-marquee:focus-within .credits-marquee-track {
+    animation: credits-scroll 24s linear infinite;
+  }
+}
+
+@keyframes credits-scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/*
+  Accessibility: no continuous movement when
+  reduced motion is enabled.
+*/
+
+@media (prefers-reduced-motion: reduce) {
+  .credits-marquee-track {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+.credits-more-hint {
+  opacity: 1;
+  transition: opacity 180ms ease;
+}
+
+.credits-marquee:hover .credits-more-hint,
+.credits-marquee:focus-within .credits-more-hint {
+  opacity: 0;
 }

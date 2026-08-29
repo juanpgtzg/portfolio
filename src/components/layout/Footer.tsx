@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function Footer() {
   return (
     <footer className="mt-28 border-t border-black/10">
@@ -21,11 +23,22 @@ export default function Footer() {
             </p>
           </div>
 
-          <div className="text-sm opacity-50 md:text-right">
-            <p>Vancouver, BC</p>
-            <p className="mt-1">
-              Designed & coded from scratch by Juan Gutierrez.
-            </p>
+          <div className="text-sm md:text-right">
+            <Image
+              src="/images/brand/juan-logo.png"
+              alt="Juan Gutierrez logo"
+              width={120}
+              height={120}
+              className="mb-4 ml-auto h-auto w-16"
+            />
+
+            <div className="opacity-50">
+              <p>Vancouver, BC</p>
+
+              <p className="mt-1">
+                Designed & coded from scratch by Juan Gutierrez.
+              </p>
+            </div>
           </div>
         </div>
       </div>

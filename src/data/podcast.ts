@@ -33,6 +33,8 @@ export const podcast = {
     "Delivered climate-change talks, interviews and workshops for companies and institutions, including Tecnológico de Monterrey",
   ],
 
+  trailer: "/audio/podcast/villam-trailer.mp3",
+
   spotify:
     "https://open.spotify.com/show/4QrQscuMiSQwa5qiENMpXr",
 
