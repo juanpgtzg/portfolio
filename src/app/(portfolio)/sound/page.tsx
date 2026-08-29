@@ -1,6 +1,8 @@
 import DemoReel from "@/components/sound/DemoReel";
 import FilmGrid from "@/components/sound/FilmGrid";
 import GrainVisualizer from "@/components/audio/GrainVisualizer";
+import ProjectCTA from "@/components/shared/ProjectCTA";
+import OnSetGallery from "@/components/sound/OnSetGallery";
 
 export default function SoundPage() {
   return (
@@ -71,6 +73,16 @@ export default function SoundPage() {
           ===================================================== */}
 
       <FilmGrid />
+
+      <OnSetGallery />
+
+      <ProjectCTA
+        label="Work With Me"
+        title="Need a sound guy for your production?"
+        description="I’ve worked across more than 40 film productions in location sound and post-production. If you’re putting together a project and need someone for sound, send me the details and I can help you figure out what you need and provide an estimate."
+        buttonLabel="Get in Touch"
+        note="Gear list, full film credits, resume, and project estimates available upon request."
+      />
     </main>
   );
 }

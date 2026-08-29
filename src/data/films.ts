@@ -9,6 +9,7 @@ export const films: Film[] = [
     year: 2025,
     productionCompany: "Chera TV",
     poster: "/images/films/a-shot-at-love.jpg",
+    link: "https://www.imdb.com/es-es/title/tt42812205/?ref_=ext_shr_lnk",
   },
   {
     id: 2,
