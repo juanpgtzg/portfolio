@@ -3,6 +3,7 @@ import FilmGrid from "@/components/sound/FilmGrid";
 import GrainVisualizer from "@/components/audio/GrainVisualizer";
 import ProjectCTA from "@/components/shared/ProjectCTA";
 import OnSetGallery from "@/components/sound/OnSetGallery";
+import PostProductionCredits from "@/components/sound/PostProductionCredits";
 
 export default function SoundPage() {
   return (
@@ -35,10 +36,10 @@ export default function SoundPage() {
           SOUND DESIGN
           ===================================================== */}
 
-      <section className="grid items-start gap-8 md:grid-cols-[0.9fr_1.25fr] md:gap-10">
+      <section className="grid items-stretch gap-8 md:grid-cols-[0.9fr_1.25fr] md:gap-10">
 
         {/* Information */}
-        <div>
+        <div className="flex min-h-0 flex-col overflow-hidden md:[contain:size]">
           <span className="retro-tag retro-tag-lilac">
             Sound Design
           </span>
@@ -52,7 +53,9 @@ export default function SoundPage() {
             sound effects, Foley, ambience and mixing.
           </p>
 
-          <div className="mt-6 border-t border-[var(--line-light)] pt-4">
+          <PostProductionCredits />
+
+          <div className="mt-auto border-t border-[var(--line-light)] pt-4">
             <p className="font-retro max-w-sm text-[11px] uppercase leading-relaxed tracking-[0.06em] opacity-55">
               Sound Design / Dialogue / SFX / Foley /
               Ambiences / Mixing

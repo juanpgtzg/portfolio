@@ -17,11 +17,11 @@ export default function FilmGrid() {
         </div>
 
         <span className="retro-label opacity-35">
-          5 Featured Credits
+          {films.length} Featured Credits
         </span>
       </div>
 
-      <div className="grid grid-cols-2 gap-x-5 gap-y-10 md:grid-cols-3 md:gap-x-7 lg:grid-cols-5">
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-x-6 gap-y-10">
         {films.map((film) => (
           <FilmCard
             key={film.id}

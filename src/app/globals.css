@@ -498,3 +498,16 @@ input[type="range"]::-moz-range-thumb {
     transform: translateX(-5%) translateY(-50%);
   }
 }
+
+/* =========================================================
+   RETRO SCROLLBAR
+   ========================================================= */
+
+.retro-scroll-hidden {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.retro-scroll-hidden::-webkit-scrollbar {
+  display: none;
+}
