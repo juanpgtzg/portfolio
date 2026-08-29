@@ -24,6 +24,7 @@
   --lilac: #d8cff0;
   --sage: #dce7dd;
   --yellow: #ead46f;
+  --red: #b85f5b;
 
   /* Compatibility with our existing components */
   --background: var(--paper);
@@ -374,31 +375,6 @@ input[type="range"]::-moz-range-thumb {
    ADDITIONAL CREDITS MARQUEE
    ========================================================= */
 
-.credits-marquee-track {
-  transform: translateX(0);
-}
-
-/*
-  Only move when someone interacts with it.
-*/
-
-@media (hover: hover) and (pointer: fine) {
-  .credits-marquee:hover .credits-marquee-track,
-  .credits-marquee:focus-within .credits-marquee-track {
-    animation: credits-scroll 24s linear infinite;
-  }
-}
-
-@keyframes credits-scroll {
-  from {
-    transform: translateX(0);
-  }
-
-  to {
-    transform: translateX(-50%);
-  }
-}
-
 /*
   Accessibility: no continuous movement when
   reduced motion is enabled.
@@ -419,4 +395,106 @@ input[type="range"]::-moz-range-thumb {
 .credits-marquee:hover .credits-more-hint,
 .credits-marquee:focus-within .credits-more-hint {
   opacity: 0;
+}
+
+/* =========================================================
+   CASSETTE MOTION
+   ========================================================= */
+
+.cassette-reel-spin {
+  animation: cassette-reel-spin 1.6s linear infinite;
+}
+
+@keyframes cassette-reel-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cassette-reel-spin,
+  .cassette-reel-spin-reverse {
+    animation-name: cassette-reel-spin;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+
+  .cassette-reel-spin {
+    animation-direction: normal;
+  }
+
+  .cassette-reel-spin-reverse {
+    animation-direction: reverse;
+  }
+
+  /* Idle cassette */
+  .cassette-reel-slow {
+    animation-duration: 14s;
+  }
+
+  /* User is interacting */
+  .cassette-reel-fast {
+    animation-duration: 2.2s;
+  }
+
+  @keyframes cassette-reel-spin {
+    from {
+      transform: rotate(0deg);
+    }
+
+    to {
+      transform: rotate(360deg);
+    }
+  }
+}
+
+.cassette-reel-spin-reverse {
+  animation: cassette-reel-spin 2.2s linear infinite reverse;
+}
+
+.cassette-tape-move,
+.cassette-tape-move-reverse {
+  animation-name: cassette-tape-move;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.cassette-tape-move {
+  animation-direction: normal;
+}
+
+.cassette-tape-move-reverse {
+  animation-direction: reverse;
+}
+
+.cassette-tape-slow {
+  animation-duration: 4s;
+}
+
+.cassette-tape-fast {
+  animation-duration: 1s;
+}
+
+@keyframes cassette-tape-move {
+  from {
+    transform: translateX(-20%) translateY(-50%);
+  }
+
+  to {
+    transform: translateX(-5%) translateY(-50%);
+  }
+}
+
+@keyframes cassette-tape-move {
+  from {
+    transform: translateX(-20%) translateY(-50%);
+  }
+
+  to {
+    transform: translateX(-5%) translateY(-50%);
+  }
 }

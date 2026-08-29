@@ -79,54 +79,64 @@ export default function PodcastTrailer() {
   }, []);
 
   return (
-    <section className="border-y border-black/10 py-5">
+    <div className="w-full">
       <audio
         ref={audioRef}
         src={podcast.trailer}
         preload="metadata"
       />
 
-      <div className="flex items-center gap-5">
+      <div className="mb-2 flex items-center justify-between">
+        <span className="retro-label opacity-40">
+          Audio / Trailer
+        </span>
+
+        <span className="font-retro text-[9px] uppercase tracking-[0.08em] opacity-30">
+          MP3
+        </span>
+      </div>
+
+      <div className="grid grid-cols-[52px_1fr_auto] border border-[var(--line)] bg-[var(--paper-light)]">
         <button
           type="button"
           onClick={togglePlay}
-          className="flex h-12 w-12 shrink-0 items-center justify-center border border-black transition-colors hover:bg-black hover:text-white"
-          aria-label={isPlaying ? "Pause trailer" : "Play trailer"}
+          className="font-retro flex h-12 items-center justify-center border-r border-[var(--line)] text-xs transition-colors hover:bg-[var(--lilac)]"
+          aria-label={
+            isPlaying
+              ? "Pause Villam trailer"
+              : "Play Villam trailer"
+          }
         >
           {isPlaying ? "Ⅱ" : "▶"}
         </button>
 
-        <div className="min-w-0 flex-1">
-          <div className="mb-2 flex items-center justify-between gap-4">
-            <div>
-              <p className="text-xs uppercase tracking-[0.18em] opacity-50">
-                Listen
-              </p>
-
-              <p className="font-medium">
-                Villam Podcast Trailer
-              </p>
-            </div>
-
-            <p className="shrink-0 text-xs tabular-nums opacity-50">
-              {formatTime(currentTime)} / {formatTime(duration)}
-            </p>
-          </div>
-
+        <div className="flex min-w-0 items-center px-4">
           <input
             type="range"
             min="0"
             max={duration || 0}
             step="0.1"
-            value={currentTime}
+            value={Math.min(currentTime, duration || 0)}
             onChange={(event) =>
               handleSeek(Number(event.target.value))
             }
-            className="w-full cursor-pointer accent-black"
+            className="w-full"
             aria-label="Trailer playback position"
           />
         </div>
+
+        <div className="font-retro flex h-12 items-center border-l border-[var(--line)] px-4 text-[10px] tabular-nums">
+          {formatTime(currentTime)}
+
+          <span className="mx-1 opacity-30">
+            /
+          </span>
+
+          <span className="opacity-50">
+            {formatTime(duration)}
+          </span>
+        </div>
       </div>
-    </section>
+    </div>
   );
 }

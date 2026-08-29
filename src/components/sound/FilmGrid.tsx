@@ -5,14 +5,20 @@ import AdditionalCredits from "@/components/sound/AdditionalCredits";
 export default function FilmGrid() {
   return (
     <section>
-      <div className="mb-6">
-        <p className="mb-2 text-xs uppercase tracking-[0.2em] opacity-50">
-          Production Sound
-        </p>
+      <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <span className="retro-tag retro-tag-sage">
+            Production Sound / 02
+          </span>
 
-        <h2 className="text-2xl font-medium tracking-tight md:text-3xl">
-          Selected Film Work
-        </h2>
+          <h2 className="mt-4 text-3xl font-bold md:text-4xl">
+            Selected Film Work
+          </h2>
+        </div>
+
+        <span className="retro-label opacity-35">
+          5 Featured Credits
+        </span>
       </div>
 
       <div className="grid grid-cols-2 gap-x-5 gap-y-10 md:grid-cols-3 md:gap-x-7 lg:grid-cols-5">

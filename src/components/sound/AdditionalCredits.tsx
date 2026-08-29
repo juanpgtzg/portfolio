@@ -137,15 +137,15 @@ export default function AdditionalCredits() {
   };
 
   return (
-    <section className="mt-10">
+    <section className="mt-7">
       <div className="mb-3">
         <span className="retro-label opacity-50">
-          Additional Credits
+          More Credits
         </span>
       </div>
 
       <div
-        className="relative overflow-hidden border-y border-[var(--line)] bg-[var(--paper-light)]"
+        className="relative overflow-hidden border-t border-[var(--line-light)]"
         tabIndex={0}
         onMouseEnter={startScrolling}
         onMouseLeave={stopScrolling}
