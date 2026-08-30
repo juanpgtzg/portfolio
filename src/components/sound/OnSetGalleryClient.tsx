@@ -18,17 +18,6 @@ export default function OnSetGalleryClient({
     const [selectedIndex, setSelectedIndex] = useState(0);
     const [isLightboxOpen, setIsLightboxOpen] = useState(false);
 
-    useEffect(() => {
-      const timer = window.setTimeout(() => {
-        photos.forEach((photo) => {
-          const image = new window.Image();
-          image.src = photo.src;
-        });
-      }, 500);
-
-      return () => window.clearTimeout(timer);
-    }, [photos]);
-
   const previousPhoto = () => {
     setSelectedIndex((current) =>
       current === 0 ? photos.length - 1 : current - 1
@@ -137,10 +126,10 @@ export default function OnSetGalleryClient({
               src={photos[selectedIndex].src}
               alt={photos[selectedIndex].alt}
               fill
-              unoptimized
+              quality={75}
+              loading="eager"
               className="object-contain transition-transform duration-500 group-hover:scale-[1.005]"
-              sizes="(max-width: 768px) 100vw, 90vw"
-              priority={selectedIndex === 0}
+              sizes="(max-width: 768px) 100vw, 70vw"
             />
 
             {/* Hover hint */}
@@ -199,6 +188,8 @@ export default function OnSetGalleryClient({
               src={photos[selectedIndex].src}
               alt={photos[selectedIndex].alt}
               fill
+              quality={75}
+              loading="eager"
               className="object-contain"
               sizes="100vw"
             />
