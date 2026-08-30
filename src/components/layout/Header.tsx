@@ -10,22 +10,22 @@ export default function Header() {
   const isPodcast = pathname === "/podcast";
 
   return (
-    <header className="border-b border-[var(--line)] px-6 md:px-10">
-      <div className="mx-auto grid min-h-16 max-w-7xl grid-cols-[1fr_auto_1fr] items-center">
+    <header className="border-b border-[var(--line)] px-5 md:px-10">
+      <div className="mx-auto grid max-w-7xl grid-cols-[1fr_auto] items-center gap-x-4 gap-y-3 py-3 md:min-h-16 md:grid-cols-[1fr_auto_1fr] md:gap-0 md:py-0">
 
         {/* Identity */}
         <Link
           href="/"
-          className="font-retro justify-self-start text-xs font-bold uppercase tracking-[0.08em] transition-opacity hover:opacity-50"
+          className="font-retro col-start-1 row-start-1 justify-self-start text-[10px] font-bold uppercase tracking-[0.08em] transition-opacity hover:opacity-50 md:text-xs"
         >
           Juan Gutierrez
         </Link>
 
         {/* Main navigation */}
-        <nav className="flex items-center gap-2 justify-self-center">
+        <nav className="col-span-2 row-start-2 grid w-full grid-cols-2 gap-2 md:col-span-1 md:col-start-2 md:row-start-1 md:flex md:w-auto md:items-center md:justify-self-center">
           <Link
             href="/sound"
-            className={`font-retro border border-[var(--line)] px-4 py-2 text-xs font-bold uppercase tracking-[0.08em] transition-all ${
+            className={`font-retro border border-[var(--line)] px-3 py-2 text-center text-[10px] font-bold uppercase tracking-[0.08em] transition-all md:px-4 md:text-xs ${
               isSound
                 ? "bg-[var(--lilac)]"
                 : "bg-[var(--lilac)] opacity-40 hover:opacity-70"
@@ -36,7 +36,7 @@ export default function Header() {
 
           <Link
             href="/podcast"
-            className={`font-retro border border-[var(--line)] px-4 py-2 text-xs font-bold uppercase tracking-[0.08em] transition-all ${
+            className={`font-retro border border-[var(--line)] px-3 py-2 text-center text-[10px] font-bold uppercase tracking-[0.08em] transition-all md:px-4 md:text-xs ${
               isPodcast
                 ? "bg-[var(--sage)]"
                 : "bg-[var(--sage)] opacity-40 hover:opacity-70"
@@ -48,7 +48,7 @@ export default function Header() {
 
         {/* Language selector */}
         <div
-          className="flex items-center gap-1 justify-self-end"
+          className="col-start-2 row-start-1 flex items-center gap-1 justify-self-end md:col-start-3"
           aria-label="Language selector"
         >
           <button

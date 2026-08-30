@@ -10,6 +10,7 @@ export default function PostProductionCredits() {
   const [thumbHeight, setThumbHeight] = useState(0);
   const [thumbTop, setThumbTop] = useState(0);
   const [canScroll, setCanScroll] = useState(false);
+  const [showAllMobile, setShowAllMobile] = useState(false);
 
   const updateScrollbar = () => {
     const element = scrollRef.current;
@@ -114,42 +115,57 @@ export default function PostProductionCredits() {
   };
 
   return (
-    <div className="mt-6 flex min-h-0 flex-1 flex-col overflow-hidden">
+    <div className="mt-6 flex flex-col md:min-h-0 md:flex-1 md:overflow-hidden">
+
+      {/* Header */}
       <div className="mb-2 flex items-center justify-between">
-        <span className="retro-label opacity-45">
+        <span className="font-retro text-[12px] font-bold uppercase tracking-[0.04em] opacity-55 md:text-[13px]">
           Post-Production Credits
         </span>
 
-        <span className="font-retro text-[8px] uppercase tracking-[0.08em] opacity-25">
+        <span className="font-retro text-[9px] uppercase tracking-[0.06em] opacity-30">
           {String(postProductionCredits.length).padStart(2, "0")} Projects
         </span>
       </div>
 
-      <div className="relative flex min-h-0 flex-1 flex-col overflow-hidden border-t border-[var(--line-light)]">
+      <div className="relative border-t border-[var(--line-light)] md:flex md:min-h-0 md:flex-1 md:flex-col md:overflow-hidden">
+
         {/* Credits */}
         <div
           ref={scrollRef}
           onScroll={updateScrollbar}
-          className="retro-scroll-hidden h-full min-h-0 flex-1 overflow-y-auto pr-5"
+          className="retro-scroll-hidden md:h-full md:min-h-0 md:flex-1 md:overflow-y-auto md:pr-5"
         >
           {postProductionCredits.map((credit, index) => (
             <div
               key={`${credit.title}-${credit.role}-${index}`}
-              className={`grid grid-cols-[24px_1fr] gap-2 py-2 ${
-                index !== postProductionCredits.length - 1
-                  ? "border-b border-[var(--line-light)]"
-                  : ""
-              }`}
+              className={`
+                grid grid-cols-[24px_minmax(0,1fr)_auto] items-center gap-2 py-2
+                ${!showAllMobile && index >= 4 ? "hidden md:grid" : ""}
+                ${
+                  index !== postProductionCredits.length - 1
+                    ? "border-b border-[var(--line-light)]"
+                    : ""
+                }
+              `}
             >
-              <span className="font-retro text-[8px] opacity-25">
+              {/* Number */}
+              <span className="font-retro text-[9px] opacity-30">
                 {String(index + 1).padStart(2, "0")}
               </span>
 
-              <div className="min-w-0">
-                <p className="font-retro truncate text-[10px] font-bold uppercase tracking-[0.04em]">
-                  {credit.title}
-                </p>
+              {/* Title */}
+              <p className="font-retro min-w-0 truncate text-[11px] font-bold uppercase tracking-[0.03em]">
+                {credit.title}
+              </p>
 
+              {/* Role */}
+              <p className="max-w-[120px] truncate text-right text-[10px] opacity-50 md:hidden">
+                {credit.role}
+              </p>
+
+              {/* Desktop role */}
+              <div className="hidden md:block md:col-start-2">
                 <p className="mt-0.5 text-[10px] opacity-45">
                   {credit.role}
                 </p>
@@ -158,26 +174,38 @@ export default function PostProductionCredits() {
           ))}
         </div>
 
-        {/* Custom retro scrollbar */}
-        <div
-        className={`absolute inset-y-0 right-0 w-[7px] border border-[var(--line-light)] bg-[var(--paper-dark)] transition-opacity ${
-            canScroll ? "opacity-100" : "pointer-events-none opacity-0"
-        }`}
+        {/* Mobile View More / Less */}
+        <button
+          type="button"
+          onClick={() => setShowAllMobile((current) => !current)}
+          className="font-retro ml-auto mt-3 flex w-fit items-center gap-1 px-1 py-1 text-[9px] font-bold uppercase tracking-[0.06em] opacity-45 transition-opacity hover:opacity-70 md:hidden"
         >
+          {showAllMobile ? "View Less ↑" : "View More ↓"}
+        </button>
+
+        {/* Custom retro scrollbar — desktop only */}
         <div
+          className={`absolute inset-y-0 right-0 hidden w-[7px] border border-[var(--line-light)] bg-[var(--paper-dark)] transition-opacity md:block ${
+            canScroll
+              ? "opacity-100"
+              : "pointer-events-none opacity-0"
+          }`}
+        >
+          <div
             ref={trackRef}
             className="absolute inset-[1px]"
-        >
+          >
             <div
-            onPointerDown={handleThumbPointerDown}
-            className="absolute left-0 right-0 cursor-grab bg-[var(--ink-soft)] active:cursor-grabbing"
-            style={{
+              onPointerDown={handleThumbPointerDown}
+              className="absolute left-0 right-0 cursor-grab bg-[var(--ink-soft)] active:cursor-grabbing"
+              style={{
                 height: `${thumbHeight}px`,
                 top: `${thumbTop}px`,
-            }}
+              }}
             />
-            </div>
+          </div>
         </div>
+
       </div>
     </div>
   );

@@ -511,3 +511,22 @@ input[type="range"]::-moz-range-thumb {
 .retro-scroll-hidden::-webkit-scrollbar {
   display: none;
 }
+
+/* =========================================================
+   IPOD
+   ========================================================= */
+
+.ipod-float {
+  animation: ipod-float 5.5s ease-in-out infinite;
+}
+
+@keyframes ipod-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-4px);
+  }
+}

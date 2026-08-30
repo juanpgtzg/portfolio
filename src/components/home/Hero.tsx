@@ -31,7 +31,7 @@ export default function Hero() {
             </h1>
 
             <p className="font-retro mt-2 text-[10px] uppercase tracking-[0.12em] opacity-40">
-              Sound / Podcast / Vancouver BC
+              Sound & Podcast / Vancouver BC
             </p>
           </div>
 
@@ -72,9 +72,9 @@ export default function Hero() {
 
           <div className="absolute left-[7%] right-[7%] top-[7%] h-[29%] overflow-hidden rounded-[7px] border border-[var(--line)] bg-[var(--paper-light)]">
 
-            {/* pastel upper strip */}
+            {/* Pastel upper strip */}
             <div className="absolute inset-x-0 top-0 flex h-[31%]">
-              <div className="w-1/2 border-r border-[var(--line)] bg-[var(--lilac)]" />
+              <div className="w-1/2 bg-[var(--lilac)]" />
               <div className="w-1/2 bg-[var(--sage)]" />
             </div>
 
@@ -86,17 +86,19 @@ export default function Hero() {
               Side B / Podcast
             </div>
 
-            <div className="absolute left-1/2 top-[43%] -translate-x-1/2 text-center">
-              <p className="font-retro text-[8px] uppercase tracking-[0.22em] opacity-45 md:text-[10px]">
+            {/* Short introduction */}
+            <div className="absolute left-[8%] right-[8%] top-[41%] text-center">
+              <p className="font-retro text-[8px] font-bold uppercase tracking-[0.18em] opacity-55 md:text-[10px]">
                 Juan Gutierrez
               </p>
 
-              <p className="font-retro mt-1 text-[7px] uppercase tracking-[0.16em] opacity-30 md:text-[9px]">
-                Stereo / Audio Portfolio
+              <p className="mx-auto mt-2 max-w-xl text-[8px] leading-relaxed opacity-45 md:text-[10px]">
+                Audio engineer working across production sound, post-production and
+                podcasting. Focused on telling stories through sound.
               </p>
             </div>
 
-            {/* ruled lines */}
+            {/* Ruled lines */}
             <div className="absolute bottom-[18%] left-[6%] right-[6%] border-t border-[var(--line)] opacity-25" />
             <div className="absolute bottom-[9%] left-[6%] right-[6%] border-t border-[var(--line)] opacity-15" />
           </div>
@@ -174,7 +176,7 @@ export default function Hero() {
           </div>
 
           {/* Center divider */}
-          <div className="absolute bottom-[25%] left-1/2 top-[21%] w-px -translate-x-1/2 bg-[var(--line)] opacity-15" />
+          <div className="absolute bottom-[25%] left-1/2 top-[29%] w-px -translate-x-1/2 bg-[var(--line)] opacity-15" />
 
           {/* =================================================
               BOTTOM MECHANISM

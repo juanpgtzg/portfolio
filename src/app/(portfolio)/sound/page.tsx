@@ -7,7 +7,7 @@ import PostProductionCredits from "@/components/sound/PostProductionCredits";
 
 export default function SoundPage() {
   return (
-    <main className="mx-auto max-w-7xl px-6 py-8 md:px-10 md:py-10">
+    <main className="mx-auto max-w-7xl px-5 py-6 md:px-10 md:py-10">
 
       {/* =====================================================
           PAGE INTRO
@@ -19,7 +19,7 @@ export default function SoundPage() {
             Portfolio / 01
           </span>
 
-          <h1 className="mt-4 text-5xl font-bold tracking-tight md:text-7xl">
+          <h1 className="mt-3 text-4xl font-bold tracking-tight md:mt-4 md:text-7xl">
             Sound
           </h1>
         </div>
@@ -30,43 +30,49 @@ export default function SoundPage() {
         </div>
       </section>
 
-      <hr className="retro-divider-strong my-7" />
+      <hr className="retro-divider-strong my-5 md:my-7" />
 
       {/* =====================================================
           SOUND DESIGN
           ===================================================== */}
 
-      <section className="grid items-stretch gap-8 md:grid-cols-[0.9fr_1.25fr] md:gap-10">
+      <section className="grid grid-cols-[minmax(0,1fr)] items-start gap-8 md:grid-cols-[0.9fr_1.25fr] md:items-stretch md:gap-10">
 
         {/* Information */}
-        <div className="flex min-h-0 flex-col overflow-hidden md:[contain:size]">
-          <span className="retro-tag retro-tag-lilac">
-            Sound Design
-          </span>
+        <div className="contents md:flex md:min-h-0 md:flex-col md:overflow-hidden md:[contain:size]">
 
-          <h2 className="mt-4 text-3xl font-bold">
-            Demo Reel
-          </h2>
+          <div className="order-1 md:order-none">
+            <span className="retro-tag retro-tag-lilac">
+              Sound Design
+            </span>
 
-          <p className="mt-5 max-w-sm text-sm leading-relaxed opacity-70">
-            A selection of sound design work across dialogue,
-            sound effects, Foley, ambience and mixing.
-          </p>
+            <h2 className="mt-4 text-3xl font-bold">
+              Demo Reel
+            </h2>
 
-          <PostProductionCredits />
-
-          <div className="mt-auto border-t border-[var(--line-light)] pt-4">
-            <p className="font-retro max-w-sm text-[11px] uppercase leading-relaxed tracking-[0.06em] opacity-55">
-              Sound Design / Dialogue / SFX / Foley /
-              Ambiences / Mixing
+            <p className="mt-5 max-w-sm text-sm leading-relaxed opacity-70">
+              A selection of sound design work across dialogue,
+              sound effects, Foley, ambience and mixing.
             </p>
           </div>
+
+          <div className="order-3 min-h-0 md:order-none md:flex md:flex-1 md:flex-col md:overflow-hidden">
+            <PostProductionCredits />
+          </div>
+
+          <div className="order-4 mt-6 border-t border-[var(--line-light)] pt-4 md:order-none md:mt-auto">
+            <p className="font-retro max-w-none whitespace-nowrap text-[8px] uppercase tracking-[0.02em] opacity-55 sm:text-[9px] md:text-[10px] md:tracking-[0.04em]">
+              Sound Design / Dialogue / SFX / Foley / Ambiences / Mixing
+            </p>
+          </div>
+
         </div>
 
         {/* Reel */}
-        <div className="w-full">
+        <div className="order-2 min-w-0 w-full md:order-none">
           <DemoReel />
         </div>
+
       </section>
 
       <hr className="retro-divider-strong my-8" />

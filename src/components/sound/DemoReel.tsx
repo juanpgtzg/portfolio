@@ -63,15 +63,15 @@ export default function DemoReel() {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full min-w-0">
       {/* Video */}
-      <div className="retro-media-frame relative aspect-video">
+      <div className="retro-media-frame relative aspect-video w-full">
         <video
           ref={videoRef}
           src="/video/sound/demo-reel.mp4"
           preload="metadata"
           playsInline
-          className="h-full w-full object-contain"
+          className="absolute inset-0 h-full w-full object-contain"
           onTimeUpdate={(event) =>
             setCurrentTime(event.currentTarget.currentTime)
           }
@@ -109,7 +109,7 @@ export default function DemoReel() {
       </div>
 
       {/* Retro transport controls */}
-      <div className="mt-2 grid grid-cols-[52px_1fr_auto_54px] border border-[var(--line)] bg-[var(--paper-light)]">
+      <div className="mt-2 grid grid-cols-[44px_minmax(0,1fr)_44px] border border-[var(--line)] bg-[var(--paper-light)] md:grid-cols-[52px_minmax(0,1fr)_auto_54px]">
 
         {/* Play / Pause */}
         <button
@@ -122,7 +122,7 @@ export default function DemoReel() {
         </button>
 
         {/* Timeline */}
-        <div className="flex min-w-0 items-center px-4">
+        <div className="flex min-w-0 items-center px-3 md:px-4">
           <input
             type="range"
             min="0"
@@ -138,7 +138,7 @@ export default function DemoReel() {
         </div>
 
         {/* Time */}
-        <div className="font-retro flex h-11 items-center border-l border-[var(--line)] px-4 text-[10px] tabular-nums">
+        <div className="font-retro hidden h-11 items-center border-l border-[var(--line)] px-4 text-[10px] tabular-nums md:flex">
           {formatTime(currentTime)}
           <span className="mx-1 opacity-35">/</span>
           <span className="opacity-50">

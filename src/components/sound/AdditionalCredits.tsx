@@ -146,7 +146,7 @@ export default function AdditionalCredits() {
       </div>
 
       <div
-        className="relative overflow-hidden border-t border-[var(--line-light)] py-4"
+        className="relative w-full max-w-full min-w-0 overflow-hidden border-t border-[var(--line-light)] py-4 [contain:inline-size]"
         onMouseEnter={startScrolling}
         onMouseLeave={stopScrolling}
         onMouseMove={handleMouseMove}
