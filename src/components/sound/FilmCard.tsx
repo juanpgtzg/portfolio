@@ -153,7 +153,7 @@ export default function FilmCard({ film }: FilmCardProps) {
             </div>
 
             <span
-              className={`font-retro shrink-0 text-[10px] transition-transform duration-200 ${
+              className={`font-retro hidden shrink-0 text-[10px] transition-transform duration-200 md:block ${
                 showDetails ? "rotate-45" : ""
               }`}
               aria-hidden="true"
@@ -169,8 +169,8 @@ export default function FilmCard({ film }: FilmCardProps) {
           {/* Fixed metadata space so cards don't jump */}
           <div className="relative mt-3 h-10 border-t border-[var(--line-light)] pt-2">
             <div
-              className={`absolute inset-x-0 top-2 transition-opacity duration-200 ${
-                showDetails ? "opacity-60" : "opacity-0"
+              className={`absolute inset-x-0 top-2 opacity-60 transition-opacity duration-200 ${
+                showDetails ? "md:opacity-60" : "md:opacity-0"
               }`}
             >
               <p className="font-retro text-[9px] uppercase tracking-[0.06em]">
@@ -183,7 +183,7 @@ export default function FilmCard({ film }: FilmCardProps) {
             </div>
 
             {!showDetails && (
-              <p className="font-retro text-[9px] uppercase tracking-[0.08em] opacity-30">
+              <p className="font-retro hidden text-[9px] uppercase tracking-[0.08em] opacity-30 md:block">
                 View details
               </p>
             )}

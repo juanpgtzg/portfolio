@@ -115,7 +115,7 @@ export default function PostProductionCredits() {
   };
 
   return (
-    <div className="mt-6 flex flex-col md:min-h-0 md:flex-1 md:overflow-hidden">
+    <div className="mt-0 flex flex-col md:mt-6 md:min-h-0 md:flex-1 md:overflow-hidden">
 
       {/* Header */}
       <div className="mb-2 flex items-center justify-between">
@@ -140,7 +140,7 @@ export default function PostProductionCredits() {
             <div
               key={`${credit.title}-${credit.role}-${index}`}
               className={`
-                grid grid-cols-[24px_minmax(0,1fr)_auto] items-center gap-2 py-2
+                grid grid-cols-[24px_minmax(0,1fr)_auto] items-center gap-x-2 gap-y-0 py-2
                 ${!showAllMobile && index >= 4 ? "hidden md:grid" : ""}
                 ${
                   index !== postProductionCredits.length - 1
@@ -175,13 +175,15 @@ export default function PostProductionCredits() {
         </div>
 
         {/* Mobile View More / Less */}
-        <button
-          type="button"
-          onClick={() => setShowAllMobile((current) => !current)}
-          className="font-retro ml-auto mt-3 flex w-fit items-center gap-1 px-1 py-1 text-[9px] font-bold uppercase tracking-[0.06em] opacity-45 transition-opacity hover:opacity-70 md:hidden"
-        >
-          {showAllMobile ? "View Less ↑" : "View More ↓"}
-        </button>
+        <div className="mt-2 flex justify-end md:hidden">
+          <button
+            type="button"
+            onClick={() => setShowAllMobile((current) => !current)}
+            className="font-retro w-auto shrink-0 appearance-none border-0 bg-transparent p-0 text-[8px] font-bold uppercase leading-none tracking-[0.04em] opacity-45 transition-opacity hover:opacity-70"
+          >
+            {showAllMobile ? "View Less ↑" : "View More ↓"}
+          </button>
+        </div>
 
         {/* Custom retro scrollbar — desktop only */}
         <div

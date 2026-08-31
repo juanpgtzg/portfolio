@@ -36,7 +36,7 @@ export default function SoundPage() {
           SOUND DESIGN
           ===================================================== */}
 
-      <section className="grid grid-cols-[minmax(0,1fr)] items-start gap-8 md:grid-cols-[0.9fr_1.25fr] md:items-stretch md:gap-10">
+      <section className="grid grid-cols-[minmax(0,1fr)] items-start gap-y-5 md:grid-cols-[0.9fr_1.25fr] md:items-stretch md:gap-10">
 
         {/* Information */}
         <div className="contents md:flex md:min-h-0 md:flex-col md:overflow-hidden md:[contain:size]">
@@ -60,8 +60,8 @@ export default function SoundPage() {
             <PostProductionCredits />
           </div>
 
-          <div className="order-4 mt-6 border-t border-[var(--line-light)] pt-4 md:order-none md:mt-auto">
-            <p className="font-retro max-w-none whitespace-nowrap text-[8px] uppercase tracking-[0.02em] opacity-55 sm:text-[9px] md:text-[10px] md:tracking-[0.04em]">
+          <div className="order-4 mt-0 border-t border-[var(--line-light)] pt-3 md:order-none md:mt-auto md:pt-4">
+            <p className="font-retro max-w-none whitespace-nowrap text-[9px] uppercase tracking-[-0.02em] opacity-55 md:text-[11px] md:tracking-[0.01em]">
               Sound Design / Dialogue / SFX / Foley / Ambiences / Mixing
             </p>
           </div>

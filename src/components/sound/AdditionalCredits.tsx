@@ -11,6 +11,7 @@ export default function AdditionalCredits() {
 
   const directionRef = useRef(-1);
   const isScrollingRef = useRef(false);
+  const isMobileRef = useRef(false);
 
   const [isScrolling, setIsScrolling] = useState(false);
 
@@ -88,6 +89,8 @@ export default function AdditionalCredits() {
   };
 
   const stopScrolling = () => {
+    if (isMobileRef.current) return;
+
     isScrollingRef.current = false;
     setIsScrolling(false);
 
@@ -122,22 +125,52 @@ export default function AdditionalCredits() {
   };
 
   useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 767px)");
+
+    const updateMode = () => {
+      isMobileRef.current = mediaQuery.matches;
+
+      if (mediaQuery.matches) {
+        startScrolling();
+      } else {
+        isScrollingRef.current = false;
+        setIsScrolling(false);
+
+        if (animationFrameRef.current !== null) {
+          cancelAnimationFrame(animationFrameRef.current);
+          animationFrameRef.current = null;
+        }
+
+        lastTimeRef.current = null;
+      }
+    };
+
+    updateMode();
+
+    mediaQuery.addEventListener("change", updateMode);
+
     return () => {
+      mediaQuery.removeEventListener("change", updateMode);
+
       if (animationFrameRef.current !== null) {
         cancelAnimationFrame(animationFrameRef.current);
+        animationFrameRef.current = null;
       }
+
+      isScrollingRef.current = false;
+      lastTimeRef.current = null;
     };
   }, []);
 
   return (
-    <section className="mt-7">
+    <section className="mt-4 md:mt-7">
       <div className="mb-2 flex items-center justify-between">
         <span className="retro-label opacity-45">
           More Credits
         </span>
 
         <span
-          className={`font-retro text-[11px] uppercase tracking-[0.08em] transition-opacity ${
+          className={`font-retro hidden text-[11px] uppercase tracking-[0.08em] transition-opacity md:block ${
             isScrolling ? "opacity-30" : "opacity-20"
           }`}
         >
@@ -146,7 +179,7 @@ export default function AdditionalCredits() {
       </div>
 
       <div
-        className="relative w-full max-w-full min-w-0 overflow-hidden border-t border-[var(--line-light)] py-4 [contain:inline-size]"
+        className="relative w-full max-w-full min-w-0 overflow-hidden border-t border-[var(--line-light)] py-3 md:py-4 [contain:inline-size]"
         onMouseEnter={startScrolling}
         onMouseLeave={stopScrolling}
         onMouseMove={handleMouseMove}
@@ -164,7 +197,7 @@ export default function AdditionalCredits() {
 
         {/* Right-side hint */}
         <div
-          className={`pointer-events-none absolute right-0 top-0 flex h-full items-center pl-14 transition-opacity duration-200 ${
+          className={`pointer-events-none absolute right-0 top-0 hidden h-full items-center pl-14 transition-opacity duration-200 md:flex ${
             isScrolling ? "opacity-0" : "opacity-100"
           }`}
           style={{

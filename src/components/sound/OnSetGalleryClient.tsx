@@ -60,7 +60,7 @@ export default function OnSetGalleryClient({
 
   return (
     <>
-      <section className="mt-12">
+      <section className="mt-4 md:mt-12">
         {/* Heading */}
         <div className="mb-5 flex items-end justify-between gap-4">
           <div>
@@ -79,16 +79,16 @@ export default function OnSetGalleryClient({
         </div>
 
         {/* Photo viewer */}
-        <div className="grid h-[470px] grid-cols-[92px_1fr] gap-2 bg-[var(--ink)] p-2 lg:h-[520px]">
+        <div className="flex min-w-0 flex-col bg-[var(--ink)] p-2 md:grid md:h-[470px] md:grid-cols-[92px_1fr] md:gap-2 lg:h-[520px]">
 
           {/* Thumbnail rail */}
-          <div className="flex min-h-0 flex-col gap-2 overflow-y-auto pr-1">
+          <div className="retro-scroll-hidden order-2 mt-2 flex w-full max-w-full min-w-0 gap-2 overflow-x-auto pb-1 [contain:inline-size] md:order-none md:mt-0 md:min-h-0 md:flex-col md:overflow-x-hidden md:overflow-y-auto md:pb-0 md:pr-1 md:[contain:none]">
             {photos.map((photo, index) => (
               <button
                 key={photo.src}
                 type="button"
                 onClick={() => setSelectedIndex(index)}
-                className={`group relative aspect-[4/3] w-full shrink-0 overflow-hidden transition-opacity ${
+                className={`group relative aspect-[4/3] w-[82px] shrink-0 overflow-hidden transition-opacity md:w-full ${
                   selectedIndex === index
                     ? "opacity-100"
                     : "opacity-55 hover:opacity-90"
@@ -99,9 +99,8 @@ export default function OnSetGalleryClient({
                   src={photo.src}
                   alt=""
                   fill
-                  unoptimized
                   className="object-cover"
-                  sizes="92px"
+                  sizes="(max-width: 768px) 82px, 92px"
                 />
 
                 {selectedIndex === index && (
@@ -119,7 +118,7 @@ export default function OnSetGalleryClient({
           <button
             type="button"
             onClick={() => setIsLightboxOpen(true)}
-            className="group relative min-w-0 overflow-hidden bg-black"
+            className="group relative order-1 aspect-[4/3] w-full min-w-0 overflow-hidden bg-black md:order-none md:aspect-auto"
             aria-label={`Open photo ${selectedIndex + 1} fullscreen`}
           >
             <Image
@@ -132,8 +131,8 @@ export default function OnSetGalleryClient({
               sizes="(max-width: 768px) 100vw, 70vw"
             />
 
-            {/* Hover hint */}
-            <div className="pointer-events-none absolute bottom-3 right-3 border border-[var(--line)] bg-[var(--paper-light)] px-3 py-2 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+            {/* Hover hint — desktop only */}
+            <div className="pointer-events-none absolute bottom-3 right-3 hidden border border-[var(--line)] bg-[var(--paper-light)] px-3 py-2 opacity-0 transition-opacity duration-200 group-hover:opacity-100 md:block">
               <span className="font-retro text-[8px] font-bold uppercase tracking-[0.08em] text-[var(--ink)]">
                 View Fullscreen ↗
               </span>
