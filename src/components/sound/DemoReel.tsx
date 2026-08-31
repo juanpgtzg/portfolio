@@ -19,6 +19,10 @@ export default function DemoReel() {
   const frameRef = useRef<HTMLDivElement>(null);
   const progressFrameRef = useRef<number | null>(null);
 
+  const demoReelSrc =
+    process.env.NEXT_PUBLIC_DEMO_REEL_URL ||
+    "/video/sound/demo-reel.mp4";
+
   const {
     registerMediaElement,
     resumeAudio,
@@ -155,7 +159,7 @@ export default function DemoReel() {
       >
         <video
           ref={videoRef}
-          src="/video/sound/demo-reel.mp4"
+          src={demoReelSrc}
           preload="metadata"
           playsInline
           className="absolute inset-0 h-full w-full object-contain"
