@@ -4,9 +4,9 @@ import AdditionalCredits from "@/components/sound/AdditionalCredits";
 
 export default function FilmGrid() {
   return (
-    <section className="min-w-0">
+    <section className="w-full max-w-full min-w-0 overflow-hidden">
       <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
-        <div>
+        <div className="min-w-0">
           <span className="retro-tag retro-tag-sage">
             Production Sound / 02
           </span>
@@ -21,11 +21,11 @@ export default function FilmGrid() {
         </span>
       </div>
 
-      <div className="retro-scroll-hidden flex w-full max-w-full min-w-0 snap-x snap-mandatory gap-4 overflow-x-auto pb-3 [contain:inline-size] md:grid md:grid-cols-[repeat(auto-fit,minmax(180px,1fr))] md:gap-x-6 md:gap-y-10 md:overflow-visible md:pb-0 md:snap-none md:[contain:none]">
+      <div className="retro-scroll-hidden flex w-full max-w-full min-w-0 snap-x snap-mandatory gap-4 overflow-x-auto pb-3 [contain:inline-size] md:gap-6">
         {films.map((film) => (
           <div
             key={film.id}
-            className="w-[64vw] max-w-[240px] shrink-0 snap-start md:w-auto md:max-w-none md:shrink"
+            className="w-[64vw] max-w-[240px] shrink-0 snap-start md:w-[210px] md:max-w-none lg:w-[220px]"
           >
             <FilmCard film={film} />
           </div>
@@ -33,7 +33,6 @@ export default function FilmGrid() {
       </div>
 
       <AdditionalCredits />
-      
     </section>
   );
 }

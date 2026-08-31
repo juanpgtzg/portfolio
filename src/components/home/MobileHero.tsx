@@ -3,50 +3,93 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+import LanguageSelector from "@/components/language/LanguageSelector";
+import { useLanguage } from "@/context/LanguageContext";
+import { translations } from "@/data/translations";
+
 type Side = "sound" | "podcast";
 
 export default function MobileHero() {
-    const router = useRouter();
-    const [selected, setSelected] = useState<Side | null>(null);
-    const [isPressed, setIsPressed] = useState(false);
+  const router = useRouter();
 
-    const enterSelected = () => {
-        if (!selected) return;
+    const { language } = useLanguage();
+    const t = translations[language];
 
-        router.push(`/${selected}`);
-    };
+  const [selected, setSelected] = useState<Side | null>(null);
+  const [isPressed, setIsPressed] = useState(false);
+  const [exitDirection, setExitDirection] = useState<
+    "left" | "right" | null
+  >(null);
 
-    const handleScreenSelect = (side: Side) => {
-        if (selected === side) {
-        setIsPressed(true);
+  const navigateTo = (side: Side) => {
+    if (exitDirection) return;
 
-        window.setTimeout(() => {
-        setIsPressed(false);
-        router.push(`/${side}`);
-        }, 130);
+    // Remember which direction the destination should enter from.
+    sessionStorage.setItem("portfolio-transition", side);
 
-        return;
+    setIsPressed(true);
+
+    // Sound is on the left → hero exits right.
+    // Podcast is on the right → hero exits left.
+    setExitDirection(side === "sound" ? "right" : "left");
+
+    window.setTimeout(() => {
+      router.push(`/${side}`);
+    }, 420);
+  };
+
+  const enterSelected = () => {
+    if (!selected) return;
+
+    navigateTo(selected);
+  };
+
+  const handleScreenSelect = (side: Side) => {
+    if (selected === side) {
+      navigateTo(side);
+      return;
     }
 
-  setSelected(side);
-};
+    setSelected(side);
+  };
 
   return (
-    <section className="retro-texture flex min-h-screen flex-col justify-center px-5 py-8">
+    <section
+        className="retro-texture flex min-h-screen flex-col justify-center overflow-hidden px-5 py-8"
+        style={{
+            transform:
+            exitDirection === "right"
+                ? "translateX(100%)"
+                : exitDirection === "left"
+                ? "translateX(-100%)"
+                : "translateX(0)",
+            opacity: exitDirection ? 0 : 1,
+            transition:
+            "transform 400ms cubic-bezier(0.76, 0, 0.24, 1), opacity 300ms ease",
+            willChange: "transform, opacity",
+        }}
+    >
       {/* Intro */}
-      <div className="mx-auto mb-6 w-full max-w-sm">
-        <span className="retro-tag retro-tag-pink">
-          Audio Portfolio / 2026
-        </span>
+        <div className="mx-auto mb-6 w-full max-w-sm">
 
-        <h1 className="mt-4 text-4xl font-bold leading-none tracking-tight">
-          Juan Gutierrez
-        </h1>
+            {/* Language selector */}
+            <div className="mb-3 flex justify-end">
+                <LanguageSelector />
+            </div>
 
-        <p className="font-retro mt-2 text-[10px] uppercase tracking-[0.08em] opacity-45">
-          Sound & Podcast / Vancouver BC
-        </p>
-      </div>
+            {/* Portfolio label */}
+            <span className="retro-tag retro-tag-pink">
+                {t.hero.portfolioLabel}
+            </span>
+
+            <h1 className="mt-4 text-4xl font-bold leading-none tracking-tight">
+                Juan Gutierrez
+            </h1>
+
+            <p className="font-retro mt-2 text-[10px] uppercase tracking-[0.08em] opacity-45">
+                {t.hero.subtitle}
+            </p>
+        </div>
 
       {/* iPod */}
         <div className="ipod-float mx-auto w-full max-w-[330px]">
@@ -71,46 +114,50 @@ export default function MobileHero() {
                 </span>
 
                 <span className="font-retro text-[8px] uppercase tracking-[0.08em] opacity-40">
-                    Menu
+                    {t.hero.menu}
                 </span>
             </div>
 
             {/* Screen title */}
             <div className="px-3 pb-2 pt-3">
                 <p className="retro-label opacity-35">
-                    Select and press Enter
+                    {t.hero.selectAndEnter}
                 </p>
             </div>
 
             {/* Sound */}
                 <button
-                    type="button"
-                    onClick={() => handleScreenSelect("sound")}
-                    className={`flex w-full items-center justify-between border-t border-[var(--line-light)] px-3 py-4 text-left transition-colors ${
+                type="button"
+                onClick={() => handleScreenSelect("sound")}
+                className={`flex w-full items-center justify-between border-t border-[var(--line-light)] px-3 py-4 transition-colors ${
                     selected === "sound"
-                        ? "bg-[var(--lilac)]"
-                        : "bg-transparent"
-                    }`}
+                    ? "bg-[var(--lilac)]"
+                    : "bg-transparent"
+                }`}
                 >
-                    <div>
-                        <span className="font-retro block text-[9px] uppercase tracking-[0.08em] opacity-45">
-                        Side A
-                        </span>
+                {/* Left arrow */}
+                {selected === "sound" ? (
+                    <svg
+                    aria-hidden="true"
+                    viewBox="0 0 24 24"
+                    className="h-4 w-4 shrink-0 fill-[var(--ink)]"
+                    >
+                    <path d="M15.5 5 8.5 12l7 7Z" />
+                    </svg>
+                ) : (
+                    <span className="h-4 w-4 shrink-0" />
+                )}
 
-                        <span className="font-retro mt-0.5 block text-sm font-bold uppercase tracking-[0.06em]">
-                        Sound
-                        </span>
-                    </div>
+                {/* Sound label */}
+                <div className="text-right">
+                    <span className="font-retro block text-[9px] uppercase tracking-[0.08em] opacity-45">
+                    {t.hero.sideA}
+                    </span>
 
-                    {selected === "sound" && (
-                        <svg
-                            aria-hidden="true"
-                            viewBox="0 0 24 24"
-                            className="h-4 w-4 fill-[var(--ink)]"
-                        >
-                            <path d="m8.5 5 7 7-7 7Z" />
-                        </svg>
-                    )}
+                    <span className="font-retro mt-0.5 block text-sm font-bold uppercase tracking-[0.06em]">
+                    {t.hero.sound}
+                    </span>
+                </div>
                 </button>
 
             {/* Podcast */}
@@ -125,11 +172,11 @@ export default function MobileHero() {
                 >
                 <div>
                     <span className="font-retro block text-[9px] uppercase tracking-[0.08em] opacity-45">
-                    Side B
+                    {t.hero.sideB}
                     </span>
 
                     <span className="font-retro mt-0.5 block text-sm font-bold uppercase tracking-[0.06em]">
-                    Podcast
+                    {t.hero.podcast}
                     </span>
                 </div>
 
@@ -147,7 +194,7 @@ export default function MobileHero() {
             {/* Screen footer */}
             <div className="flex items-center justify-between border-t border-[var(--line)] px-3 py-2">
                 <span className="font-retro text-[7px] uppercase tracking-[0.08em] opacity-30">
-                Stereo
+                {t.hero.stereo}
                 </span>
 
                 <span className="font-retro text-[7px] uppercase tracking-[0.08em] opacity-30">
@@ -222,25 +269,18 @@ export default function MobileHero() {
 
             {/* Center button */}
             <button
-                    type="button"
-                    onClick={() => {
-                        if (!selected) return;
-
-                        setIsPressed(true);
-
-                        window.setTimeout(() => {
-                            setIsPressed(false);
-                            enterSelected();
-                        }, 130);
-                    }}
-                    onTouchStart={enterSelected}
-                    aria-label={`Enter ${selected}`}
-                    className="absolute left-1/2 top-1/2 flex aspect-square w-[42%] -translate-x-1/2 -translate-y-1/2 touch-manipulation select-none items-center justify-center rounded-full border-2 border-[var(--line)] bg-[var(--paper-dark)] transition-transform active:scale-95"
-                    style={{ WebkitTapHighlightColor: "transparent" }}
-                    >
-                    <span className="font-retro text-[8px] font-bold uppercase tracking-[0.08em] opacity-60">
-                        Enter
-                    </span>
+                type="button"
+                onClick={() => {
+                    if (!selected) return;
+                    enterSelected();
+                }}
+                aria-label={`Enter ${selected}`}
+                className="absolute left-1/2 top-1/2 flex aspect-square w-[42%] -translate-x-1/2 -translate-y-1/2 touch-manipulation select-none items-center justify-center rounded-full border-2 border-[var(--line)] bg-[var(--paper-dark)] transition-transform active:scale-95"
+                style={{ WebkitTapHighlightColor: "transparent" }}
+                >
+                <span className="font-retro text-[8px] font-bold uppercase tracking-[0.08em] opacity-60">
+                    Enter
+                </span>
                 </button>
             </div>
 
@@ -251,14 +291,14 @@ export default function MobileHero() {
             </span>
 
             <span className="font-retro text-[7px] uppercase tracking-[0.08em] opacity-30">
-                Made in Mexico
+                {t.hero.madeInMexico}
             </span>
             </div>
         </div>
     </div>
 
       <p className="font-retro mx-auto mt-5 text-center text-[8px] uppercase tracking-[0.1em] opacity-30">
-        Select / Enter
+        {t.hero.selectSide} / {t.hero.enter}
       </p>
     </section>
   );

@@ -1,19 +1,64 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+
+import LanguageSelector from "@/components/language/LanguageSelector";
+import { useLanguage } from "@/context/LanguageContext";
+import { translations } from "@/data/translations";
 
 type Side = "sound" | "podcast" | null;
 
 export default function Hero() {
+  const router = useRouter();
+
+  const { language } = useLanguage();
+  const t = translations[language];
+
   const [activeSide, setActiveSide] = useState<Side>(null);
   const [isPressed, setIsPressed] = useState(false);
+
+  const [exitDirection, setExitDirection] = useState<
+    "left" | "right" | null
+  >(null);
 
   const [transportDirection, setTransportDirection] =
   useState<"sound" | "podcast">("sound");
 
+  const navigateTo = (side: "sound" | "podcast") => {
+    if (exitDirection) return;
+
+    sessionStorage.setItem("portfolio-transition", side);
+
+    // Lock the selected side during the exit animation
+    setActiveSide(side);
+    setTransportDirection(side);
+    setIsPressed(true);
+
+    setExitDirection(side === "sound" ? "right" : "left");
+
+    window.setTimeout(() => {
+      router.push(`/${side}`);
+    }, 420);
+  };
+
   return (
-    <section className="retro-texture flex min-h-screen items-center justify-center px-6 py-10 md:px-10">
+    <section
+      className="retro-texture flex min-h-screen items-center justify-center px-6 py-10 md:px-10"
+      style={{
+        transform:
+          exitDirection === "right"
+            ? "translateX(100%)"
+            : exitDirection === "left"
+              ? "translateX(-100%)"
+              : "translateX(0)",
+        opacity: exitDirection ? 0 : 1,
+        transition:
+          "transform 400ms cubic-bezier(0.76, 0, 0.24, 1), opacity 300ms ease",
+        willChange: "transform, opacity",
+      }}
+    >
       <div className="w-full max-w-5xl">
 
         {/* =====================================================
@@ -23,7 +68,7 @@ export default function Hero() {
         <div className="mb-7 flex items-end justify-between gap-6">
           <div>
             <span className="retro-tag retro-tag-pink">
-              Audio Portfolio / 2026
+              {t.hero.portfolioLabel}
             </span>
 
             <h1 className="mt-4 text-4xl font-bold tracking-tight md:text-6xl">
@@ -31,18 +76,22 @@ export default function Hero() {
             </h1>
 
             <p className="font-retro mt-2 text-[10px] uppercase tracking-[0.12em] opacity-40">
-              Sound & Podcast / Vancouver BC
+              {t.hero.subtitle}
             </p>
           </div>
 
-          <div className="hidden text-right md:block">
-            <p className="retro-label opacity-35">
-              JG — 01
-            </p>
+          <div className="flex flex-col items-end">
+            <LanguageSelector />
 
-            <p className="font-retro mt-1 text-[9px] uppercase tracking-[0.1em] opacity-30">
-              Select a side
-            </p>
+            <div className="mt-3 text-right">
+              <p className="retro-label opacity-35">
+                JG — 01
+              </p>
+
+              <p className="font-retro mt-1 text-[9px] uppercase tracking-[0.1em] opacity-30">
+                {t.hero.selectSide}
+              </p>
+            </div>
           </div>
         </div>
 
@@ -79,11 +128,11 @@ export default function Hero() {
             </div>
 
             <div className="absolute left-[4%] top-[9%] font-retro text-[8px] font-bold uppercase tracking-[0.12em] md:text-[10px]">
-              Side A / Sound
+              {t.hero.sideASound}
             </div>
 
             <div className="absolute right-[4%] top-[9%] font-retro text-[8px] font-bold uppercase tracking-[0.12em] md:text-[10px]">
-              Side B / Podcast
+              {t.hero.sideBPodcast}
             </div>
 
             {/* Short introduction */}
@@ -93,8 +142,7 @@ export default function Hero() {
               </p>
 
               <p className="mx-auto mt-2 max-w-xl text-[8px] leading-relaxed opacity-45 md:text-[10px]">
-                Audio engineer working across production sound, post-production and
-                podcasting. Focused on telling stories through sound.
+                {t.hero.intro}
               </p>
             </div>
 
@@ -215,11 +263,19 @@ export default function Hero() {
           <Link
             href="/sound"
             aria-label="View sound portfolio"
+            onClick={(event) => {
+              event.preventDefault();
+              navigateTo("sound");
+            }}
             onMouseEnter={() => {
+              if (exitDirection) return;
+
               setActiveSide("sound");
               setTransportDirection("sound");
             }}
             onMouseLeave={() => {
+              if (exitDirection) return;
+
               setActiveSide(null);
               setIsPressed(false);
             }}
@@ -242,12 +298,12 @@ export default function Hero() {
                     : "bg-[var(--paper-light)]"
                 }`}
               >
-                Side A
+                {t.hero.sideA}
               </span>
 
               <div className="relative mt-2 inline-block">
                 <p className="font-retro text-2xl font-bold uppercase tracking-tight md:text-4xl">
-                  Sound
+                  {t.hero.sound}
                 </p>
 
                 <div
@@ -266,7 +322,7 @@ export default function Hero() {
                     : "opacity-0"
                 }`}
               >
-                Enter →
+                {t.hero.enter} →
               </span>
             </div>
           </Link>
@@ -274,11 +330,19 @@ export default function Hero() {
           <Link
             href="/podcast"
             aria-label="View podcast portfolio"
+            onClick={(event) => {
+              event.preventDefault();
+              navigateTo("podcast");
+            }}
             onMouseEnter={() => {
+              if (exitDirection) return;
+
               setActiveSide("podcast");
               setTransportDirection("podcast");
             }}
             onMouseLeave={() => {
+              if (exitDirection) return;
+
               setActiveSide(null);
               setIsPressed(false);
             }}
@@ -301,12 +365,12 @@ export default function Hero() {
                     : "bg-[var(--paper-light)]"
                 }`}
               >
-                Side B
+                {t.hero.sideB}
               </span>
 
               <div className="relative mt-2 inline-block">
                 <p className="font-retro text-2xl font-bold uppercase tracking-tight md:text-4xl">
-                  Podcast
+                  {t.hero.podcast}
                 </p>
 
                 <div
@@ -325,7 +389,7 @@ export default function Hero() {
                     : "opacity-0"
                 }`}
               >
-                ← Enter
+                ← {t.hero.enter}
               </span>
             </div>
           </Link>
@@ -339,11 +403,11 @@ export default function Hero() {
           </div>
 
           <div className="pointer-events-none absolute right-[5%] top-[4%] font-retro text-[7px] uppercase tracking-[0.14em] opacity-40 md:text-[9px]">
-            Type I / Stereo
+            Type I / {t.hero.stereo}
           </div>
 
           <div className="pointer-events-none absolute bottom-[2.5%] left-1/2 -translate-x-1/2 font-retro text-[7px] uppercase tracking-[0.16em] opacity-45 md:text-[9px]">
-            Made in Mexico
+            {t.hero.madeInMexico}
           </div>
         </div>
 
@@ -353,11 +417,11 @@ export default function Hero() {
 
         <div className="mt-5 flex items-center justify-between border-t border-[var(--line)] pt-3">
           <span className="retro-label opacity-35">
-            Choose a side
+            {t.hero.chooseSide}
           </span>
 
           <span className="font-retro text-[9px] uppercase tracking-[0.1em] opacity-30">
-            Sound ← / → Podcast
+            {t.hero.sound} ← / → {t.hero.podcast}
           </span>
         </div>
       </div>

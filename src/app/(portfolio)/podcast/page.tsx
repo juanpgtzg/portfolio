@@ -5,7 +5,6 @@ import ProjectCTA from "@/components/shared/ProjectCTA";
 export default function PodcastPage() {
   return (
     <main className="mx-auto max-w-7xl px-6 py-8 md:px-10 md:py-10">
-
       {/* Page intro */}
       <section className="grid items-end gap-4 md:grid-cols-2 md:gap-8">
         <div className="relative">

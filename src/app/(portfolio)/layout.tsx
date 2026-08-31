@@ -1,5 +1,4 @@
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
+import PortfolioPageShell from "@/components/layout/PortfolioPageShell";
 
 export default function PortfolioLayout({
   children,
@@ -7,12 +6,8 @@ export default function PortfolioLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <>
-      <Header />
-
+    <PortfolioPageShell>
       {children}
-
-      <Footer />
-    </>
+    </PortfolioPageShell>
   );
 }

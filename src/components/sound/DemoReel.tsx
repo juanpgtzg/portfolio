@@ -17,6 +17,7 @@ function formatTime(seconds: number) {
 export default function DemoReel() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const frameRef = useRef<HTMLDivElement>(null);
+  const progressFrameRef = useRef<number | null>(null);
 
   const {
     registerMediaElement,
@@ -90,6 +91,45 @@ export default function DemoReel() {
     iosVideo.webkitEnterFullscreen?.();
   };
 
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const updateProgress = () => {
+      setCurrentTime(video.currentTime);
+
+      if (!video.paused && !video.ended) {
+        progressFrameRef.current =
+          requestAnimationFrame(updateProgress);
+      }
+    };
+
+    if (isPlaying) {
+      progressFrameRef.current =
+        requestAnimationFrame(updateProgress);
+    } else {
+      setCurrentTime(video.currentTime);
+    }
+
+    return () => {
+      if (progressFrameRef.current !== null) {
+        cancelAnimationFrame(progressFrameRef.current);
+        progressFrameRef.current = null;
+      }
+    };
+  }, [isPlaying]);
+
+  const syncVideoMetadata = () => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (Number.isFinite(video.duration) && video.duration > 0) {
+      setDuration(video.duration);
+    }
+
+    setCurrentTime(video.currentTime);
+  };
+
   const toggleMute = () => {
     const video = videoRef.current;
     if (!video) return;
@@ -119,18 +159,34 @@ export default function DemoReel() {
           preload="metadata"
           playsInline
           className="absolute inset-0 h-full w-full object-contain"
-          onTimeUpdate={(event) =>
-            setCurrentTime(event.currentTarget.currentTime)
-          }
-          onLoadedMetadata={(event) =>
-            setDuration(event.currentTarget.duration)
-          }
-          onDurationChange={(event) =>
-            setDuration(event.currentTarget.duration)
-          }
-          onPlay={() => setIsPlaying(true)}
-          onPause={() => setIsPlaying(false)}
-          onEnded={() => setIsPlaying(false)}
+
+          onLoadedMetadata={syncVideoMetadata}
+          onLoadedData={syncVideoMetadata}
+          onDurationChange={syncVideoMetadata}
+          onCanPlay={syncVideoMetadata}
+
+          onTimeUpdate={(event) => {
+            setCurrentTime(event.currentTarget.currentTime);
+          }}
+
+          onPlay={() => {
+            setIsPlaying(true);
+            syncVideoMetadata();
+          }}
+
+          onPause={() => {
+            setIsPlaying(false);
+            syncVideoMetadata();
+          }}
+
+          onSeeking={syncVideoMetadata}
+          onSeeked={syncVideoMetadata}
+
+          onEnded={() => {
+            setIsPlaying(false);
+            setCurrentTime(0);
+          }}
+
           onClick={togglePlay}
         />
 
@@ -213,10 +269,13 @@ export default function DemoReel() {
         <div className="flex min-w-0 items-center px-3 md:px-4">
           <input
             type="range"
-            min="0"
-            max={duration || 0}
-            step="0.1"
-            value={Math.min(currentTime, duration || 0)}
+            min={0}
+            max={duration > 0 ? duration : 1}
+            step={0.01}
+            value={Math.min(
+              currentTime,
+              duration > 0 ? duration : 1
+            )}
             onChange={(event) =>
               handleSeek(Number(event.target.value))
             }

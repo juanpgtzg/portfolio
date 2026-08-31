@@ -140,7 +140,7 @@ export default function PostProductionCredits() {
             <div
               key={`${credit.title}-${credit.role}-${index}`}
               className={`
-                grid grid-cols-[24px_minmax(0,1fr)_auto] items-center gap-x-2 gap-y-0 py-2
+                grid grid-cols-[24px_minmax(0,1fr)_auto] items-start gap-x-2 gap-y-0 py-2
                 ${!showAllMobile && index >= 4 ? "hidden md:grid" : ""}
                 ${
                   index !== postProductionCredits.length - 1
@@ -150,26 +150,50 @@ export default function PostProductionCredits() {
               `}
             >
               {/* Number */}
-              <span className="font-retro text-[9px] opacity-30">
+              <span className="font-retro col-start-1 row-start-1 pt-[1px] text-[9px] opacity-30">
                 {String(index + 1).padStart(2, "0")}
               </span>
 
               {/* Title */}
-              <p className="font-retro min-w-0 truncate text-[11px] font-bold uppercase tracking-[0.03em]">
+              <p className="font-retro col-start-2 row-start-1 min-w-0 truncate text-[11px] font-bold uppercase tracking-[0.03em]">
                 {credit.title}
               </p>
 
+              {/* External link */}
+              {credit.link && (
+                <a
+                  href={credit.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Open ${credit.title} in a new tab`}
+                  className="col-start-3 row-start-1 flex h-4 w-4 shrink-0 items-center justify-center opacity-30 transition-opacity hover:opacity-80"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    className="h-3 w-3 fill-none stroke-current"
+                    strokeWidth="1.8"
+                    strokeLinecap="square"
+                    strokeLinejoin="miter"
+                    aria-hidden="true"
+                  >
+                    <path d="M14 5h5v5" />
+                    <path d="M19 5l-8 8" />
+                    <path d="M17 13v6H5V7h6" />
+                  </svg>
+                </a>
+              )}
+
               {/* Role */}
-              <p className="max-w-[120px] truncate text-right text-[10px] opacity-50 md:hidden">
+              <p className="col-start-2 col-span-2 row-start-2 mt-0.5 min-w-0 text-[10px] opacity-45">
                 {credit.role}
               </p>
 
-              {/* Desktop role */}
-              <div className="hidden md:block md:col-start-2">
-                <p className="mt-0.5 text-[10px] opacity-45">
-                  {credit.role}
+              {/* Optional note */}
+              {credit.note && (
+                <p className="font-retro col-start-2 col-span-2 row-start-3 mt-1 min-w-0 text-[8px] leading-relaxed tracking-[0.03em] opacity-30 md:text-[9px]">
+                  {credit.note}
                 </p>
-              </div>
+              )}
             </div>
           ))}
         </div>
