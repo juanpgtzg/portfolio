@@ -7,6 +7,7 @@ import { useState } from "react";
 import LanguageSelector from "@/components/language/LanguageSelector";
 import { useLanguage } from "@/context/LanguageContext";
 import { translations } from "@/data/translations";
+import ArrowIcon from "@/components/ui/ArrowIcon";
 
 type Side = "sound" | "podcast" | null;
 
@@ -322,7 +323,12 @@ export default function Hero() {
                     : "opacity-0"
                 }`}
               >
-                {t.hero.enter} →
+                {t.hero.enter}
+
+                <ArrowIcon
+                  name="right"
+                  className="h-2.5 w-2.5"
+                />
               </span>
             </div>
           </Link>
@@ -389,7 +395,12 @@ export default function Hero() {
                     : "opacity-0"
                 }`}
               >
-                ← {t.hero.enter}
+                <ArrowIcon
+                  name="left"
+                  className="h-2.5 w-2.5"
+                />
+
+                {t.hero.enter}
               </span>
             </div>
           </Link>
@@ -420,8 +431,22 @@ export default function Hero() {
             {t.hero.chooseSide}
           </span>
 
-          <span className="font-retro text-[9px] uppercase tracking-[0.1em] opacity-30">
-            {t.hero.sound} ← / → {t.hero.podcast}
+          <span className="font-retro flex items-center gap-1 text-[9px] uppercase tracking-[0.1em] opacity-30">
+            {t.hero.sound}
+
+            <ArrowIcon
+              name="left"
+              className="h-2.5 w-2.5"
+            />
+
+            <span className="mx-1">/</span>
+
+            <ArrowIcon
+              name="right"
+              className="h-2.5 w-2.5"
+            />
+
+            {t.hero.podcast}
           </span>
         </div>
       </div>

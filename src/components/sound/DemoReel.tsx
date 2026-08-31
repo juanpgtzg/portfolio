@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useAudioEngine } from "@/components/audio/AudioProvider";
+import ArrowIcon from "@/components/ui/ArrowIcon";
 
 function formatTime(seconds: number) {
   if (!Number.isFinite(seconds)) return "0:00";
@@ -203,7 +204,10 @@ export default function DemoReel() {
             aria-label="Play demo reel"
           >
             <span className="font-retro flex h-16 w-16 items-center justify-center border border-[var(--paper)] bg-black/20 text-xl text-[var(--paper)]">
-              ▶
+              <ArrowIcon
+                name="play"
+                className="h-5 w-5"
+              />
             </span>
           </button>
         )}
@@ -267,7 +271,17 @@ export default function DemoReel() {
           className="font-retro flex h-11 items-center justify-center border-r border-[var(--line)] text-xs transition-colors hover:bg-[var(--lilac)]"
           aria-label={isPlaying ? "Pause demo reel" : "Play demo reel"}
         >
-          {isPlaying ? "Ⅱ" : "▶"}
+          {isPlaying ? (
+            <ArrowIcon
+              name="pause"
+              className="h-3.5 w-3.5"
+            />
+          ) : (
+            <ArrowIcon
+              name="play"
+              className="h-3.5 w-3.5"
+            />
+          )}
         </button>
 
         {/* Timeline */}

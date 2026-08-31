@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { postProductionCredits } from "@/data/postProductionCredits";
+import ArrowIcon from "@/components/ui/ArrowIcon";
 
 export default function PostProductionCredits() {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -205,7 +206,14 @@ export default function PostProductionCredits() {
             onClick={() => setShowAllMobile((current) => !current)}
             className="font-retro origin-center scale-[0.72] appearance-none border-0 bg-transparent p-0 text-[8px] font-bold uppercase leading-none tracking-[0.04em] opacity-45 transition-opacity hover:opacity-70"
           >
-            {showAllMobile ? "View Less ↑" : "View More ↓"}
+            <span className="flex items-center gap-1">
+              {showAllMobile ? "View Less" : "View More"}
+
+              <ArrowIcon
+                name={showAllMobile ? "up" : "down"}
+                className="h-2.5 w-2.5"
+              />
+            </span>
           </button>
         </div>
 
