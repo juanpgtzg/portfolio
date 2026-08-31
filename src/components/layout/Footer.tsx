@@ -49,7 +49,7 @@ export default function Footer() {
         {/* Right */}
         <div className="flex items-center justify-between border-t border-[var(--line-light)] pt-4 md:justify-self-end md:border-0 md:pt-0 md:text-right">
           <p className="font-retro text-[8px] uppercase leading-relaxed tracking-[0.05em] opacity-30 md:text-[9px] md:tracking-[0.06em]">
-            Designed &amp; coded from scratch
+            Designed &amp; coded
             <br />
             by Juan Gutierrez
           </p>

@@ -7,17 +7,23 @@ export default function PodcastPage() {
     <main className="mx-auto max-w-7xl px-6 py-8 md:px-10 md:py-10">
 
       {/* Page intro */}
-      <section className="grid items-end gap-8 md:grid-cols-2">
-        <div>
+      <section className="grid items-end gap-4 md:grid-cols-2 md:gap-8">
+        <div className="relative">
           <span className="retro-tag retro-tag-pink">
-            Portfolio / 02
+            SIDE B
           </span>
 
-          <h1 className="mt-4 text-5xl font-bold tracking-tight md:text-7xl">
+          <h1 className="relative z-10 mt-3 text-4xl font-bold tracking-tight md:mt-4 md:text-7xl">
             Podcast
           </h1>
+
+          {/* Mobile grains overlapping title */}
+          <div className="md:hidden">
+            <GrainVisualizer mobileOverlay />
+          </div>
         </div>
 
+        {/* Desktop grain visualizer */}
         <div className="hidden md:block">
           <GrainVisualizer />
         </div>

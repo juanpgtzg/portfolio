@@ -13,18 +13,21 @@ export default function SoundPage() {
           PAGE INTRO
           ===================================================== */}
 
-      <section className="grid items-end gap-8 md:grid-cols-2">
-        <div>
+      <section className="grid items-end gap-4 md:grid-cols-2 md:gap-8">
+        <div className="relative">
           <span className="retro-tag retro-tag-pink">
-            Portfolio / 01
+            SIDE A
           </span>
 
-          <h1 className="mt-3 text-4xl font-bold tracking-tight md:mt-4 md:text-7xl">
+          <h1 className="relative z-10 mt-3 text-4xl font-bold tracking-tight md:mt-4 md:text-7xl">
             Sound
           </h1>
+
+          <div className="md:hidden">
+            <GrainVisualizer mobileOverlay />
+          </div>
         </div>
 
-        {/* Audio-reactive grains */}
         <div className="hidden md:block">
           <GrainVisualizer />
         </div>

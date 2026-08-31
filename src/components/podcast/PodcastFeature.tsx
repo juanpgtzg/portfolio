@@ -6,14 +6,14 @@ export default function PodcastFeature() {
   return (
     <section>
       {/* Case study header */}
-      <div className="mb-6 grid items-end gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:gap-12">
+      <div className="mb-4 grid items-end gap-4 lg:mb-6 lg:grid-cols-[0.85fr_1.15fr] lg:gap-12">
         {/* Villam information */}
         <div>
             <span className="retro-tag retro-tag-sage">
-            Case Study / 01
+            Production Notes / 01
             </span>
 
-            <h2 className="mt-4 text-3xl font-bold md:text-4xl">
+            <h2 className="mt-3 text-3xl font-bold md:mt-4 md:text-4xl">
             {podcast.title}
             </h2>
 
@@ -21,7 +21,7 @@ export default function PodcastFeature() {
             {podcast.subtitle}
             </p>
 
-            <p className="retro-label mt-3 opacity-35">
+            <p className="retro-label mt-2 opacity-35 md:mt-3">
             {podcast.episodes} Episodes / Villam
             </p>
         </div>
@@ -34,7 +34,7 @@ export default function PodcastFeature() {
       <div className="grid border border-[var(--line)] bg-[var(--paper-light)] lg:grid-cols-[0.8fr_1.15fr_1fr]">
 
         {/* Artwork */}
-        <div className="border-b border-[var(--line)] p-3 lg:border-b-0 lg:border-r">
+        <div className="border-b border-[var(--line)] p-2.5 md:p-3 lg:border-b-0 lg:border-r">
           <div className="relative aspect-square overflow-hidden border border-[var(--line)]">
             <Image
               src={podcast.artwork}
@@ -51,7 +51,7 @@ export default function PodcastFeature() {
               href={podcast.spotify}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-retro flex min-h-10 items-center justify-center border-r border-[var(--line)] text-[10px] font-bold uppercase tracking-[0.08em] transition-colors hover:bg-[var(--sage)]"
+              className="font-retro flex min-h-9 items-center justify-center border-r border-[var(--line)] text-[9px] font-bold uppercase tracking-[0.08em] transition-colors hover:bg-[var(--sage)] md:min-h-10 md:text-[10px]"
             >
               Spotify ↗
             </a>
@@ -60,7 +60,7 @@ export default function PodcastFeature() {
               href={podcast.apple}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-retro flex min-h-10 items-center justify-center text-[10px] font-bold uppercase tracking-[0.08em] transition-colors hover:bg-[var(--pink)]"
+              className="font-retro flex min-h-9 items-center justify-center border-r border-[var(--line)] text-[9px] font-bold uppercase tracking-[0.08em] transition-colors hover:bg-[var(--sage)] md:min-h-10 md:text-[10px]"
             >
               Apple ↗
             </a>

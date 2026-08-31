@@ -15,7 +15,13 @@ interface Grain {
   opacity: number;
 }
 
-export default function GrainVisualizer() {
+interface GrainVisualizerProps {
+  mobileOverlay?: boolean;
+}
+
+export default function GrainVisualizer({
+  mobileOverlay = false,
+}: GrainVisualizerProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { getAnalyser } = useAudioEngine();
 
@@ -455,10 +461,20 @@ export default function GrainVisualizer() {
   }, [getAnalyser]);
 
   return (
-    <div className="relative h-28 w-full md:h-32">
+    <div
+      className={
+        mobileOverlay
+          ? "pointer-events-none absolute inset-x-0 bottom-[-18px] h-20 md:relative md:bottom-auto md:h-32"
+          : "relative h-16 w-full md:h-32"
+      }
+    >
 
       {/* Status sitting down at grain level */}
-      <div className="pointer-events-none absolute bottom-5 left-0 right-0 z-0 flex items-center justify-between">
+      <div
+        className={`pointer-events-none absolute bottom-2 left-0 right-0 z-0 items-center justify-between md:bottom-5 ${
+          mobileOverlay ? "hidden md:flex" : "flex"
+        }`}
+      >
         <span className="retro-label opacity-40">
           Audio Response
         </span>

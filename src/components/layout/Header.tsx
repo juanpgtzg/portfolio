@@ -2,12 +2,68 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+
+type Language = "en" | "es" | "fr" | "zh";
+
+const languages: {
+  code: Language;
+  label: string;
+}[] = [
+  { code: "en", label: "EN" },
+  { code: "es", label: "ES" },
+  { code: "fr", label: "FR" },
+  { code: "zh", label: "中文" },
+];
 
 export default function Header() {
   const pathname = usePathname();
 
   const isSound = pathname === "/sound";
   const isPodcast = pathname === "/podcast";
+
+  const [language, setLanguage] = useState<Language>("en");
+
+  useEffect(() => {
+    const savedLanguage = localStorage.getItem(
+      "portfolio-language"
+    ) as Language | null;
+
+    const initialLanguage =
+      savedLanguage &&
+      languages.some(
+        (item) => item.code === savedLanguage
+      )
+        ? savedLanguage
+        : "en";
+
+    setLanguage(initialLanguage);
+
+    document.documentElement.lang =
+      initialLanguage === "zh"
+        ? "zh-Hant"
+        : initialLanguage;
+
+    document.documentElement.dataset.language =
+      initialLanguage;
+  }, []);
+
+  const selectLanguage = (newLanguage: Language) => {
+    setLanguage(newLanguage);
+
+    localStorage.setItem(
+      "portfolio-language",
+      newLanguage
+    );
+
+    document.documentElement.lang =
+      newLanguage === "zh"
+        ? "zh-Hant"
+        : newLanguage;
+
+    document.documentElement.dataset.language =
+      newLanguage;
+  };
 
   return (
     <header className="border-b border-[var(--line)] px-5 md:px-10">
@@ -51,33 +107,39 @@ export default function Header() {
           className="col-start-2 row-start-1 flex items-center gap-1 justify-self-end md:col-start-3"
           aria-label="Language selector"
         >
-          <button
-            type="button"
-            className="font-retro text-[8px] font-bold uppercase tracking-[0.08em]"
-            aria-pressed="true"
-          >
-            EN
-          </button>
+          {languages.map((item, index) => (
+            <div
+              key={item.code}
+              className="flex items-center gap-1"
+            >
+              {index > 0 && (
+                <span className="font-retro text-[7px] opacity-20">
+                  /
+                </span>
+              )}
 
-          <span className="font-retro text-[7px] opacity-20">/</span>
-
-          <button
-            type="button"
-            disabled
-            className="font-retro cursor-default text-[8px] font-bold uppercase tracking-[0.08em] opacity-20"
-          >
-            ES
-          </button>
-
-          <span className="font-retro text-[7px] opacity-20">/</span>
-
-          <button
-            type="button"
-            disabled
-            className="font-retro cursor-default text-[8px] font-bold uppercase tracking-[0.08em] opacity-20"
-          >
-            FR
-          </button>
+              <button
+                type="button"
+                onClick={() =>
+                  selectLanguage(item.code)
+                }
+                aria-pressed={
+                  language === item.code
+                }
+                className={`font-retro text-[8px] font-bold tracking-[0.08em] transition-opacity ${
+                  item.code !== "zh"
+                    ? "uppercase"
+                    : ""
+                } ${
+                  language === item.code
+                    ? "opacity-100"
+                    : "opacity-25 hover:opacity-60"
+                }`}
+              >
+                {item.label}
+              </button>
+            </div>
+          ))}
         </div>
 
       </div>

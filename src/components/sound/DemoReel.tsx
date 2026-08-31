@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAudioEngine } from "@/components/audio/AudioProvider";
 
 function formatTime(seconds: number) {
@@ -16,6 +16,7 @@ function formatTime(seconds: number) {
 
 export default function DemoReel() {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const frameRef = useRef<HTMLDivElement>(null);
 
   const {
     registerMediaElement,
@@ -26,6 +27,25 @@ export default function DemoReel() {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [isMuted, setIsMuted] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(document.fullscreenElement !== null);
+    };
+
+    document.addEventListener(
+      "fullscreenchange",
+      handleFullscreenChange
+    );
+
+    return () => {
+      document.removeEventListener(
+        "fullscreenchange",
+        handleFullscreenChange
+      );
+    };
+  }, []);
 
   const togglePlay = async () => {
     const video = videoRef.current;
@@ -44,6 +64,30 @@ export default function DemoReel() {
     } else {
       video.pause();
     }
+  };
+
+  const toggleFullscreen = async () => {
+    const frame = frameRef.current;
+    const video = videoRef.current;
+
+    if (!frame || !video) return;
+
+    if (document.fullscreenElement) {
+      await document.exitFullscreen();
+      return;
+    }
+
+    if (frame.requestFullscreen) {
+      await frame.requestFullscreen();
+      return;
+    }
+
+    // iPhone Safari fallback
+    const iosVideo = video as HTMLVideoElement & {
+      webkitEnterFullscreen?: () => void;
+    };
+
+    iosVideo.webkitEnterFullscreen?.();
   };
 
   const toggleMute = () => {
@@ -65,7 +109,10 @@ export default function DemoReel() {
   return (
     <div className="w-full min-w-0">
       {/* Video */}
-      <div className="retro-media-frame relative aspect-video w-full">
+      <div
+        ref={frameRef}
+        className="retro-media-frame relative aspect-video w-full"
+      >
         <video
           ref={videoRef}
           src="/video/sound/demo-reel.mp4"
@@ -106,6 +153,47 @@ export default function DemoReel() {
             JG / Reel 01
           </span>
         </div>
+
+        {/* Fullscreen button */}
+        <button
+          type="button"
+          onClick={(event) => {
+            event.stopPropagation();
+            toggleFullscreen();
+          }}
+          className="absolute right-2 top-2 z-20 flex h-7 w-7 items-center justify-center border border-[var(--paper)] bg-black/40 text-[var(--paper)] transition-colors hover:bg-black/60 md:right-3 md:top-3 md:h-8 md:w-8"
+          aria-label={
+            isFullscreen
+              ? "Exit fullscreen"
+              : "View demo reel fullscreen"
+          }
+        >
+          {isFullscreen ? (
+            /* Exit fullscreen */
+            <svg
+              viewBox="0 0 24 24"
+              className="h-3.5 w-3.5 fill-none stroke-current"
+              strokeWidth="2"
+            >
+              <path d="M9 3v6H3" />
+              <path d="M15 3v6h6" />
+              <path d="M9 21v-6H3" />
+              <path d="M15 21v-6h6" />
+            </svg>
+          ) : (
+            /* Enter fullscreen */
+            <svg
+              viewBox="0 0 24 24"
+              className="h-3.5 w-3.5 fill-none stroke-current"
+              strokeWidth="2"
+            >
+              <path d="M3 9V3h6" />
+              <path d="M15 3h6v6" />
+              <path d="M3 15v6h6" />
+              <path d="M21 15v6h-6" />
+            </svg>
+          )}
+        </button>
       </div>
 
       {/* Retro transport controls */}

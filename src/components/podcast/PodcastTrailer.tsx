@@ -86,7 +86,7 @@ export default function PodcastTrailer() {
         preload="metadata"
       />
 
-      <div className="mb-2 flex items-center justify-between">
+      <div className="mb-1.5 flex items-center justify-between md:mb-2">
         <span className="retro-label opacity-40">
           Audio / Trailer
         </span>
@@ -96,11 +96,11 @@ export default function PodcastTrailer() {
         </span>
       </div>
 
-      <div className="grid grid-cols-[52px_1fr_auto] border border-[var(--line)] bg-[var(--paper-light)]">
+      <div className="grid grid-cols-[44px_minmax(0,1fr)_auto] border border-[var(--line)] bg-[var(--paper-light)] md:grid-cols-[52px_minmax(0,1fr)_auto]">
         <button
           type="button"
           onClick={togglePlay}
-          className="font-retro flex h-12 items-center justify-center border-r border-[var(--line)] text-xs transition-colors hover:bg-[var(--lilac)]"
+          className="font-retro flex h-10 items-center justify-center border-r border-[var(--line)] text-xs transition-colors hover:bg-[var(--lilac)] md:h-12"
           aria-label={
             isPlaying
               ? "Pause Villam trailer"
@@ -110,7 +110,7 @@ export default function PodcastTrailer() {
           {isPlaying ? "Ⅱ" : "▶"}
         </button>
 
-        <div className="flex min-w-0 items-center px-4">
+        <div className="flex min-w-0 items-center px-3 md:px-4">
           <input
             type="range"
             min="0"
@@ -125,7 +125,7 @@ export default function PodcastTrailer() {
           />
         </div>
 
-        <div className="font-retro flex h-12 items-center border-l border-[var(--line)] px-4 text-[10px] tabular-nums">
+        <div className="font-retro flex h-10 items-center border-l border-[var(--line)] px-3 text-[9px] tabular-nums md:h-12 md:px-4 md:text-[10px]">
           {formatTime(currentTime)}
 
           <span className="mx-1 opacity-30">

@@ -175,11 +175,11 @@ export default function PostProductionCredits() {
         </div>
 
         {/* Mobile View More / Less */}
-        <div className="mt-2 flex justify-end md:hidden">
+        <div className="mt-2 flex justify-center md:hidden">
           <button
             type="button"
             onClick={() => setShowAllMobile((current) => !current)}
-            className="font-retro w-auto shrink-0 appearance-none border-0 bg-transparent p-0 text-[8px] font-bold uppercase leading-none tracking-[0.04em] opacity-45 transition-opacity hover:opacity-70"
+            className="font-retro origin-center scale-[0.72] appearance-none border-0 bg-transparent p-0 text-[8px] font-bold uppercase leading-none tracking-[0.04em] opacity-45 transition-opacity hover:opacity-70"
           >
             {showAllMobile ? "View Less ↑" : "View More ↓"}
           </button>
