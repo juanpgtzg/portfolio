@@ -159,6 +159,7 @@ export default function DemoReel() {
       >
         <video
           ref={videoRef}
+          crossOrigin="anonymous"
           src={demoReelSrc}
           preload="metadata"
           playsInline
