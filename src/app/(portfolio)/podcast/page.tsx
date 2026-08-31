@@ -1,6 +1,25 @@
 import GrainVisualizer from "@/components/audio/GrainVisualizer";
 import PodcastFeature from "@/components/podcast/PodcastFeature";
 import ProjectCTA from "@/components/shared/ProjectCTA";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Podcast Producer & Audio Editor",
+
+  description:
+    "Podcast production, editing, content development, original music, recording, and audio post-production by Juan Gutierrez in Vancouver.",
+
+  alternates: {
+    canonical: "/podcast",
+  },
+
+  openGraph: {
+    title: "Podcast Producer & Audio Editor | Sound by Juan",
+    description:
+      "Podcast production, editing, content strategy, recording, and audio post-production by Juan Gutierrez.",
+    url: "/podcast",
+  },
+};
 
 export default function PodcastPage() {
   return (

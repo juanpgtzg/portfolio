@@ -4,6 +4,25 @@ import GrainVisualizer from "@/components/audio/GrainVisualizer";
 import ProjectCTA from "@/components/shared/ProjectCTA";
 import OnSetGallery from "@/components/sound/OnSetGallery";
 import PostProductionCredits from "@/components/sound/PostProductionCredits";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Production Sound Mixer & Sound Designer",
+
+  description:
+    "Production sound, location recording, post-production audio, dialogue editing, sound design, Foley, ambiences, and mixing by Vancouver audio engineer Juan Gutierrez.",
+
+  alternates: {
+    canonical: "/sound",
+  },
+
+  openGraph: {
+    title: "Production Sound Mixer & Sound Designer | Sound by Juan",
+    description:
+      "Explore production sound and post-production audio work by Vancouver-based audio engineer Juan Gutierrez.",
+    url: "/sound",
+  },
+};
 
 export default function SoundPage() {
   return (
