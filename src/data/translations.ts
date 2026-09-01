@@ -49,6 +49,8 @@ export const translations: Record<
         unmute: string;
         fullscreen: string;
         exitFullscreen: string;
+        playbackPosition: string;
+        technicalLabel: string;
       };
 
       productionSound: {
@@ -85,6 +87,57 @@ export const translations: Record<
         openFullscreen: string;
         photoAlt: string;
       };
+
+      cta: {
+        label: string;
+        title: string;
+        description: string;
+        button: string;
+        note: string;
+      };
+
+      visualizer: {
+        label: string;
+        live: string;
+        activeLabel: string;
+        inactiveLabel: string;
+      };
+
+      roles: {
+        locationSoundMixerBoomOperator: string;
+        locationSoundMixer: string;
+        boomOperator: string;
+        soundAssistant: string;
+
+        soundDesignerSoundMixer: string;
+        dialogueEditorSoundMixer: string;
+        soundDesigner: string;
+        postSoundMixer: string;
+        gameAudioDesigner: string;
+      };
+
+      formats: {
+        webMiniseries: string;
+        featureFilm: string;
+        shortFilm: string;
+      };
+
+      filmCard: {
+        viewDetails: string;
+        viewOnImdb: string;
+        poster: string;
+      };
+
+      postProductionNotes: {
+        soundRedesignFinalProject: string;
+        gameAudioFinalProject: string;
+        soundRedesignProject: string;
+      };
+    };
+
+    podcast: {
+      sideLabel: string;
+      title: string;
 
       cta: {
         label: string;
@@ -140,12 +193,14 @@ export const translations: Record<
         disciplines:
           "Sound Design / Dialogue / SFX / Foley / Ambiences / Mixing",
 
-        play: "Play",
-        pause: "Pause",
-        mute: "Mute",
-        unmute: "Unmute",
-        fullscreen: "Fullscreen",
-        exitFullscreen: "Exit Fullscreen",
+        play: "Play demo reel",
+        pause: "Pause demo reel",
+        mute: "Mute demo reel",
+        unmute: "Turn sound on",
+        fullscreen: "View demo reel fullscreen",
+        exitFullscreen: "Exit fullscreen",
+        playbackPosition: "Demo reel playback position",
+        technicalLabel: "Sound Design Reel",
       },
 
       productionSound: {
@@ -191,6 +246,80 @@ export const translations: Record<
         button: "Get in Touch",
         note:
           "Gear list, full film credits, resume and project estimates available upon request.",
+      },
+
+      visualizer: {
+        label: "Audio Response",
+        live: "Live",
+        activeLabel: "Audio response active",
+        inactiveLabel: "Audio response inactive",
+      },
+
+      roles: {
+        locationSoundMixerBoomOperator:
+          "Location Sound Mixer & Boom Operator",
+
+        locationSoundMixer:
+          "Location Sound Mixer",
+
+        boomOperator:
+          "Boom Operator",
+
+        soundAssistant:
+          "Sound Assistant",
+
+        soundDesignerSoundMixer:
+          "Sound Designer & Sound Mixer",
+
+        dialogueEditorSoundMixer:
+          "Dialogue Editor & Sound Mixer",
+
+        soundDesigner:
+          "Sound Designer",
+
+        postSoundMixer:
+          "Sound Mixer",
+
+        gameAudioDesigner:
+          "Game Audio Designer",
+      },
+
+      formats: {
+        webMiniseries: "Web Miniseries",
+        featureFilm: "Feature Film",
+        shortFilm: "Short Film",
+      },
+
+      filmCard: {
+        viewDetails: "View Details",
+        viewOnImdb: "View on IMDb",
+        poster: "Poster",
+      },
+
+      postProductionNotes: {
+        soundRedesignFinalProject:
+          "Sound redesign — VFS final project",
+
+        gameAudioFinalProject:
+          "Game audio — VFS final project",
+
+        soundRedesignProject:
+          "Sound redesign — VFS project",
+      },
+    },
+
+    podcast: {
+      sideLabel: "Side B",
+      title: "Podcast",
+
+      cta: {
+        label: "Work With Me",
+        title: "Ready to build your podcast?",
+        description:
+          "From shaping the concept and developing the content to recording, editing, original music, and final delivery, I can help launch a podcast from the ground up or take an existing show further.",
+        button: "Get in Touch",
+        note:
+          "Podcast production, editing, content development, and project estimates available upon request.",
       },
     },
   },
@@ -239,12 +368,14 @@ export const translations: Record<
         disciplines:
           "Diseño Sonoro / Diálogos / SFX / Foley / Ambientes / Mezcla",
 
-        play: "Reproducir",
-        pause: "Pausar",
-        mute: "Silenciar",
+        play: "Reproducir demo reel",
+        pause: "Pausar demo reel",
+        mute: "Silenciar demo reel",
         unmute: "Activar sonido",
-        fullscreen: "Pantalla completa",
+        fullscreen: "Ver demo reel en pantalla completa",
         exitFullscreen: "Salir de pantalla completa",
+        playbackPosition: "Posición de reproducción del demo reel",
+        technicalLabel: "Reel de Diseño Sonoro",
       },
 
       productionSound: {
@@ -290,6 +421,80 @@ export const translations: Record<
         button: "Hablemos",
         note:
           "Lista de equipo, filmografía completa, CV y cotizaciones disponibles a solicitud.",
+      },
+
+      visualizer: {
+        label: "Reacción al Audio",
+        live: "En Vivo",
+        activeLabel: "Visualizador de audio activo",
+        inactiveLabel: "Visualizador de audio inactivo",
+      },
+
+      roles: {
+        locationSoundMixerBoomOperator:
+          "Sonidista y Microfonista",
+
+        locationSoundMixer:
+          "Sonidista",
+
+        boomOperator:
+          "Microfonista",
+
+        soundAssistant:
+          "Asistente de Sonido",
+
+        soundDesignerSoundMixer:
+          "Mezcla y Diseño de Sonido",
+
+        dialogueEditorSoundMixer:
+          "Edición de Diálogo y Mezcla",
+
+        soundDesigner:
+          "Diseño de Sonido",
+
+        postSoundMixer:
+          "Mezcla de Sonido",
+
+        gameAudioDesigner:
+          "Diseño de Audio para Videojuegos",
+      },
+
+      formats: {
+        webMiniseries: "Miniserie Web",
+        featureFilm: "Largometraje",
+        shortFilm: "Cortometraje",
+      },
+
+      filmCard: {
+        viewDetails: "Ver Detalles",
+        viewOnImdb: "Ver en IMDb",
+        poster: "Póster",
+      },
+
+      postProductionNotes: {
+        soundRedesignFinalProject:
+          "Rediseño sonoro — Proyecto final de VFS",
+
+        gameAudioFinalProject:
+          "Audio para videojuegos — Proyecto final de VFS",
+
+        soundRedesignProject:
+          "Rediseño sonoro — Proyecto de VFS",
+      },
+    },
+
+    podcast: {
+      sideLabel: "Lado B",
+      title: "Podcast",
+
+      cta: {
+        label: "Trabajemos Juntos",
+        title: "¿Quieres crear o llevar más lejos tu podcast?",
+        description:
+          "Puedo acompañar el proyecto desde la idea y el desarrollo de contenidos hasta la grabación, edición, música original y entrega final, ya sea para lanzar un podcast desde cero o fortalecer uno que ya existe.",
+        button: "Hablemos",
+        note:
+          "Producción y edición de podcast, desarrollo de contenidos y cotizaciones disponibles a solicitud.",
       },
     },
   },
@@ -338,12 +543,14 @@ export const translations: Record<
         disciplines:
           "Conception Sonore / Dialogue / SFX / Foley / Ambiances / Mixage",
 
-        play: "Lecture",
-        pause: "Pause",
+        play: "Lire la bande démo",
+        pause: "Mettre la bande démo en pause",
         mute: "Couper le son",
-        unmute: "Activer le son",
-        fullscreen: "Plein écran",
+        unmute: "Rétablir le son",
+        fullscreen: "Voir la bande démo en plein écran",
         exitFullscreen: "Quitter le plein écran",
+        playbackPosition: "Position de lecture de la bande démo",
+        technicalLabel: "Bande Démo / Conception Sonore",
       },
 
       productionSound: {
@@ -389,6 +596,80 @@ export const translations: Record<
         note:
           "Liste de matériel, filmographie complète, CV et estimations de projet disponibles sur demande.",
       },
+
+      visualizer: {
+        label: "Réaction au Son",
+        live: "En Direct",
+        activeLabel: "Visualisation audio active",
+        inactiveLabel: "Visualisation audio inactive",
+      },
+
+      roles: {
+        locationSoundMixerBoomOperator:
+          "Chef Opérateur du Son & Perchman",
+
+        locationSoundMixer:
+          "Chef Opérateur du Son",
+
+        boomOperator:
+          "Perchman",
+
+        soundAssistant:
+          "Assistant Son",
+
+        soundDesignerSoundMixer:
+          "Conception Sonore & Mixage",
+
+        dialogueEditorSoundMixer:
+          "Montage Dialogue & Mixage",
+
+        soundDesigner:
+          "Conception Sonore",
+
+        postSoundMixer:
+          "Mixage",
+
+        gameAudioDesigner:
+          "Conception Audio pour Jeu Vidéo",
+      },
+
+      formats: {
+        webMiniseries: "Mini-série Web",
+        featureFilm: "Long Métrage",
+        shortFilm: "Court Métrage",
+      },
+
+      filmCard: {
+        viewDetails: "Voir les Détails",
+        viewOnImdb: "Voir sur IMDb",
+        poster: "Affiche",
+      },
+
+      postProductionNotes: {
+        soundRedesignFinalProject:
+          "Recréation sonore — Projet de fin d’études VFS",
+
+        gameAudioFinalProject:
+          "Audio pour jeu vidéo — Projet de fin d’études VFS",
+
+        soundRedesignProject:
+          "Recréation sonore — Projet VFS",
+      },
+    },
+
+    podcast: {
+      sideLabel: "Face B",
+      title: "Podcast",
+
+      cta: {
+        label: "Travaillons Ensemble",
+        title: "Envie de créer ou de faire évoluer votre podcast ?",
+        description:
+          "Je peux accompagner le projet de la conception éditoriale à la livraison finale : développement du contenu, enregistrement, montage, musique originale et production audio, que ce soit pour lancer une nouvelle émission ou faire évoluer un podcast existant.",
+        button: "Me Contacter",
+        note:
+          "Production et montage de podcast, développement éditorial et estimations de projet disponibles sur demande.",
+      },
     },
   },
 
@@ -407,13 +688,13 @@ export const translations: Record<
       sideB: "B 面",
 
       sound: "聲音",
-      podcast: "Podcast",
+      podcast: "播客",
 
       sideASound: "A 面 / 聲音",
       sideBPodcast: "B 面 / 播客",
 
       intro:
-        "音訊工程師，專注於現場收音、聲音後期與 Podcast 製作，以聲音為故事服務。",
+        "音訊工程師，專注於現場收音、聲音後期與 播客 製作，以聲音為故事服務。",
 
       enter: "Enter",
       chooseSide: "選擇一面",
@@ -436,12 +717,14 @@ export const translations: Record<
         disciplines:
           "聲音設計 / 對白 / SFX / Foley / 環境聲 / 混音",
 
-        play: "播放",
-        pause: "暫停",
-        mute: "靜音",
+        play: "播放 Demo Reel",
+        pause: "暫停 Demo Reel",
+        mute: "關閉聲音",
         unmute: "開啟聲音",
-        fullscreen: "全螢幕",
+        fullscreen: "以全螢幕觀看 Demo Reel",
         exitFullscreen: "退出全螢幕",
+        playbackPosition: "Demo Reel 播放進度",
+        technicalLabel: "聲音設計作品",
       },
 
       productionSound: {
@@ -487,6 +770,80 @@ export const translations: Record<
         button: "聯絡我",
         note:
           "可依需求提供器材清單、完整影視經歷、履歷與專案報價。",
+      },
+
+      visualizer: {
+        label: "音訊反應",
+        live: "即時",
+        activeLabel: "音訊視覺反應已啟用",
+        inactiveLabel: "音訊視覺反應未啟用",
+      },
+
+      roles: {
+        locationSoundMixerBoomOperator:
+          "現場收音師與吊桿收音師",
+
+        locationSoundMixer:
+          "現場收音師",
+
+        boomOperator:
+          "吊桿收音師",
+
+        soundAssistant:
+          "收音助理",
+
+        soundDesignerSoundMixer:
+          "聲音設計與混音",
+
+        dialogueEditorSoundMixer:
+          "對白剪輯與混音",
+
+        soundDesigner:
+          "聲音設計",
+
+        postSoundMixer:
+          "混音",
+
+        gameAudioDesigner:
+          "遊戲音訊設計",
+      },
+
+      formats: {
+        webMiniseries: "網路迷你影集",
+        featureFilm: "劇情長片",
+        shortFilm: "短片",
+      },
+
+      filmCard: {
+        viewDetails: "查看詳情",
+        viewOnImdb: "前往 IMDb 查看",
+        poster: "海報",
+      },
+
+      postProductionNotes: {
+        soundRedesignFinalProject:
+          "聲音重新設計 — VFS 畢業專案",
+
+        gameAudioFinalProject:
+          "遊戲音訊 — VFS 畢業專案",
+
+        soundRedesignProject:
+          "聲音重新設計 — VFS 專案",
+      },
+    },
+
+    podcast: {
+      sideLabel: "B 面",
+      title: "播客",
+
+      cta: {
+        label: "合作邀約",
+        title: "想打造一檔新的播客，或讓現有節目更完整嗎？",
+        description:
+          "從節目概念、內容企劃到錄音、剪輯、原創音樂與最終製作，我可以協助你從零打造一檔播客，也能為既有節目提升聲音與內容品質。",
+        button: "聯絡我",
+        note:
+          "可依需求提供播客製作、剪輯、內容企劃與專案報價。",
       },
     },
   },

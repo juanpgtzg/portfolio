@@ -10,6 +10,12 @@ export default function PostProductionCredits() {
   const { language } = useLanguage();
   const t = translations[language].sound.postProduction;
 
+  const roles =
+    translations[language].sound.roles;
+
+  const notes =
+    translations[language].sound.postProductionNotes;
+
   const scrollRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
 
@@ -236,13 +242,13 @@ export default function PostProductionCredits() {
 
                 {/* Role */}
                 <p className="col-start-2 col-span-2 row-start-2 mt-0.5 min-w-0 text-[10px] opacity-45">
-                  {credit.role}
+                  {roles[credit.role]}
                 </p>
 
                 {/* Optional note */}
                 {credit.note && (
                   <p className="font-retro col-start-2 col-span-2 row-start-3 mt-1 min-w-0 text-[8px] leading-relaxed tracking-[0.03em] opacity-30 md:text-[9px]">
-                    {credit.note}
+                    {notes[credit.note]}
                   </p>
                 )}
               </div>

@@ -1,71 +1,71 @@
-import { title } from "process";
+import type { SoundRoleKey } from "@/types/soundRoles";
+import type { PostProductionNoteKey } from "@/types/postProductionNotes";
 
 export interface PostProductionCredit {
   title: string;
-  role: string;
+  role: SoundRoleKey;
   link?: string;
-  note?: string;
+  note?: PostProductionNoteKey;
 }
 
 export const postProductionCredits: PostProductionCredit[] = [
-  // Add your real credits here:
   {
     title: "Strava Vancouver",
-    role: "Sound Designer & Sound Mixer"
+    role: "soundDesignerSoundMixer",
   },
 
   {
     title: "FIFA World Cup 2026 Vancouver",
-    role: "Sound Designer & Sound Mixer"
+    role: "soundDesignerSoundMixer",
   },
 
   {
     title: "West Point Grey Academy",
-    role: "Sound Designer & Sound Mixer"
+    role: "soundDesignerSoundMixer",
   },
 
   {
     title: "Plan Jinn",
-    role: "Sound Designer & Sound Mixer"
+    role: "soundDesignerSoundMixer",
   },
 
   {
     title: "Shade Avoidance Response",
-    role: "Sound Designer & Sound Mixer"
+    role: "soundDesignerSoundMixer",
   },
 
   {
     title: "The Edge",
-    role: "Dialogue Editor & Sound Mixer",
-    link: "https://www.imdb.com/es-es/title/tt38913287/?ref_=ext_shr_lnk"
+    role: "dialogueEditorSoundMixer",
+    link: "https://www.imdb.com/es-es/title/tt38913287/?ref_=ext_shr_lnk",
   },
 
   {
     title: "Stand In",
-    role: "Sound Designer",
-    link: "https://www.imdb.com/es-es/title/tt34076541/?ref_=ext_shr_lnk"
+    role: "soundDesigner",
+    link: "https://www.imdb.com/es-es/title/tt34076541/?ref_=ext_shr_lnk",
   },
 
   {
     title: "Bloody Slushie",
-    role: "Sound Mixer"
+    role: "postSoundMixer",
   },
 
   {
     title: "No Lullaby",
-    role: "Sound Designer",
-    note: "Sound redesign — VFS final project"
+    role: "soundDesigner",
+    note: "soundRedesignFinalProject",
   },
 
   {
     title: "Paper Samurai",
-    role: "Game Audio Designer",
-    note: "Game audio — VFS final project"
+    role: "gameAudioDesigner",
+    note: "gameAudioFinalProject",
   },
 
   {
     title: "The Summit of the Gods",
-    role: "Sound Designer",
-    note: "Sound redesign — VFS project"
+    role: "soundDesigner",
+    note: "soundRedesignProject",
   },
 ];

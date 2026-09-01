@@ -1,14 +1,22 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+
 import { useAudioEngine } from "@/components/audio/AudioProvider";
 import ArrowIcon from "@/components/ui/ArrowIcon";
+import { useLanguage } from "@/context/LanguageContext";
+import { translations } from "@/data/translations";
 
 function formatTime(seconds: number) {
-  if (!Number.isFinite(seconds)) return "0:00";
+  if (!Number.isFinite(seconds)) {
+    return "0:00";
+  }
 
   const minutes = Math.floor(seconds / 60);
-  const remainingSeconds = Math.floor(seconds % 60)
+
+  const remainingSeconds = Math.floor(
+    seconds % 60
+  )
     .toString()
     .padStart(2, "0");
 
@@ -16,9 +24,18 @@ function formatTime(seconds: number) {
 }
 
 export default function DemoReel() {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const frameRef = useRef<HTMLDivElement>(null);
-  const progressFrameRef = useRef<number | null>(null);
+  const { language } = useLanguage();
+  const t =
+    translations[language].sound.demoReel;
+
+  const videoRef =
+    useRef<HTMLVideoElement>(null);
+
+  const frameRef =
+    useRef<HTMLDivElement>(null);
+
+  const progressFrameRef =
+    useRef<number | null>(null);
 
   const demoReelSrc =
     process.env.NEXT_PUBLIC_DEMO_REEL_URL ||
@@ -29,15 +46,26 @@ export default function DemoReel() {
     resumeAudio,
   } = useAudioEngine();
 
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(0);
-  const [isMuted, setIsMuted] = useState(false);
-  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isPlaying, setIsPlaying] =
+    useState(false);
+
+  const [currentTime, setCurrentTime] =
+    useState(0);
+
+  const [duration, setDuration] =
+    useState(0);
+
+  const [isMuted, setIsMuted] =
+    useState(false);
+
+  const [isFullscreen, setIsFullscreen] =
+    useState(false);
 
   useEffect(() => {
     const handleFullscreenChange = () => {
-      setIsFullscreen(document.fullscreenElement !== null);
+      setIsFullscreen(
+        document.fullscreenElement !== null
+      );
     };
 
     document.addEventListener(
@@ -59,11 +87,8 @@ export default function DemoReel() {
     if (!video) return;
 
     if (video.paused) {
-      // Connect the actual video to our Web Audio engine
-      // during the user's interaction.
       registerMediaElement(video);
 
-      // Make sure the AudioContext is active.
       await resumeAudio();
 
       await video.play();
@@ -89,36 +114,50 @@ export default function DemoReel() {
     }
 
     // iPhone Safari fallback
-    const iosVideo = video as HTMLVideoElement & {
-      webkitEnterFullscreen?: () => void;
-    };
+    const iosVideo =
+      video as HTMLVideoElement & {
+        webkitEnterFullscreen?: () => void;
+      };
 
     iosVideo.webkitEnterFullscreen?.();
   };
 
   useEffect(() => {
     const video = videoRef.current;
+
     if (!video) return;
 
     const updateProgress = () => {
       setCurrentTime(video.currentTime);
 
-      if (!video.paused && !video.ended) {
+      if (
+        !video.paused &&
+        !video.ended
+      ) {
         progressFrameRef.current =
-          requestAnimationFrame(updateProgress);
+          requestAnimationFrame(
+            updateProgress
+          );
       }
     };
 
     if (isPlaying) {
       progressFrameRef.current =
-        requestAnimationFrame(updateProgress);
+        requestAnimationFrame(
+          updateProgress
+        );
     } else {
       setCurrentTime(video.currentTime);
     }
 
     return () => {
-      if (progressFrameRef.current !== null) {
-        cancelAnimationFrame(progressFrameRef.current);
+      if (
+        progressFrameRef.current !== null
+      ) {
+        cancelAnimationFrame(
+          progressFrameRef.current
+        );
+
         progressFrameRef.current = null;
       }
     };
@@ -126,9 +165,13 @@ export default function DemoReel() {
 
   const syncVideoMetadata = () => {
     const video = videoRef.current;
+
     if (!video) return;
 
-    if (Number.isFinite(video.duration) && video.duration > 0) {
+    if (
+      Number.isFinite(video.duration) &&
+      video.duration > 0
+    ) {
       setDuration(video.duration);
     }
 
@@ -137,17 +180,21 @@ export default function DemoReel() {
 
   const toggleMute = () => {
     const video = videoRef.current;
+
     if (!video) return;
 
     video.muted = !video.muted;
+
     setIsMuted(video.muted);
   };
 
   const handleSeek = (value: number) => {
     const video = videoRef.current;
+
     if (!video) return;
 
     video.currentTime = value;
+
     setCurrentTime(value);
   };
 
@@ -165,34 +212,35 @@ export default function DemoReel() {
           preload="metadata"
           playsInline
           className="absolute inset-0 h-full w-full object-contain"
-
-          onLoadedMetadata={syncVideoMetadata}
-          onLoadedData={syncVideoMetadata}
-          onDurationChange={syncVideoMetadata}
+          onLoadedMetadata={
+            syncVideoMetadata
+          }
+          onLoadedData={
+            syncVideoMetadata
+          }
+          onDurationChange={
+            syncVideoMetadata
+          }
           onCanPlay={syncVideoMetadata}
-
           onTimeUpdate={(event) => {
-            setCurrentTime(event.currentTarget.currentTime);
+            setCurrentTime(
+              event.currentTarget.currentTime
+            );
           }}
-
           onPlay={() => {
             setIsPlaying(true);
             syncVideoMetadata();
           }}
-
           onPause={() => {
             setIsPlaying(false);
             syncVideoMetadata();
           }}
-
           onSeeking={syncVideoMetadata}
           onSeeked={syncVideoMetadata}
-
           onEnded={() => {
             setIsPlaying(false);
             setCurrentTime(0);
           }}
-
           onClick={togglePlay}
         />
 
@@ -201,7 +249,7 @@ export default function DemoReel() {
             type="button"
             onClick={togglePlay}
             className="absolute inset-0 flex items-center justify-center bg-black/15 transition-colors hover:bg-black/25"
-            aria-label="Play demo reel"
+            aria-label={t.play}
           >
             <span className="font-retro flex h-16 w-16 items-center justify-center border border-[var(--paper)] bg-black/20 text-xl text-[var(--paper)]">
               <ArrowIcon
@@ -219,7 +267,7 @@ export default function DemoReel() {
           </span>
         </div>
 
-        {/* Fullscreen button */}
+        {/* Fullscreen */}
         <button
           type="button"
           onClick={(event) => {
@@ -229,13 +277,13 @@ export default function DemoReel() {
           className="absolute right-2 top-2 z-20 flex h-7 w-7 items-center justify-center border border-[var(--paper)] bg-black/40 text-[var(--paper)] transition-colors hover:bg-black/60 md:right-3 md:top-3 md:h-8 md:w-8"
           aria-label={
             isFullscreen
-              ? "Exit fullscreen"
-              : "View demo reel fullscreen"
+              ? t.exitFullscreen
+              : t.fullscreen
           }
         >
           {isFullscreen ? (
-            /* Exit fullscreen */
             <svg
+              aria-hidden="true"
               viewBox="0 0 24 24"
               className="h-3.5 w-3.5 fill-none stroke-current"
               strokeWidth="2"
@@ -246,8 +294,8 @@ export default function DemoReel() {
               <path d="M15 21v-6h6" />
             </svg>
           ) : (
-            /* Enter fullscreen */
             <svg
+              aria-hidden="true"
               viewBox="0 0 24 24"
               className="h-3.5 w-3.5 fill-none stroke-current"
               strokeWidth="2"
@@ -263,25 +311,25 @@ export default function DemoReel() {
 
       {/* Retro transport controls */}
       <div className="mt-2 grid grid-cols-[44px_minmax(0,1fr)_44px] border border-[var(--line)] bg-[var(--paper-light)] md:grid-cols-[52px_minmax(0,1fr)_auto_54px]">
-
         {/* Play / Pause */}
         <button
           type="button"
           onClick={togglePlay}
           className="font-retro flex h-11 items-center justify-center border-r border-[var(--line)] text-xs transition-colors hover:bg-[var(--lilac)]"
-          aria-label={isPlaying ? "Pause demo reel" : "Play demo reel"}
+          aria-label={
+            isPlaying
+              ? t.pause
+              : t.play
+          }
         >
-          {isPlaying ? (
-            <ArrowIcon
-              name="pause"
-              className="h-3.5 w-3.5"
-            />
-          ) : (
-            <ArrowIcon
-              name="play"
-              className="h-3.5 w-3.5"
-            />
-          )}
+          <ArrowIcon
+            name={
+              isPlaying
+                ? "pause"
+                : "play"
+            }
+            className="h-3.5 w-3.5"
+          />
         </button>
 
         {/* Timeline */}
@@ -289,24 +337,40 @@ export default function DemoReel() {
           <input
             type="range"
             min={0}
-            max={duration > 0 ? duration : 1}
+            max={
+              duration > 0
+                ? duration
+                : 1
+            }
             step={0.01}
             value={Math.min(
               currentTime,
-              duration > 0 ? duration : 1
+              duration > 0
+                ? duration
+                : 1
             )}
             onChange={(event) =>
-              handleSeek(Number(event.target.value))
+              handleSeek(
+                Number(
+                  event.target.value
+                )
+              )
             }
             className="w-full"
-            aria-label="Demo reel playback position"
+            aria-label={
+              t.playbackPosition
+            }
           />
         </div>
 
         {/* Time */}
         <div className="font-retro hidden h-11 items-center border-l border-[var(--line)] px-4 text-[10px] tabular-nums md:flex">
           {formatTime(currentTime)}
-          <span className="mx-1 opacity-35">/</span>
+
+          <span className="mx-1 opacity-35">
+            /
+          </span>
+
           <span className="opacity-50">
             {formatTime(duration)}
           </span>
@@ -316,17 +380,34 @@ export default function DemoReel() {
         <button
           type="button"
           onClick={toggleMute}
-          className="font-retro flex h-11 items-center justify-center border-l border-[var(--line)] text-[10px] transition-colors hover:bg-[var(--pink)]"
-          aria-label={isMuted ? "Unmute demo reel" : "Mute demo reel"}
+          className="flex h-11 items-center justify-center border-l border-[var(--line)] transition-colors hover:bg-[var(--pink)]"
+          aria-label={
+            isMuted
+              ? t.unmute
+              : t.mute
+          }
+          aria-pressed={isMuted}
         >
-          {isMuted ? "MUTE" : "VOL"}
+          <ArrowIcon
+            name={
+              isMuted
+                ? "mute"
+                : "volume"
+            }
+            className="h-4 w-4"
+          />
         </button>
       </div>
 
       {/* Technical footer */}
-      <div className="mt-2 flex justify-between font-retro text-[9px] uppercase tracking-[0.1em] opacity-35">
-        <span>Stereo / 48 kHz</span>
-        <span>Sound Design Reel</span>
+      <div className="font-retro mt-2 flex justify-between text-[9px] uppercase tracking-[0.1em] opacity-35">
+        <span>
+          Stereo / 48 kHz
+        </span>
+
+        <span>
+          {t.technicalLabel}
+        </span>
       </div>
     </div>
   );

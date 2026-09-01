@@ -5,7 +5,9 @@ type ArrowIconName =
   | "down"
   | "external"
   | "play"
-  | "pause";
+  | "pause"
+  | "volume"
+  | "mute";
 
 interface ArrowIconProps {
   name: ArrowIconName;
@@ -37,6 +39,40 @@ export default function ArrowIcon({
         className={`fill-current ${className}`}
       >
         <path d="M8 5v14l11-7Z" />
+      </svg>
+    );
+  }
+
+  if (name === "volume") {
+    return (
+      <svg
+        aria-hidden="true"
+        viewBox="0 0 24 24"
+        className={`fill-none stroke-current ${className}`}
+        strokeWidth="1.8"
+        strokeLinecap="square"
+        strokeLinejoin="miter"
+      >
+        <path d="M4 10v4h4l5 4V6L8 10H4Z" />
+        <path d="M16 9c1.5 1.5 1.5 4.5 0 6" />
+        <path d="M18.5 6.5c3 3 3 8 0 11" />
+      </svg>
+    );
+  }
+
+  if (name === "mute") {
+    return (
+      <svg
+        aria-hidden="true"
+        viewBox="0 0 24 24"
+        className={`fill-none stroke-current ${className}`}
+        strokeWidth="1.8"
+        strokeLinecap="square"
+        strokeLinejoin="miter"
+      >
+        <path d="M4 10v4h4l5 4V6L8 10H4Z" />
+        <path d="m16 9 5 6" />
+        <path d="m21 9-5 6" />
       </svg>
     );
   }

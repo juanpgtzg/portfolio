@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useAudioEngine } from "@/components/audio/AudioProvider";
+import { useLanguage } from "@/context/LanguageContext";
+import { translations } from "@/data/translations";
 
 interface Grain {
   x: number;
@@ -24,6 +26,9 @@ export default function GrainVisualizer({
 }: GrainVisualizerProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { getAnalyser } = useAudioEngine();
+
+  const { language } = useLanguage();
+  const t = translations[language].sound.visualizer;
 
   const [isActive, setIsActive] = useState(false);
 
@@ -476,15 +481,15 @@ export default function GrainVisualizer({
         }`}
       >
         <span className="retro-label opacity-40">
-          Audio Response
+          {t.label}
         </span>
 
         <span
           className="font-retro flex items-center gap-2 text-[9px] uppercase tracking-[0.1em]"
           aria-label={
             isActive
-              ? "Audio response active"
-              : "Audio response inactive"
+              ? t.activeLabel
+              : t.inactiveLabel
           }
         >
           <span
@@ -502,7 +507,7 @@ export default function GrainVisualizer({
                 : "opacity-35"
             }
           >
-            Live
+            {t.live}
           </span>
         </span>
       </div>

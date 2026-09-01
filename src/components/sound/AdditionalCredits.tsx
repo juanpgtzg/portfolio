@@ -8,6 +8,7 @@ import { translations } from "@/data/translations";
 export default function AdditionalCredits() {
   const { language } = useLanguage();
   const t = translations[language].sound.additionalCredits;
+  const roles = translations[language].sound.roles;
 
   const trackRef = useRef<HTMLDivElement>(null);
   const animationFrameRef = useRef<number | null>(null);
@@ -38,7 +39,7 @@ export default function AdditionalCredits() {
           </span>
 
           <span className="whitespace-nowrap text-[10px] opacity-50">
-            {credit.role}
+            {roles[credit.role]}
           </span>
 
           <span className="mx-5 text-[9px] opacity-20">

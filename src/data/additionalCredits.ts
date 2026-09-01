@@ -1,141 +1,117 @@
+import type { SoundRoleKey } from "@/types/soundRoles";
+
 export interface AdditionalCredit {
   title: string;
-  role: string;
+  role: SoundRoleKey;
 }
 
 export const additionalCredits: AdditionalCredit[] = [
   {
     title: "Snow Castle",
-    role: "Location Sound Mixer & Boom Operator",
+    role: "locationSoundMixerBoomOperator",
   },
-
   {
     title: "Plan Jinn",
-    role: "Location Sound Mixer & Boom Operator",
+    role: "locationSoundMixerBoomOperator",
   },
-
   {
     title: "Wrongly Accused",
-    role: "Location Sound Mixer & Boom Operator",
+    role: "locationSoundMixerBoomOperator",
   },
-
   {
     title: "Mr. And Mrs. Adams",
-    role: "Location Sound Mixer & Boom Operator",
+    role: "locationSoundMixerBoomOperator",
   },
-
   {
     title: "The Model Maker",
-    role: "Boom Operator",
+    role: "boomOperator",
   },
-
   {
     title: "Father Christmas",
-    role: "Location Sound Mixer & Boom Operator",
+    role: "locationSoundMixerBoomOperator",
   },
-
   {
     title: "An Hour Away",
-    role: "Location Sound Mixer",
+    role: "locationSoundMixer",
   },
-
   {
     title: "Mafia Princess",
-    role: "Location Sound Mixer & Boom Operator",
+    role: "locationSoundMixerBoomOperator",
   },
-
   {
     title: "Mountain Rescue",
-    role: "Location Sound Mixer & Boom Operator",
+    role: "locationSoundMixerBoomOperator",
   },
-
   {
     title: "The Things We Bury",
-    role: "Location Sound Mixer & Boom Operator",
+    role: "locationSoundMixerBoomOperator",
   },
-
   {
     title: "Veins Of Sacrifice",
-    role: "Location Sound Mixer & Boom Operator",
+    role: "locationSoundMixerBoomOperator",
   },
-
   {
     title: "Nudos",
-    role: "Location Sound Mixer & Boom Operator",
+    role: "locationSoundMixerBoomOperator",
   },
-
   {
     title: "Migraine",
-    role: "Location Sound Mixer & Boom Operator",
+    role: "locationSoundMixerBoomOperator",
   },
-
   {
     title: "Nora",
-    role: "Location Sound Mixer",
+    role: "locationSoundMixer",
   },
-
   {
     title: "Moon Curse",
-    role: "Boom Operator",
+    role: "boomOperator",
   },
-
   {
     title: "UBC Injection Videos",
-    role: "Location Sound Mixer",
+    role: "locationSoundMixer",
   },
-
   {
     title: "Blacklisted",
-    role: "Location Sound Mixer",
+    role: "locationSoundMixer",
   },
-
   {
     title: "House Of Legacy",
-    role: "Sound Assistant",
+    role: "soundAssistant",
   },
-
   {
     title: "Guards Of Grouse",
-    role: "Boom Operator",
+    role: "boomOperator",
   },
-
   {
     title: "Unscented",
-    role: "Boom Operator",
+    role: "boomOperator",
   },
-
   {
     title: "Name Of My Mother",
-    role: "Sound Assistant",
+    role: "soundAssistant",
   },
-
   {
     title: "Love Again",
-    role: "Location Sound Mixer",
+    role: "locationSoundMixer",
   },
-
   {
     title: "Crazy",
-    role: "Location Sound Mixer & Boom Operator",
+    role: "locationSoundMixerBoomOperator",
   },
-
   {
     title: "Collapsed",
-    role: "Sound Assistant",
+    role: "soundAssistant",
   },
-
   {
     title: "Film Noir",
-    role: "Location Sound Mixer & Boom Operator",
+    role: "locationSoundMixerBoomOperator",
   },
-
   {
     title: "Unclaimed Love",
-    role: "Sound Assistant",
+    role: "soundAssistant",
   },
-
   {
     title: "How To Plan the Wedding of Your Brother’s Ex",
-    role: "Location Sound Mixer & Boom Operator",
+    role: "locationSoundMixerBoomOperator",
   },
 ];
