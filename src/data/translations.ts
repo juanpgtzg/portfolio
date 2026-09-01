@@ -860,19 +860,19 @@ export const translations: Record<
 
   zh: {
     nav: {
-      sound: "聲音",
+      sound: "影視聲音",
       podcast: "播客",
     },
 
     hero: {
       portfolioLabel: "聲音作品集 / 2026",
-      subtitle: "聲音 & 播客 / 加拿大溫哥華",
+      subtitle: "影視聲音 & 播客 / 加拿大溫哥華",
       selectSide: "選擇一面",
 
-      sideA: "A 面",
-      sideB: "B 面",
+      sideA: "A 面 / 影視聲音",
+      sideB: "B 面 / 播客",
 
-      sound: "聲音",
+      sound: "影視聲音",
       podcast: "播客",
 
       sideASound: "A 面 / 聲音",

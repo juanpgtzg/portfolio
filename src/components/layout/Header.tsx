@@ -7,9 +7,13 @@ import { useDirectionalTransition } from "@/components/transitions/DirectionalPa
 import LanguageSelector from "@/components/language/LanguageSelector";
 import { useLanguage } from "@/context/LanguageContext";
 import { translations } from "@/data/translations";
+import { stripLanguageFromPathname } from "@/lib/i18n";
 
 export default function Header() {
   const pathname = usePathname();
+  const basePath = stripLanguageFromPathname(
+    pathname || "/"
+  );
   const { navigateTo, isTransitioning } =
     useDirectionalTransition();
     
@@ -17,8 +21,8 @@ export default function Header() {
   const t = translations[language];
   const { localizedPath } = useLanguage();
 
-  const isSound = pathname === "/sound";
-  const isPodcast = pathname === "/podcast";
+  const isSound = basePath === "/sound";
+  const isPodcast = basePath === "/podcast";
 
 
   return (

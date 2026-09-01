@@ -1,8 +1,11 @@
 "use client";
 
+import { useState } from "react";
+
 import DemoReel from "@/components/sound/DemoReel";
 import GrainVisualizer from "@/components/audio/GrainVisualizer";
 import PostProductionCredits from "@/components/sound/PostProductionCredits";
+import ArrowIcon from "@/components/ui/ArrowIcon";
 import { useLanguage } from "@/context/LanguageContext";
 import { translations } from "@/data/translations";
 
@@ -12,6 +15,40 @@ export default function SoundIntro() {
   const t = translations[language];
   const sound = t.sound;
   const reel = sound.demoReel;
+
+  const [
+    activeCreditId,
+    setActiveCreditId,
+  ] = useState<string | null>(null);
+
+  const [
+    reelPlayRequest,
+    setReelPlayRequest,
+  ] = useState(0);
+
+  /*
+   * Master Play / Pause button beside
+   * the Demo Reel title.
+   */
+  const [
+    transportRequest,
+    setTransportRequest,
+  ] = useState(0);
+
+  const [
+    isReelPlaying,
+    setIsReelPlaying,
+  ] = useState(false);
+
+  const handleSelectReelCredit = (
+    creditId: string
+  ) => {
+    setActiveCreditId(creditId);
+
+    setReelPlayRequest(
+      (current) => current + 1
+    );
+  };
 
   return (
     <>
@@ -30,7 +67,9 @@ export default function SoundIntro() {
           </h1>
 
           <div className="md:hidden">
-            <GrainVisualizer mobileOverlay />
+            <GrainVisualizer
+              mobileOverlay
+            />
           </div>
         </div>
 
@@ -53,9 +92,40 @@ export default function SoundIntro() {
               {reel.tag}
             </span>
 
-            <h2 className="mt-4 text-3xl font-bold">
-              {reel.title}
-            </h2>
+            {/* Demo Reel title + master transport */}
+            <div className="mt-4 flex items-center gap-4">
+              <h2 className="text-3xl font-bold">
+                {reel.title}
+              </h2>
+
+              <button
+                type="button"
+                onClick={() =>
+                  setTransportRequest(
+                    (current) =>
+                      current + 1
+                  )
+                }
+                aria-label={
+                  isReelPlaying
+                    ? reel.pause
+                    : reel.play
+                }
+                aria-pressed={
+                  isReelPlaying
+                }
+                className="flex h-12 w-12 shrink-0 items-center justify-center border border-[var(--line)] bg-[var(--paper-light)] transition-colors hover:bg-[var(--lilac)]"
+              >
+                <ArrowIcon
+                  name={
+                    isReelPlaying
+                      ? "pause"
+                      : "play"
+                  }
+                  className="h-4 w-4"
+                />
+              </button>
+            </div>
 
             <p className="mt-5 max-w-sm text-sm leading-relaxed opacity-70">
               {reel.description}
@@ -63,7 +133,14 @@ export default function SoundIntro() {
           </div>
 
           <div className="order-3 min-h-0 md:order-none md:flex md:flex-1 md:flex-col md:overflow-hidden">
-            <PostProductionCredits />
+            <PostProductionCredits
+              activeCreditId={
+                activeCreditId
+              }
+              onSelectReelCredit={
+                handleSelectReelCredit
+              }
+            />
           </div>
 
           <div className="order-4 mt-0 border-t border-[var(--line-light)] pt-3 md:order-none md:mt-auto md:pt-4">
@@ -75,7 +152,23 @@ export default function SoundIntro() {
 
         {/* Reel */}
         <div className="order-2 min-w-0 w-full md:order-none">
-          <DemoReel />
+          <DemoReel
+            activeCreditId={
+              activeCreditId
+            }
+            playRequest={
+              reelPlayRequest
+            }
+            transportRequest={
+              transportRequest
+            }
+            onActiveCreditChange={
+              setActiveCreditId
+            }
+            onPlayingChange={
+              setIsReelPlaying
+            }
+          />
         </div>
       </section>
 
