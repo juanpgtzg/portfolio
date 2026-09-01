@@ -54,18 +54,35 @@ export const metadata: Metadata = {
     locale: "en_CA",
     url: "https://soundbyjuan.com",
     siteName: "Sound by Juan",
+
     title:
       "Sound by Juan | Juan Gutierrez — Audio Engineer in Vancouver",
+
     description:
       "Production sound, post-production audio, sound design, mixing, and podcast production by Vancouver audio engineer Juan Gutierrez.",
+
+    images: [
+      {
+        url: "/images/seo/og-en.png",
+        width: 1200,
+        height: 630,
+        alt: "Sound by Juan — Juan Gutierrez Audio Portfolio",
+      },
+    ],
   },
 
   twitter: {
     card: "summary_large_image",
+
     title:
       "Sound by Juan | Juan Gutierrez — Audio Engineer in Vancouver",
+
     description:
       "Production sound, post-production audio, sound design, mixing, and podcast production.",
+
+    images: [
+      "/images/seo/og-en.png",
+    ],
   },
 };
 

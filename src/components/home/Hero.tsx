@@ -105,6 +105,7 @@ export default function Hero() {
             ===================================================== */}
 
         <div
+          id="hero-cassette"
           className="relative mx-auto aspect-[1.62/1] w-full max-w-4xl overflow-hidden rounded-[24px] border-2 border-[var(--line)] bg-[var(--paper-dark)] shadow-[8px_10px_0_rgba(60,48,45,0.12)] transition-transform duration-300 ease-out"
           style={{
             transform: isPressed
