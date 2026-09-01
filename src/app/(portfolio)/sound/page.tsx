@@ -5,6 +5,10 @@ import FilmGrid from "@/components/sound/FilmGrid";
 import OnSetGallery from "@/components/sound/OnSetGallery";
 import SoundProjectCTA from "@/components/sound/SoundProjectCTA";
 
+import {
+  getLanguageAlternates,
+} from "@/lib/i18n";
+
 export const metadata: Metadata = {
   title: "Production Sound Mixer & Sound Designer",
 
@@ -13,6 +17,10 @@ export const metadata: Metadata = {
 
   alternates: {
     canonical: "/sound",
+    languages:
+      getLanguageAlternates(
+        "/sound"
+      ),
   },
 
   openGraph: {

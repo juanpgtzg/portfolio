@@ -5,68 +5,86 @@ import {
   ReactNode,
   useContext,
   useEffect,
-  useState,
 } from "react";
 
-export type Language = "en" | "es" | "fr" | "zh";
+import {
+  usePathname,
+  useRouter,
+} from "next/navigation";
+
+import {
+  getLanguageFromPathname,
+  htmlLanguage,
+  localizePath,
+} from "@/lib/i18n";
+
+import type { Language } from "@/lib/i18n";
+
+export type { Language } from "@/lib/i18n";
 
 interface LanguageContextValue {
   language: Language;
-  setLanguage: (language: Language) => void;
+
+  setLanguage: (
+    language: Language
+  ) => void;
+
+  localizedPath: (
+    path: string,
+    languageOverride?: Language
+  ) => string;
 }
 
 const LanguageContext =
-  createContext<LanguageContextValue | null>(null);
+  createContext<LanguageContextValue | null>(
+    null
+  );
 
 export function LanguageProvider({
   children,
 }: {
   children: ReactNode;
 }) {
-  const [language, setLanguageState] =
-    useState<Language>("en");
+  const pathname =
+    usePathname() || "/";
+
+  const router = useRouter();
+
+  const language =
+    getLanguageFromPathname(pathname);
 
   useEffect(() => {
-    const savedLanguage =
-      localStorage.getItem(
-        "portfolio-language"
-      ) as Language | null;
+    document.documentElement.lang =
+      htmlLanguage(language);
 
-    if (
-      savedLanguage === "en" ||
-      savedLanguage === "es" ||
-      savedLanguage === "fr" ||
-      savedLanguage === "zh"
-    ) {
-      setLanguageState(savedLanguage);
+    document.documentElement.dataset.language =
+      language;
+  }, [language]);
 
-      document.documentElement.lang =
-        savedLanguage === "zh"
-          ? "zh-Hant"
-          : savedLanguage;
-
-      document.documentElement.dataset.language =
-        savedLanguage;
-    }
-  }, []);
+  const getLocalizedPath = (
+    path: string,
+    languageOverride = language
+  ) => {
+    return localizePath(
+      path,
+      languageOverride
+    );
+  };
 
   const setLanguage = (
     newLanguage: Language
   ) => {
-    setLanguageState(newLanguage);
+    if (newLanguage === language) {
+      return;
+    }
 
-    localStorage.setItem(
-      "portfolio-language",
-      newLanguage
-    );
+    const destination =
+      localizePath(
+        pathname,
+        newLanguage
+      );
 
-    document.documentElement.lang =
-      newLanguage === "zh"
-        ? "zh-Hant"
-        : newLanguage;
-
-    document.documentElement.dataset.language =
-      newLanguage;
+    router.push(destination);
   };
 
   return (
@@ -74,6 +92,8 @@ export function LanguageProvider({
       value={{
         language,
         setLanguage,
+        localizedPath:
+          getLocalizedPath,
       }}
     >
       {children}

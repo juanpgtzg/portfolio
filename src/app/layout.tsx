@@ -5,6 +5,10 @@ import "./globals.css";
 import { AudioProvider } from "@/components/audio/AudioProvider";
 import { LanguageProvider } from "@/context/LanguageContext";
 
+import {
+  getLanguageAlternates,
+} from "@/lib/i18n";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -41,6 +45,8 @@ export const metadata: Metadata = {
 
   alternates: {
     canonical: "/",
+    languages:
+      getLanguageAlternates("/"),
   },
 
   openGraph: {

@@ -10,6 +10,8 @@ import DirectionalPageTransition, {
   DirectionalPageMotion,
 } from "@/components/transitions/DirectionalPageTransition";
 
+import { stripLanguageFromPathname } from "@/lib/i18n";
+
 interface PortfolioPageShellProps {
   children: ReactNode;
 }
@@ -19,10 +21,15 @@ export default function PortfolioPageShell({
 }: PortfolioPageShellProps) {
   const pathname = usePathname();
 
+  const basePath =
+    stripLanguageFromPathname(
+      pathname || "/"
+    );
+
   const side =
-    pathname === "/sound"
+    basePath === "/sound"
       ? "sound"
-      : pathname === "/podcast"
+      : basePath === "/podcast"
         ? "podcast"
         : null;
 
@@ -37,7 +44,9 @@ export default function PortfolioPageShell({
   }
 
   return (
-    <DirectionalPageTransition side={side}>
+    <DirectionalPageTransition
+      side={side}
+    >
       {/* STAYS STILL */}
       <Header />
 

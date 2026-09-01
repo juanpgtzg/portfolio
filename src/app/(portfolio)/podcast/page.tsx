@@ -4,6 +4,10 @@ import PodcastIntro from "@/components/podcast/PodcastIntro";
 import PodcastFeature from "@/components/podcast/PodcastFeature";
 import PodcastProjectCTA from "@/components/podcast/PodcastProjectCTA";
 
+import {
+  getLanguageAlternates,
+} from "@/lib/i18n";
+
 export const metadata: Metadata = {
   title: "Podcast Producer & Audio Editor",
 
@@ -12,6 +16,10 @@ export const metadata: Metadata = {
 
   alternates: {
     canonical: "/podcast",
+    languages:
+      getLanguageAlternates(
+        "/podcast"
+      ),
   },
 
   openGraph: {

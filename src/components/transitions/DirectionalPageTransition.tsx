@@ -9,6 +9,7 @@ import {
   useState,
 } from "react";
 import { useRouter } from "next/navigation";
+import { useLanguage } from "@/context/LanguageContext";
 
 type Side = "sound" | "podcast";
 
@@ -46,6 +47,8 @@ export default function DirectionalPageTransition({
   children,
 }: DirectionalPageTransitionProps) {
   const router = useRouter();
+  const { localizedPath } =
+    useLanguage();
   const settleTimer = useRef<number | null>(null);
 
   const [offset, setOffset] = useState(0);
@@ -145,7 +148,9 @@ export default function DirectionalPageTransition({
     setOpacity(0);
 
     navigationTimer.current = window.setTimeout(() => {
-      router.push(`/${target}`);
+      router.push(
+        localizedPath(`/${target}`)
+      );
     }, 420);
   };
 

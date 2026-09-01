@@ -17,6 +17,8 @@ export default function Hero() {
   const { language } = useLanguage();
   const t = translations[language];
 
+  const { localizedPath } = useLanguage();
+
   const [activeSide, setActiveSide] = useState<Side>(null);
   const [isPressed, setIsPressed] = useState(false);
 
@@ -40,7 +42,9 @@ export default function Hero() {
     setExitDirection(side === "sound" ? "right" : "left");
 
     window.setTimeout(() => {
-      router.push(`/${side}`);
+      router.push(
+        localizedPath(`/${side}`)
+      );
     }, 420);
   };
 
@@ -262,7 +266,7 @@ export default function Hero() {
               ================================================= */}
 
           <Link
-            href="/sound"
+            href={localizedPath("/sound")}
             aria-label="View sound portfolio"
             onClick={(event) => {
               event.preventDefault();
@@ -334,7 +338,7 @@ export default function Hero() {
           </Link>
 
           <Link
-            href="/podcast"
+            href={localizedPath("/podcast")}
             aria-label="View podcast portfolio"
             onClick={(event) => {
               event.preventDefault();

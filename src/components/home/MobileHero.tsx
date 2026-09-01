@@ -15,6 +15,8 @@ export default function MobileHero() {
     const { language } = useLanguage();
     const t = translations[language];
 
+    const { localizedPath } = useLanguage();
+
   const [selected, setSelected] = useState<Side | null>(null);
   const [isPressed, setIsPressed] = useState(false);
   const [exitDirection, setExitDirection] = useState<
@@ -34,7 +36,9 @@ export default function MobileHero() {
     setExitDirection(side === "sound" ? "right" : "left");
 
     window.setTimeout(() => {
-      router.push(`/${side}`);
+        router.push(
+            localizedPath(`/${side}`)
+        );
     }, 420);
   };
 

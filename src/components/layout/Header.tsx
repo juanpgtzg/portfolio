@@ -15,6 +15,7 @@ export default function Header() {
     
   const { language } = useLanguage();
   const t = translations[language];
+  const { localizedPath } = useLanguage();
 
   const isSound = pathname === "/sound";
   const isPodcast = pathname === "/podcast";
@@ -26,7 +27,7 @@ export default function Header() {
 
         {/* Identity */}
         <Link
-          href="/"
+          href={localizedPath("/")}
           className="font-retro col-start-1 row-start-1 justify-self-start text-[10px] font-bold uppercase tracking-[0.08em] transition-opacity hover:opacity-50 md:text-xs"
         >
           Juan Gutierrez
@@ -35,7 +36,7 @@ export default function Header() {
         {/* Main navigation */}
         <nav className="col-span-2 row-start-2 grid w-full grid-cols-2 gap-2 md:col-span-1 md:col-start-2 md:row-start-1 md:flex md:w-auto md:items-center md:justify-self-center">
           <Link
-            href="/sound"
+            href={localizedPath("/sound")}
             onClick={(event) => {
               if (
                 event.metaKey ||
@@ -64,7 +65,7 @@ export default function Header() {
           </Link>
 
           <Link
-            href="/podcast"
+            href={localizedPath("/podcast")}
             onClick={(event) => {
               if (
                 event.metaKey ||
