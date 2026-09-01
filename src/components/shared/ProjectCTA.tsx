@@ -1,3 +1,5 @@
+import ArrowIcon from "@/components/ui/ArrowIcon";
+
 interface ProjectCTAProps {
   label: string;
   title: string;
@@ -15,7 +17,6 @@ export default function ProjectCTA({
 }: ProjectCTAProps) {
   return (
     <section className="mt-12 border-t border-[var(--line)] pt-7">
-
       {/* Full-width heading */}
       <div>
         <span className="retro-tag retro-tag-pink">
@@ -44,9 +45,14 @@ export default function ProjectCTA({
 
           <a
             href="mailto:juanpgtzg@outlook.com"
-            className="retro-button mt-5 inline-flex"
+            className="retro-button mt-5 inline-flex items-center gap-2"
           >
-            {buttonLabel} →
+            {buttonLabel}
+
+            <ArrowIcon
+              name="right"
+              className="h-2.5 w-2.5"
+            />
           </a>
         </div>
       </div>

@@ -2,8 +2,13 @@
 
 import { useEffect, useRef, useState } from "react";
 import { additionalCredits } from "@/data/additionalCredits";
+import { useLanguage } from "@/context/LanguageContext";
+import { translations } from "@/data/translations";
 
 export default function AdditionalCredits() {
+  const { language } = useLanguage();
+  const t = translations[language].sound.additionalCredits;
+
   const trackRef = useRef<HTMLDivElement>(null);
   const animationFrameRef = useRef<number | null>(null);
   const lastTimeRef = useRef<number | null>(null);
@@ -56,8 +61,7 @@ export default function AdditionalCredits() {
 
     const loopWidth = trackRef.current.scrollWidth / 2;
 
-    offsetRef.current +=
-      speed * directionRef.current * delta;
+    offsetRef.current += speed * directionRef.current * delta;
 
     if (offsetRef.current <= -loopWidth) {
       offsetRef.current += loopWidth;
@@ -80,10 +84,10 @@ export default function AdditionalCredits() {
     isScrollingRef.current = true;
     setIsScrolling(true);
 
-    // Default automatic direction
     directionRef.current = -1;
 
     lastTimeRef.current = null;
+
     animationFrameRef.current =
       requestAnimationFrame(animate);
   };
@@ -125,7 +129,9 @@ export default function AdditionalCredits() {
   };
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia("(max-width: 767px)");
+    const mediaQuery = window.matchMedia(
+      "(max-width: 767px)"
+    );
 
     const updateMode = () => {
       isMobileRef.current = mediaQuery.matches;
@@ -137,7 +143,9 @@ export default function AdditionalCredits() {
         setIsScrolling(false);
 
         if (animationFrameRef.current !== null) {
-          cancelAnimationFrame(animationFrameRef.current);
+          cancelAnimationFrame(
+            animationFrameRef.current
+          );
           animationFrameRef.current = null;
         }
 
@@ -147,13 +155,21 @@ export default function AdditionalCredits() {
 
     updateMode();
 
-    mediaQuery.addEventListener("change", updateMode);
+    mediaQuery.addEventListener(
+      "change",
+      updateMode
+    );
 
     return () => {
-      mediaQuery.removeEventListener("change", updateMode);
+      mediaQuery.removeEventListener(
+        "change",
+        updateMode
+      );
 
       if (animationFrameRef.current !== null) {
-        cancelAnimationFrame(animationFrameRef.current);
+        cancelAnimationFrame(
+          animationFrameRef.current
+        );
         animationFrameRef.current = null;
       }
 
@@ -166,15 +182,17 @@ export default function AdditionalCredits() {
     <section className="mt-4 md:mt-7">
       <div className="mb-2 flex items-center justify-between">
         <span className="retro-label opacity-45">
-          More Credits
+          {t.title}
         </span>
 
         <span
           className={`font-retro hidden text-[11px] uppercase tracking-[0.08em] transition-opacity md:block ${
-            isScrolling ? "opacity-30" : "opacity-20"
+            isScrolling
+              ? "opacity-30"
+              : "opacity-20"
           }`}
         >
-          Hover to explore
+          {t.hoverToExplore}
         </span>
       </div>
 
@@ -198,7 +216,9 @@ export default function AdditionalCredits() {
         {/* Right-side hint */}
         <div
           className={`pointer-events-none absolute right-0 top-0 hidden h-full items-center pl-14 transition-opacity duration-200 md:flex ${
-            isScrolling ? "opacity-0" : "opacity-100"
+            isScrolling
+              ? "opacity-0"
+              : "opacity-100"
           }`}
           style={{
             background:
