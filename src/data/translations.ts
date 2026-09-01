@@ -139,6 +139,32 @@ export const translations: Record<
       sideLabel: string;
       title: string;
 
+      feature: {
+        tag: string;
+        subtitle: string;
+        episodes: string;
+        myRole: string;
+        project: string;
+        highlights: string;
+        listenOn: string;
+        artworkAlt: string;
+
+        roles: string[];
+        services: string[];
+
+        description: string;
+        community: string;
+
+        highlightsList: string[];
+      };
+
+      trailer: {
+        label: string;
+        play: string;
+        pause: string;
+        playbackPosition: string;
+      };
+
       cta: {
         label: string;
         title: string;
@@ -311,6 +337,59 @@ export const translations: Record<
     podcast: {
       sideLabel: "Side B",
       title: "Podcast",
+
+      feature: {
+        tag: "Production Notes / 01",
+
+        subtitle:
+          "Environment · Climate Change · Sustainability",
+
+        episodes: "Episodes",
+
+        myRole: "My Role",
+
+        project: "Project",
+
+        highlights: "Highlights",
+
+        listenOn: "Listen on",
+
+        artworkAlt: "Podcast cover artwork",
+
+        roles: [
+          "Co-Founder",
+          "Podcast Co-Producer & Editor",
+          "Content Creator",
+        ],
+
+        services: [
+          "Production",
+          "Recording",
+          "Editing",
+          "Original Music",
+          "Content Strategy",
+        ],
+
+        description:
+          "Villam is an environmental communication and consulting organization that I co-founded. My work spanned content strategy, community management and podcast production, including co-producing and editing the Villam Podcast and creating original music for the show.",
+
+        community:
+          "In less than two years, Villam grew a community of more than 10,000 followers on Instagram and 7,000 on Facebook.",
+
+        highlightsList: [
+          "#1 on Apple Podcasts in the Nature category in Mexico, Argentina and Peru",
+          "Top 10 on Spotify Mexico in the Science category",
+          "An environmental infographic reached more than 4.5 million people",
+          "Delivered talks, interviews and workshops on climate change for companies and institutions, including Tecnológico de Monterrey",
+        ],
+      },
+
+      trailer: {
+        label: "Audio / Trailer",
+        play: "Play Villam trailer",
+        pause: "Pause Villam trailer",
+        playbackPosition: "Trailer playback position",
+      },
 
       cta: {
         label: "Work With Me",
@@ -487,6 +566,59 @@ export const translations: Record<
       sideLabel: "Lado B",
       title: "Podcast",
 
+      feature: {
+        tag: "Notas de Producción / 01",
+
+        subtitle:
+          "Medioambiente · Cambio Climático · Sustentabilidad",
+
+        episodes: "Episodios",
+
+        myRole: "Mi Participación",
+
+        project: "El Proyecto",
+
+        highlights: "Logros Destacados",
+
+        listenOn: "Escuchar en",
+
+        artworkAlt: "Portada del podcast",
+
+        roles: [
+          "Cofundador",
+          "Coproductor y Editor del Podcast",
+          "Creador de Contenido",
+        ],
+
+        services: [
+          "Producción",
+          "Grabación",
+          "Edición",
+          "Música Original",
+          "Estrategia de Contenidos",
+        ],
+
+        description:
+          "Villam es una organización de comunicación y consultoría ambiental que cofundé. Mi trabajo abarcó estrategia de contenidos, gestión de comunidad y producción de podcast, incluyendo la coproducción y edición de Villam Podcast, además de la creación de música original para el programa.",
+
+        community:
+          "En menos de dos años, Villam construyó una comunidad de más de 10,000 seguidores en Instagram y 7,000 en Facebook.",
+
+        highlightsList: [
+          "#1 en Apple Podcasts, categoría Naturaleza, en México, Argentina y Perú",
+          "Top 10 en Spotify México, categoría Ciencia",
+          "Una infografía ambiental alcanzó a más de 4.5 millones de personas",
+          "Charlas, entrevistas y talleres sobre cambio climático para empresas e instituciones, incluyendo el Tecnológico de Monterrey",
+        ],
+      },
+
+      trailer: {
+        label: "Audio / Tráiler",
+        play: "Reproducir tráiler de Villam",
+        pause: "Pausar tráiler de Villam",
+        playbackPosition: "Posición de reproducción del tráiler",
+      },
+
       cta: {
         label: "Trabajemos Juntos",
         title: "¿Quieres crear o llevar más lejos tu podcast?",
@@ -660,6 +792,59 @@ export const translations: Record<
     podcast: {
       sideLabel: "Face B",
       title: "Podcast",
+
+      feature: {
+        tag: "Notes de Production / 01",
+
+        subtitle:
+          "Environnement · Changement Climatique · Développement Durable",
+
+        episodes: "Épisodes",
+
+        myRole: "Mon Rôle",
+
+        project: "Le Projet",
+
+        highlights: "Temps Forts",
+
+        listenOn: "Écouter sur",
+
+        artworkAlt: "Visuel du podcast",
+
+        roles: [
+          "Cofondateur",
+          "Coproducteur & Monteur du Podcast",
+          "Créateur de Contenu",
+        ],
+
+        services: [
+          "Production",
+          "Enregistrement",
+          "Montage",
+          "Musique Originale",
+          "Stratégie Éditoriale",
+        ],
+
+        description:
+          "Villam est une organisation de communication et de conseil spécialisée dans les enjeux environnementaux que j’ai cofondée. J’y ai travaillé sur la stratégie éditoriale, l’animation de communauté et la production du podcast, notamment en coproduisant et montant Villam Podcast et en composant sa musique originale.",
+
+        community:
+          "En moins de deux ans, Villam a développé une communauté de plus de 10 000 abonnés sur Instagram et 7 000 sur Facebook.",
+
+        highlightsList: [
+          "#1 sur Apple Podcasts dans la catégorie Nature au Mexique, en Argentine et au Pérou",
+          "Top 10 sur Spotify Mexique dans la catégorie Science",
+          "Une infographie environnementale a touché plus de 4,5 millions de personnes",
+          "Conférences, entretiens et ateliers sur le changement climatique pour des entreprises et institutions, dont le Tecnológico de Monterrey",
+        ],
+      },
+
+      trailer: {
+        label: "Audio / Bande-annonce",
+        play: "Lire la bande-annonce de Villam",
+        pause: "Mettre la bande-annonce de Villam en pause",
+        playbackPosition: "Position de lecture de la bande-annonce",
+      },
 
       cta: {
         label: "Travaillons Ensemble",
@@ -835,6 +1020,59 @@ export const translations: Record<
     podcast: {
       sideLabel: "B 面",
       title: "播客",
+
+      feature: {
+        tag: "製作筆記 / 01",
+
+        subtitle:
+          "環境 · 氣候變遷 · 永續發展",
+
+        episodes: "集",
+
+        myRole: "我的工作",
+
+        project: "專案介紹",
+
+        highlights: "重要成果",
+
+        listenOn: "收聽平台",
+
+        artworkAlt: "播客封面",
+
+        roles: [
+          "共同創辦人",
+          "播客共同製作與剪輯",
+          "內容創作者",
+        ],
+
+        services: [
+          "製作",
+          "錄音",
+          "剪輯",
+          "原創音樂",
+          "內容企劃",
+        ],
+
+        description:
+          "Villam 是由我共同創辦的環境傳播與顧問組織。我的工作涵蓋內容企劃、社群經營與播客製作，包括共同製作與剪輯 Villam Podcast，並為節目創作原創音樂。",
+
+        community:
+          "不到兩年內，Villam 在 Instagram 累積超過 10,000 名追蹤者，Facebook 也建立了超過 7,000 人的社群。",
+
+        highlightsList: [
+          "在墨西哥、阿根廷與秘魯的 Apple Podcasts「自然」類別排名第 1",
+          "進入 Spotify 墨西哥「科學」類別前 10 名",
+          "一則環境議題資訊圖觸及超過 450 萬人",
+          "為企業與教育機構舉辦氣候變遷講座、訪談與工作坊，包括 Tecnológico de Monterrey",
+        ],
+      },
+
+      trailer: {
+        label: "音訊 / 預告",
+        play: "播放 Villam 預告",
+        pause: "暫停 Villam 預告",
+        playbackPosition: "Villam 預告播放進度",
+      },
 
       cta: {
         label: "合作邀約",
