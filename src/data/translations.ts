@@ -274,7 +274,7 @@ export const translations: Record<
         label: "Work With Me",
         title: "Need sound for your production?",
         description:
-          "I’ve worked on more than 40 film productions across location sound and post-production. If you’re putting a project together, send me the details and I can help determine the sound setup you need and provide an estimate.",
+          "I’ve worked on more than 50 film productions across location sound and post-production. If you’re putting a project together, send me the details and I can help determine the sound setup you need and provide an estimate.",
         button: "Get in Touch",
         note:
           "Gear list, full film credits, resume and project estimates available upon request.",
@@ -508,7 +508,7 @@ export const translations: Record<
         label: "Trabajemos Juntos",
         title: "¿Necesitas sonido para tu producción?",
         description:
-          "He trabajado en más de 40 producciones audiovisuales, tanto en sonido directo como en postproducción. Si estás preparando un proyecto, cuéntame los detalles y puedo ayudarte a definir qué necesitas en sonido y preparar una cotización.",
+          "He trabajado en más de 50 producciones audiovisuales, tanto en sonido directo como en postproducción. Si estás preparando un proyecto, cuéntame los detalles y puedo ayudarte a definir qué necesitas en sonido y preparar una cotización.",
         button: "Hablemos",
         note:
           "Lista de equipo, filmografía completa, CV y cotizaciones disponibles a solicitud.",
@@ -741,7 +741,7 @@ export const translations: Record<
         label: "Travaillons Ensemble",
         title: "Besoin de son pour votre production ?",
         description:
-          "J’ai travaillé sur plus de 40 productions audiovisuelles, en son direct comme en postproduction. Si vous préparez un projet, envoyez-moi les détails : je peux vous aider à définir vos besoins en son et vous proposer une estimation.",
+          "J’ai travaillé sur plus de 50 productions audiovisuelles, en son direct comme en postproduction. Si vous préparez un projet, envoyez-moi les détails : je peux vous aider à définir vos besoins en son et vous proposer une estimation.",
         button: "Me Contacter",
         note:
           "Liste de matériel, filmographie complète, CV et estimations de projet disponibles sur demande.",
@@ -975,7 +975,7 @@ export const translations: Record<
         label: "合作邀約",
         title: "正在為你的製作尋找聲音團隊嗎？",
         description:
-          "我參與過 40 多部影視製作，工作涵蓋現場收音與聲音後期。如果你正在籌備新作品，歡迎告訴我製作需求，我可以協助規劃合適的收音配置並提供報價。",
+          "我參與過 50 多部影視製作，工作涵蓋現場收音與聲音後期。如果你正在籌備新作品，歡迎告訴我製作需求，我可以協助規劃合適的收音配置並提供報價。",
         button: "聯絡我",
         note:
           "可依需求提供器材清單、完整影視經歷、履歷與專案報價。",

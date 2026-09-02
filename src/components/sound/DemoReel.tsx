@@ -126,6 +126,22 @@ export default function DemoReel({
   const volumeFrameRef =
     useRef<number | null>(null);
 
+  const controlsTimerRef =
+    useRef<number | null>(null);
+
+  /*
+   * IMPORTANT:
+   * This tracks real desktop mouse
+   * hover only.
+   *
+   * Touch devices can synthesize mouse
+   * events after a tap, which was
+   * causing the mobile controls to
+   * sometimes remain visible forever.
+   */
+  const isMouseHoveringRef =
+    useRef(false);
+
   const lastActiveCreditRef =
     useRef<string | null>(null);
 
@@ -193,6 +209,11 @@ export default function DemoReel({
     setVideoVisible,
   ] = useState(true);
 
+  const [
+    controlsVisible,
+    setControlsVisible,
+  ] = useState(true);
+
   const displayedIndex =
     displayedCreditId
       ? reelCredits.findIndex(
@@ -236,102 +257,276 @@ export default function DemoReel({
   } = useAudioEngine();
 
   /* ==========================================
+     VIDEO INTERFACE VISIBILITY
+     ========================================== */
+
+  const clearControlsTimer =
+    useCallback(() => {
+      if (
+        controlsTimerRef.current !==
+        null
+      ) {
+        window.clearTimeout(
+          controlsTimerRef.current
+        );
+
+        controlsTimerRef.current =
+          null;
+      }
+    }, []);
+
+  const scheduleControlsHide =
+    useCallback(() => {
+      clearControlsTimer();
+
+      controlsTimerRef.current =
+        window.setTimeout(() => {
+          /*
+           * Desktop mouse hover keeps
+           * the interface visible.
+           *
+           * Touch never sets this ref,
+           * so mobile will always hide
+           * reliably after the delay.
+           */
+          if (
+            isMouseHoveringRef.current
+          ) {
+            controlsTimerRef.current =
+              null;
+
+            return;
+          }
+
+          setControlsVisible(false);
+
+          controlsTimerRef.current =
+            null;
+        }, 2200);
+    }, [clearControlsTimer]);
+
+  /*
+   * New reel:
+   * show information immediately.
+   *
+   * Playing:
+   * hide after 2.2 seconds unless a
+   * desktop mouse is hovering.
+   *
+   * Paused:
+   * keep information visible.
+   */
+  useEffect(() => {
+    clearControlsTimer();
+
+    setControlsVisible(true);
+
+    if (
+      isPlaying &&
+      !isMouseHoveringRef.current
+    ) {
+      scheduleControlsHide();
+    }
+
+    return () => {
+      clearControlsTimer();
+    };
+  }, [
+    displayedCreditId,
+    isPlaying,
+    clearControlsTimer,
+    scheduleControlsHide,
+  ]);
+
+  useEffect(() => {
+    return () => {
+      clearControlsTimer();
+    };
+  }, [clearControlsTimer]);
+
+  /*
+   * Desktop hover behavior.
+   *
+   * Pointer events let us distinguish
+   * a real mouse from touch input,
+   * avoiding synthesized mouse-hover
+   * behavior on phones/tablets.
+   */
+  const handlePointerEnter = (
+    event: React.PointerEvent<HTMLDivElement>
+  ) => {
+    if (
+      event.pointerType !==
+      "mouse"
+    ) {
+      return;
+    }
+
+    isMouseHoveringRef.current =
+      true;
+
+    clearControlsTimer();
+
+    setControlsVisible(true);
+  };
+
+  const handlePointerLeave = (
+    event: React.PointerEvent<HTMLDivElement>
+  ) => {
+    if (
+      event.pointerType !==
+      "mouse"
+    ) {
+      return;
+    }
+
+    isMouseHoveringRef.current =
+      false;
+
+    clearControlsTimer();
+
+    /*
+     * Desktop:
+     * when the mouse leaves while
+     * playing, hide immediately.
+     */
+    if (isPlaying) {
+      setControlsVisible(false);
+    } else {
+      setControlsVisible(true);
+    }
+  };
+
+  /*
+   * Mobile touch behavior.
+   *
+   * The touch reveals the information
+   * immediately BEFORE the click fires.
+   *
+   * The normal video click then still
+   * toggles playback on that SAME touch.
+   *
+   * Therefore:
+   *
+   * hidden + playing + tap
+   * → show data + pause immediately
+   *
+   * paused + tap
+   * → play + show data briefly
+   */
+  const handlePointerDown = (
+    event: React.PointerEvent<HTMLDivElement>
+  ) => {
+    if (
+      event.pointerType ===
+      "mouse"
+    ) {
+      return;
+    }
+
+    clearControlsTimer();
+
+    setControlsVisible(true);
+  };
+
+  /* ==========================================
      AUDIO FADE
      ========================================== */
 
   const fadeVolume =
-      useCallback(
-        (
-          video: HTMLVideoElement,
-          targetVolume: number,
-          durationMs: number
+    useCallback(
+      (
+        video: HTMLVideoElement,
+        targetVolume: number,
+        durationMs: number
+      ) => {
+        if (
+          volumeFrameRef.current !==
+          null
+        ) {
+          cancelAnimationFrame(
+            volumeFrameRef.current
+          );
+
+          volumeFrameRef.current =
+            null;
+        }
+
+        const startVolume =
+          Math.min(
+            1,
+            Math.max(
+              0,
+              video.volume
+            )
+          );
+
+        const safeTargetVolume =
+          Math.min(
+            1,
+            Math.max(
+              0,
+              targetVolume
+            )
+          );
+
+        const startTime =
+          performance.now();
+
+        const tick = (
+          now: number
         ) => {
-          if (
-            volumeFrameRef.current !==
-            null
-          ) {
-            cancelAnimationFrame(
-              volumeFrameRef.current
+          const progress =
+            Math.min(
+              1,
+              Math.max(
+                0,
+                (now - startTime) /
+                  durationMs
+              )
             );
+
+          const nextVolume =
+            startVolume +
+            (safeTargetVolume -
+              startVolume) *
+              progress;
+
+          /*
+           * HTMLMediaElement.volume
+           * must always remain between
+           * 0 and 1.
+           */
+          video.volume =
+            Math.min(
+              1,
+              Math.max(
+                0,
+                nextVolume
+              )
+            );
+
+          if (progress < 1) {
+            volumeFrameRef.current =
+              requestAnimationFrame(
+                tick
+              );
+          } else {
+            video.volume =
+              safeTargetVolume;
 
             volumeFrameRef.current =
               null;
           }
+        };
 
-          const startVolume =
-            Math.min(
-              1,
-              Math.max(
-                0,
-                video.volume
-              )
-            );
-
-          const safeTargetVolume =
-            Math.min(
-              1,
-              Math.max(
-                0,
-                targetVolume
-              )
-            );
-
-          const startTime =
-            performance.now();
-
-          const tick = (
-            now: number
-          ) => {
-            const progress =
-              Math.min(
-                1,
-                Math.max(
-                  0,
-                  (now - startTime) /
-                    durationMs
-                )
-              );
-
-            const nextVolume =
-              startVolume +
-              (safeTargetVolume -
-                startVolume) *
-                progress;
-
-            /*
-            * HTMLMediaElement.volume
-            * MUST stay between 0 and 1.
-            */
-            video.volume =
-              Math.min(
-                1,
-                Math.max(
-                  0,
-                  nextVolume
-                )
-              );
-
-            if (progress < 1) {
-              volumeFrameRef.current =
-                requestAnimationFrame(
-                  tick
-                );
-            } else {
-              video.volume =
-                safeTargetVolume;
-
-              volumeFrameRef.current =
-                null;
-            }
-          };
-
-          volumeFrameRef.current =
-            requestAnimationFrame(
-              tick
-            );
-        },
-        []
-  );
+        volumeFrameRef.current =
+          requestAnimationFrame(
+            tick
+          );
+      },
+      []
+    );
 
   useEffect(() => {
     return () => {
@@ -471,14 +666,6 @@ export default function DemoReel({
         const token =
           ++transitionTokenRef.current;
 
-        /*
-         * Fade the current picture and
-         * audio before changing source.
-         *
-         * If the clip already ended,
-         * it has already been faded by
-         * the near-end transition.
-         */
         if (
           video &&
           !video.ended
@@ -522,10 +709,6 @@ export default function DemoReel({
           autoplay,
         };
 
-        /*
-         * Clicking the same credit
-         * again restarts that clip.
-         */
         if (
           displayedCreditId ===
           target.id
@@ -637,6 +820,7 @@ export default function DemoReel({
 
       if (!pending) {
         video.volume = 1;
+
         setVideoVisible(true);
 
         return;
@@ -659,6 +843,7 @@ export default function DemoReel({
         video.volume = 1;
 
         setIsPlaying(false);
+
         onPlayingChange(false);
 
         requestAnimationFrame(
@@ -696,6 +881,7 @@ export default function DemoReel({
         video.volume = 1;
 
         setIsPlaying(false);
+
         onPlayingChange(false);
 
         setVideoVisible(true);
@@ -757,7 +943,14 @@ export default function DemoReel({
         await resumeAudio();
 
         video.volume = 0;
+
         setVideoVisible(true);
+
+        /*
+         * Whenever playback begins,
+         * reveal the interface again.
+         */
+        setControlsVisible(true);
 
         try {
           await video.play();
@@ -771,9 +964,17 @@ export default function DemoReel({
           video.volume = 1;
 
           setIsPlaying(false);
+
           onPlayingChange(false);
         }
       } else {
+        /*
+         * A click/tap while playing
+         * pauses immediately.
+         *
+         * The onPause handler below
+         * keeps the interface visible.
+         */
         video.pause();
       }
     }, [
@@ -835,10 +1036,6 @@ export default function DemoReel({
             video.duration -
             video.currentTime;
 
-          /*
-           * Very short fade before the
-           * next reel replaces this one.
-           */
           if (
             remaining <= 0.18 &&
             remaining > 0 &&
@@ -958,14 +1155,11 @@ export default function DemoReel({
 
   const handleEnded = () => {
     setIsPlaying(false);
+
     onPlayingChange(false);
 
     setCurrentTime(0);
 
-    /*
-     * Normal clip:
-     * continue automatically.
-     */
     if (nextCredit) {
       requestCreditChange(
         nextCredit,
@@ -975,12 +1169,6 @@ export default function DemoReel({
       return;
     }
 
-    /*
-     * Last reel:
-     * return to clip 01,
-     * load its first frame,
-     * but leave it paused.
-     */
     const firstCredit =
       reelCredits[0];
 
@@ -1075,6 +1263,15 @@ export default function DemoReel({
             ? "relative aspect-video w-full overflow-hidden bg-black"
             : "retro-media-frame relative aspect-video w-full"
         }
+        onPointerEnter={
+          handlePointerEnter
+        }
+        onPointerLeave={
+          handlePointerLeave
+        }
+        onPointerDown={
+          handlePointerDown
+        }
       >
         <video
           ref={videoRef}
@@ -1109,142 +1306,181 @@ export default function DemoReel({
           }}
           onPlay={() => {
             setIsPlaying(true);
+
             onPlayingChange(true);
+
+            setControlsVisible(true);
 
             syncVideoMetadata();
           }}
           onPause={() => {
             setIsPlaying(false);
+
             onPlayingChange(false);
+
+            clearControlsTimer();
+
+            /*
+             * Pausing from the video,
+             * desktop or mobile,
+             * immediately reveals and
+             * keeps all reel information.
+             */
+            setControlsVisible(true);
 
             syncVideoMetadata();
           }}
           onEnded={
             handleEnded
           }
-          onClick={
-            togglePlay
-          }
+          onClick={() => {
+            /*
+             * Same behavior on desktop
+             * and mobile:
+             *
+             * playing → pause
+             * paused  → play
+             *
+             * There is no separate
+             * "reveal-only" first tap.
+             */
+            void togglePlay();
+          }}
         />
 
-        {/* Reel counter */}
-        <div className="pointer-events-none absolute left-3 top-3 z-20">
-          <span className="font-retro bg-black/60 px-2 py-1 text-[9px] uppercase tracking-[0.12em] text-white">
-            JG / Reel{" "}
-            {String(
-              reelNumber
-            ).padStart(
-              2,
-              "0"
-            )}{" "}
-            /{" "}
-            {String(
-              reelTotal
-            ).padStart(
-              2,
-              "0"
-            )}
-          </span>
-        </div>
-
-        {/* Project title + roles */}
-        {currentCredit && (
-          <div className="pointer-events-none absolute bottom-7 left-3 z-20 flex max-w-[75%] flex-col items-start gap-1">
-            {/* Title */}
-            <span className="font-retro bg-black/60 px-2 py-1 text-[9px] font-bold uppercase tracking-[0.12em] text-white">
-              {currentCredit.title}
-            </span>
-
-            {/* Roles */}
-            <span className="font-retro bg-black/60 px-2 py-1 text-[8px] leading-relaxed tracking-[0.06em] text-white md:text-[9px]">
-              {currentCredit.roles
-                .map((role) => roles[role])
-                .join(" · ")}
+        {/* Auto-hiding interface.
+            Wrapper ignores pointer events
+            so clicking/tapping the image
+            still reaches the video. */}
+        <div
+          className={`pointer-events-none absolute inset-0 z-20 transition-opacity duration-200 ${
+            controlsVisible
+              ? "opacity-100"
+              : "opacity-0"
+          }`}
+        >
+          {/* Reel counter */}
+          <div className="absolute left-3 top-3">
+            <span className="font-retro bg-black/60 px-2 py-1 text-[9px] uppercase tracking-[0.12em] text-white">
+              JG / Reel{" "}
+              {String(
+                reelNumber
+              ).padStart(
+                2,
+                "0"
+              )}{" "}
+              /{" "}
+              {String(
+                reelTotal
+              ).padStart(
+                2,
+                "0"
+              )}
             </span>
           </div>
-        )}
 
-        {/* Previous — completely absent on reel 01 */}
-        {previousCredit && (
-          <button
-            type="button"
-            onClick={
-              handlePrevious
-            }
-            aria-label={
-              navigation.previous
-            }
-            className="absolute cursor-pointer left-3 top-1/2 z-20 flex h-9 w-9 -translate-y-1/2 items-center justify-center border border-white/60 bg-black/35 text-white opacity-70 backdrop-blur-[2px] transition-all hover:bg-black/65 hover:opacity-100"
-          >
-            <ArrowIcon
-              name="left"
-              className="h-3.5 w-3.5"
-            />
-          </button>
-        )}
+          {/* Project title + roles */}
+          {currentCredit && (
+            <div className="absolute bottom-7 left-3 flex max-w-[75%] flex-col items-start gap-1">
+              <span className="font-retro bg-black/60 px-2 py-1 text-[9px] font-bold uppercase tracking-[0.12em] text-white">
+                {
+                  currentCredit.title
+                }
+              </span>
 
-        {/* Next — absent on final reel */}
-        {nextCredit && (
-          <button
-            type="button"
-            onClick={
-              handleNext
-            }
-            aria-label={
-              navigation.next
-            }
-            className="absolute cursor-pointer right-3 top-1/2 z-20 flex h-9 w-9 -translate-y-1/2 items-center justify-center border border-white/60 bg-black/35 text-white opacity-70 backdrop-blur-[2px] transition-all hover:bg-black/65 hover:opacity-100"
-          >
-            <ArrowIcon
-              name="right"
-              className="h-3.5 w-3.5"
-            />
-          </button>
-        )}
-
-        {/* Fullscreen */}
-        <button
-          type="button"
-          onClick={() => {
-            void toggleFullscreen();
-          }}
-          className="absolute right-3 top-3 z-20 flex h-8 w-8 items-center justify-center border border-white/70 bg-black/40 text-white transition-colors hover:bg-black/65"
-          aria-label={
-            isFullscreen
-              ? t.exitFullscreen
-              : t.fullscreen
-          }
-        >
-          {isFullscreen ? (
-            <svg
-              aria-hidden="true"
-              viewBox="0 0 24 24"
-              className="h-3.5 w-3.5 fill-none stroke-current"
-              strokeWidth="2"
-            >
-              <path d="M9 3v6H3" />
-              <path d="M15 3v6h6" />
-              <path d="M9 21v-6H3" />
-              <path d="M15 21v-6h6" />
-            </svg>
-          ) : (
-            <svg
-              aria-hidden="true"
-              viewBox="0 0 24 24"
-              className="h-3.5 w-3.5 fill-none stroke-current"
-              strokeWidth="2"
-            >
-              <path d="M3 9V3h6" />
-              <path d="M15 3h6v6" />
-              <path d="M3 15v6h6" />
-              <path d="M21 15v6h-6" />
-            </svg>
+              <span className="font-retro bg-black/60 px-2 py-1 text-[8px] leading-relaxed tracking-[0.06em] text-white md:text-[9px]">
+                {currentCredit.roles
+                  .map(
+                    (role) =>
+                      roles[role]
+                  )
+                  .join(" · ")}
+              </span>
+            </div>
           )}
-        </button>
 
-        {/* Clip progress */}
+          {/* Previous — completely absent on reel 01 */}
+          {previousCredit && (
+            <button
+              type="button"
+              onClick={
+                handlePrevious
+              }
+              aria-label={
+                navigation.previous
+              }
+              className="pointer-events-auto absolute left-3 top-1/2 flex h-9 w-9 -translate-y-1/2 cursor-pointer items-center justify-center border border-white/60 bg-black/35 text-white opacity-70 backdrop-blur-[2px] transition-all hover:bg-black/65 hover:opacity-100"
+            >
+              <ArrowIcon
+                name="left"
+                className="h-3.5 w-3.5"
+              />
+            </button>
+          )}
+
+          {/* Next — absent on final reel */}
+          {nextCredit && (
+            <button
+              type="button"
+              onClick={
+                handleNext
+              }
+              aria-label={
+                navigation.next
+              }
+              className="pointer-events-auto absolute right-3 top-1/2 flex h-9 w-9 -translate-y-1/2 cursor-pointer items-center justify-center border border-white/60 bg-black/35 text-white opacity-70 backdrop-blur-[2px] transition-all hover:bg-black/65 hover:opacity-100"
+            >
+              <ArrowIcon
+                name="right"
+                className="h-3.5 w-3.5"
+              />
+            </button>
+          )}
+
+          {/* Fullscreen */}
+          <button
+            type="button"
+            onClick={() => {
+              void toggleFullscreen();
+            }}
+            className="pointer-events-auto absolute right-3 top-3 flex h-8 w-8 cursor-pointer items-center justify-center border border-white/70 bg-black/40 text-white transition-colors hover:bg-black/65"
+            aria-label={
+              isFullscreen
+                ? t.exitFullscreen
+                : t.fullscreen
+            }
+          >
+            {isFullscreen ? (
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 24 24"
+                className="h-3.5 w-3.5 fill-none stroke-current"
+                strokeWidth="2"
+              >
+                <path d="M9 3v6H3" />
+                <path d="M15 3v6h6" />
+                <path d="M9 21v-6H3" />
+                <path d="M15 21v-6h6" />
+              </svg>
+            ) : (
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 24 24"
+                className="h-3.5 w-3.5 fill-none stroke-current"
+                strokeWidth="2"
+              >
+                <path d="M3 9V3h6" />
+                <path d="M15 3h6v6" />
+                <path d="M3 15v6h6" />
+                <path d="M21 15v6h-6" />
+              </svg>
+            )}
+          </button>
+        </div>
+
+        {/* Clip progress — always visible */}
         <div
-          className="pointer-events-none absolute bottom-3 left-3 right-3 z-20 h-[2px] overflow-hidden bg-white/25"
+          className="pointer-events-none absolute bottom-3 left-3 right-3 z-30 h-[2px] overflow-hidden bg-white/25"
           aria-hidden="true"
         >
           <div
