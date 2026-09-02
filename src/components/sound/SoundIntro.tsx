@@ -26,10 +26,6 @@ export default function SoundIntro() {
     setReelPlayRequest,
   ] = useState(0);
 
-  /*
-   * Master Play / Pause button beside
-   * the Demo Reel title.
-   */
   const [
     transportRequest,
     setTransportRequest,
@@ -81,94 +77,176 @@ export default function SoundIntro() {
       <hr className="retro-divider-strong my-5 md:my-7" />
 
       {/* =====================================================
-          SOUND DESIGN
+          DEMO REEL CONSOLE
           ===================================================== */}
 
-      <section className="grid grid-cols-[minmax(0,1fr)] items-start gap-y-5 md:grid-cols-[0.9fr_1.25fr] md:items-stretch md:gap-10">
-        {/* Information */}
-        <div className="contents md:flex md:min-h-0 md:flex-col md:overflow-hidden md:[contain:size]">
-          <div className="order-1 md:order-none">
+      <section className="w-full overflow-hidden border border-[var(--line)] bg-[var(--paper-light)]">
+        {/* ===================================================
+            CONSOLE HEADER
+            =================================================== */}
+
+        <div className="flex items-end justify-between gap-4 border-b border-[var(--line)] px-4 py-4 md:px-6 md:py-5">
+          <div className="min-w-0">
             <span className="retro-tag retro-tag-lilac">
               {reel.tag}
             </span>
 
-            {/* Demo Reel title + master transport */}
-            <div className="mt-4 flex items-center gap-4">
-              <h2 className="text-3xl font-bold">
-                {reel.title}
-              </h2>
-
-              <button
-                type="button"
-                onClick={() =>
-                  setTransportRequest(
-                    (current) =>
-                      current + 1
-                  )
-                }
-                aria-label={
-                  isReelPlaying
-                    ? reel.pause
-                    : reel.play
-                }
-                aria-pressed={
-                  isReelPlaying
-                }
-                className="flex h-12 w-12 shrink-0 items-center justify-center border border-[var(--line)] bg-[var(--paper-light)] transition-colors hover:bg-[var(--lilac)]"
-              >
-                <ArrowIcon
-                  name={
-                    isReelPlaying
-                      ? "pause"
-                      : "play"
-                  }
-                  className="h-4 w-4"
-                />
-              </button>
-            </div>
-
-            <p className="mt-5 max-w-sm text-sm leading-relaxed opacity-70">
-              {reel.description}
-            </p>
+            <h2 className="mt-3 text-3xl font-bold md:text-4xl">
+              {reel.title}
+            </h2>
           </div>
 
-          <div className="order-3 min-h-0 md:order-none md:flex md:flex-1 md:flex-col md:overflow-hidden">
-            <PostProductionCredits
+          {/* Master Play / Pause */}
+          <button
+            type="button"
+            onClick={() =>
+              setTransportRequest(
+                (current) =>
+                  current + 1
+              )
+            }
+            aria-label={
+              isReelPlaying
+                ? reel.pause
+                : reel.play
+            }
+            aria-pressed={
+              isReelPlaying
+            }
+            className={`
+              font-retro
+              flex h-11 w-11 shrink-0
+              items-center justify-center
+              border border-[var(--line)]
+              text-[10px]
+              font-bold uppercase
+              tracking-[0.08em]
+              transition-colors
+              md:h-12 md:w-auto md:gap-2 md:px-5
+              ${
+                isReelPlaying
+                  ? "bg-[var(--lilac)]"
+                  : "bg-[var(--paper)] hover:bg-[var(--lilac)]"
+              }
+            `}
+          >
+            <ArrowIcon
+              name={
+                isReelPlaying
+                  ? "pause"
+                  : "play"
+              }
+              className="h-3.5 w-3.5"
+            />
+
+            {/* Desktop only */}
+            <span className="hidden md:inline">
+              {isReelPlaying
+                ? reel.pause
+                : reel.play}
+            </span>
+          </button>
+        </div>
+
+        {/* ===================================================
+            CONSOLE BODY
+          
+            Desktop:
+            The VIDEO determines the height.
+            The left panel is positioned inside that same
+            height so the credits scroll instead of expanding
+            the entire console.
+            =================================================== */}
+
+        <div className="relative min-w-0">
+          {/* ===============================================
+              VIDEO PANEL
+
+              Mobile: first
+              Desktop: right 58.14% of console
+              =============================================== */}
+
+          <div className="w-full min-w-0 bg-black md:ml-[41.86%] md:w-[58.14%]">
+            <DemoReel
+              embedded
               activeCreditId={
                 activeCreditId
               }
-              onSelectReelCredit={
-                handleSelectReelCredit
+              playRequest={
+                reelPlayRequest
+              }
+              transportRequest={
+                transportRequest
+              }
+              onActiveCreditChange={
+                setActiveCreditId
+              }
+              onPlayingChange={
+                setIsReelPlaying
               }
             />
           </div>
 
-          <div className="order-4 mt-0 border-t border-[var(--line-light)] pt-3 md:order-none md:mt-auto md:pt-4">
-            <p className="font-retro max-w-none whitespace-nowrap text-[9px] uppercase tracking-[-0.02em] opacity-55 md:text-[11px] md:tracking-[0.01em]">
-              {reel.disciplines}
-            </p>
+          {/* ===============================================
+              LEFT PANEL
+
+              Mobile: normal document flow
+              Desktop: exactly matches video height
+              =============================================== */}
+
+          <div
+            className="
+              flex min-w-0 flex-col
+              border-t border-[var(--line)]
+              md:absolute
+              md:inset-y-0
+              md:left-0
+              md:w-[41.86%]
+              md:min-h-0
+              md:overflow-hidden
+              md:border-r
+              md:border-t-0
+            "
+          >
+            {/* Description */}
+            <div className="shrink-0 px-4 py-5 md:px-6 md:py-5">
+              <p className="max-w-md text-sm leading-relaxed opacity-70">
+                {reel.description}
+              </p>
+            </div>
+
+            {/* Credits */}
+            <div className="min-h-0 border-t border-[var(--line-light)] px-4 pb-4 pt-3 md:flex md:flex-1 md:flex-col md:overflow-hidden md:px-6 md:pb-4">
+              <PostProductionCredits
+                activeCreditId={
+                  activeCreditId
+                }
+                onSelectReelCredit={
+                  handleSelectReelCredit
+                }
+              />
+            </div>
           </div>
         </div>
 
-        {/* Reel */}
-        <div className="order-2 min-w-0 w-full md:order-none">
-          <DemoReel
-            activeCreditId={
-              activeCreditId
-            }
-            playRequest={
-              reelPlayRequest
-            }
-            transportRequest={
-              transportRequest
-            }
-            onActiveCreditChange={
-              setActiveCreditId
-            }
-            onPlayingChange={
-              setIsReelPlaying
-            }
-          />
+        {/* ===================================================
+            CONSOLE FOOTER
+            =================================================== */}
+
+        <div className="font-retro grid gap-2 border-t border-[var(--line)] px-4 py-3 text-[9px] uppercase tracking-[0.06em] opacity-50 md:grid-cols-[1fr_auto] md:items-center md:px-6 md:text-[10px]">
+          <span>
+            {reel.disciplines}
+          </span>
+
+          <span className="whitespace-nowrap">
+            Stereo / 48 kHz
+
+            <span className="mx-2 opacity-40">
+              /
+            </span>
+
+            {reel.technicalLabel}
+          </span>
         </div>
       </section>
 

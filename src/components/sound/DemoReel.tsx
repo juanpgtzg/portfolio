@@ -8,7 +8,6 @@ import {
 } from "react";
 
 import { useAudioEngine } from "@/components/audio/AudioProvider";
-import ArrowIcon from "@/components/ui/ArrowIcon";
 import { useLanguage } from "@/context/LanguageContext";
 import { translations } from "@/data/translations";
 
@@ -40,6 +39,8 @@ const reelCredits =
     );
 
 interface DemoReelProps {
+  embedded?: boolean;
+
   activeCreditId: string | null;
 
   playRequest: number;
@@ -56,6 +57,7 @@ interface DemoReelProps {
 }
 
 export default function DemoReel({
+  embedded = false,
   activeCreditId,
   playRequest,
   transportRequest,
@@ -87,11 +89,6 @@ export default function DemoReel({
   const lastTransportRequestRef =
     useRef(transportRequest);
 
-  /*
-   * Keep the old full demo reel as
-   * a fallback until individual
-   * reel clips are added.
-   */
   const legacyDemoReelSrc =
     process.env
       .NEXT_PUBLIC_DEMO_REEL_URL ||
@@ -145,7 +142,7 @@ export default function DemoReel({
   ] = useState(false);
 
   /* ==========================================
-     FULLSCREEN
+     FULLSCREEN STATE
      ========================================== */
 
   useEffect(() => {
@@ -171,7 +168,7 @@ export default function DemoReel({
   }, []);
 
   /* ==========================================
-     VIDEO METADATA
+     METADATA
      ========================================== */
 
   const syncVideoMetadata =
@@ -198,7 +195,7 @@ export default function DemoReel({
     }, []);
 
   /* ==========================================
-     LOAD A CREDIT CLIP
+     LOAD SELECTED CREDIT
      ========================================== */
 
   useEffect(() => {
@@ -247,10 +244,6 @@ export default function DemoReel({
         setCurrentTime(0);
         setDuration(0);
 
-        /*
-         * Reload the <video> element
-         * using the newly selected src.
-         */
         video.load();
 
         registerMediaElement(
@@ -296,20 +289,11 @@ export default function DemoReel({
       if (!video) return;
 
       if (video.paused) {
-        /*
-         * If this is the first Play,
-         * activate the first reel credit.
-         */
         if (
           currentCredit &&
           activeCreditId !==
             currentCredit.id
         ) {
-          /*
-           * Prevent the clip-selection
-           * effect from reloading the same
-           * clip we are about to play.
-           */
           lastActiveCreditRef.current =
             currentCredit.id;
 
@@ -321,10 +305,6 @@ export default function DemoReel({
           );
         }
 
-        /*
-         * If the last clip finished,
-         * clicking Play restarts it.
-         */
         if (video.ended) {
           video.currentTime = 0;
         }
@@ -355,7 +335,7 @@ export default function DemoReel({
     ]);
 
   /* ==========================================
-     MASTER BUTTON BESIDE DEMO REEL TITLE
+     MASTER CONSOLE PLAY BUTTON
      ========================================== */
 
   useEffect(() => {
@@ -456,9 +436,6 @@ export default function DemoReel({
       }
     }
 
-    /*
-     * Final clip stops naturally.
-     */
     setIsPlaying(false);
     onPlayingChange(false);
 
@@ -466,7 +443,7 @@ export default function DemoReel({
   };
 
   /* ==========================================
-     FULLSCREEN CONTROL
+     FULLSCREEN
      ========================================== */
 
   const toggleFullscreen =
@@ -498,9 +475,6 @@ export default function DemoReel({
         return;
       }
 
-      /*
-       * iPhone Safari fallback.
-       */
       const iosVideo =
         video as HTMLVideoElement & {
           webkitEnterFullscreen?: () => void;
@@ -510,7 +484,7 @@ export default function DemoReel({
     };
 
   /* ==========================================
-     DISPLAY
+     DISPLAY VALUES
      ========================================== */
 
   const reelNumber =
@@ -538,10 +512,13 @@ export default function DemoReel({
 
   return (
     <div className="w-full min-w-0">
-      {/* Video */}
       <div
         ref={frameRef}
-        className="retro-media-frame relative aspect-video w-full"
+        className={
+          embedded
+            ? "relative aspect-video w-full overflow-hidden bg-black"
+            : "retro-media-frame relative aspect-video w-full"
+        }
       >
         <video
           ref={videoRef}
@@ -596,7 +573,7 @@ export default function DemoReel({
           }
         />
 
-        {/* Current reel index */}
+        {/* Reel index */}
         <div className="pointer-events-none absolute left-3 top-3 z-20">
           <span className="font-retro bg-black/60 px-2 py-1 text-[9px] uppercase tracking-[0.12em] text-white">
             JG / Reel{" "}
@@ -626,7 +603,7 @@ export default function DemoReel({
 
             void toggleFullscreen();
           }}
-          className="absolute right-2 top-2 z-20 flex h-7 w-7 items-center justify-center border border-[var(--paper)] bg-black/40 text-[var(--paper)] transition-colors hover:bg-black/60 md:right-3 md:top-3 md:h-8 md:w-8"
+          className="absolute right-3 top-3 z-20 flex h-8 w-8 items-center justify-center border border-white/70 bg-black/40 text-white transition-colors hover:bg-black/65"
           aria-label={
             isFullscreen
               ? t.exitFullscreen
@@ -660,9 +637,9 @@ export default function DemoReel({
           )}
         </button>
 
-        {/* Instagram-style clip progress */}
+        {/* Clip progress */}
         <div
-          className="pointer-events-none absolute bottom-2 left-3 right-3 z-20 h-[2px] overflow-hidden bg-white/25"
+          className="pointer-events-none absolute bottom-3 left-3 right-3 z-20 h-[2px] overflow-hidden bg-white/25"
           aria-hidden="true"
         >
           <div
@@ -674,16 +651,18 @@ export default function DemoReel({
         </div>
       </div>
 
-      {/* Technical footer */}
-      <div className="font-retro mt-2 flex justify-between text-[9px] uppercase tracking-[0.1em] opacity-35">
-        <span>
-          Stereo / 48 kHz
-        </span>
+      {/* Only show standalone footer outside the console */}
+      {!embedded && (
+        <div className="font-retro mt-2 flex justify-between text-[9px] uppercase tracking-[0.1em] opacity-35">
+          <span>
+            Stereo / 48 kHz
+          </span>
 
-        <span>
-          {t.technicalLabel}
-        </span>
-      </div>
+          <span>
+            {t.technicalLabel}
+          </span>
+        </div>
+      )}
     </div>
   );
 }
