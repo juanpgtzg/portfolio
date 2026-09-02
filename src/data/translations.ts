@@ -138,6 +138,7 @@ export const translations: Record<
         soundRedesignFinalProject: string;
         gameAudioFinalProject: string;
         soundRedesignProject: string;
+        leoAwardNominee2025: string;
       };
     };
 
@@ -343,6 +344,9 @@ export const translations: Record<
 
         soundRedesignProject:
           "Sound redesign — VFS project",
+
+        leoAwardNominee2025:
+            "2025 Leo Awards Nominee — Best Sound in a Short Drama",
       },
     },
 
@@ -577,6 +581,9 @@ export const translations: Record<
 
         soundRedesignProject:
           "Rediseño sonoro — Proyecto de VFS",
+
+        leoAwardNominee2025:
+          "Nominado a los Leo Awards 2025 — Mejor Sonido en un Drama Corto",
       },
     },
 
@@ -810,6 +817,9 @@ export const translations: Record<
 
         soundRedesignProject:
           "Recréation sonore — Projet VFS",
+
+        leoAwardNominee2025:
+          "Nommé aux Leo Awards 2025 — Meilleur Son dans un Court Métrage Dramatique",
       },
     },
 
@@ -1044,6 +1054,9 @@ export const translations: Record<
 
         soundRedesignProject:
           "聲音重新設計 — VFS 專案",
+
+        leoAwardNominee2025:
+          "2025 Leo Awards 入圍 — 短篇劇情類最佳聲音",
       },
     },
 

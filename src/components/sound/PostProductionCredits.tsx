@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 import {
   useEffect,
   useRef,
@@ -382,7 +384,7 @@ export default function PostProductionCredits({
   };
 
   const imdbTooltipRef =
-  useRef<HTMLSpanElement>(null);
+    useRef<HTMLSpanElement>(null);
 
   const [
     showImdbTooltip,
@@ -398,8 +400,8 @@ export default function PostProductionCredits({
   });
 
   const filmCard =
-  translations[language].sound
-    .filmCard;
+    translations[language].sound
+      .filmCard;
 
   const handleImdbMouseMove = (
     event: React.MouseEvent<HTMLAnchorElement>
@@ -486,7 +488,7 @@ export default function PostProductionCredits({
               const isActive =
                 activeCreditId ===
                 credit.id;
-              
+
               const isActivePlaying =
                 isActive &&
                 isReelPlaying;
@@ -498,7 +500,8 @@ export default function PostProductionCredits({
 
               const isLastReelCredit =
                 hasReel &&
-                index === reelCredits.length - 1;
+                index ===
+                  reelCredits.length - 1;
 
               const hiddenOnMobile =
                 !showAllMobile &&
@@ -518,7 +521,6 @@ export default function PostProductionCredits({
                   {/* Additional credits separator */}
                   {isFirstAdditional && (
                     <div className="relative py-4 md:py-5">
-                      {/* Single full-width section divider */}
                       <div className="pointer-events-none absolute left-0 right-0 top-0 h-px bg-[var(--line)] md:-right-5" />
 
                       <p className="font-retro text-[9px] font-bold uppercase tracking-[0.07em] opacity-50 md:text-[10px]">
@@ -544,7 +546,7 @@ export default function PostProductionCredits({
                   >
                     {/* Active background */}
                     <div
-                      className={`pointer-events-none absolute inset-y-0 left-0 right-0 md:-right-5 transition-opacity duration-200 ${
+                      className={`pointer-events-none absolute inset-y-0 left-0 right-0 transition-opacity duration-200 md:-right-5 ${
                         isActive
                           ? "bg-[var(--lilac)] opacity-25"
                           : "opacity-0"
@@ -557,10 +559,12 @@ export default function PostProductionCredits({
                     )}
 
                     {/* Row divider */}
-                    {index !== displayCredits.length - 1 &&
+                    {index !==
+                      displayCredits.length -
+                        1 &&
                       !isLastReelCredit && (
                         <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-px bg-[var(--line-light)] md:-right-5" />
-                    )}
+                      )}
 
                     {hasReel ? (
                       <button
@@ -577,14 +581,24 @@ export default function PostProductionCredits({
                         className="relative z-[1] block w-full cursor-pointer text-left"
                       >
                         <CreditContent
-                          credit={credit}
-                          index={index}
-                          isActive={isActive}
+                          credit={
+                            credit
+                          }
+                          index={
+                            index
+                          }
+                          isActive={
+                            isActive
+                          }
                           isPlaying={
                             isActivePlaying
                           }
-                          roles={roles}
-                          notes={notes}
+                          roles={
+                            roles
+                          }
+                          notes={
+                            notes
+                          }
                           showPlay
                         />
                       </button>
@@ -612,19 +626,30 @@ export default function PostProductionCredits({
 
                     {credit.link && (
                       <a
-                        href={credit.link}
+                        href={
+                          credit.link
+                        }
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label={`${filmCard.viewOnImdb}: ${credit.title}`}
-                        onMouseEnter={(event) => {
-                          setShowImdbTooltip(true);
-                          handleImdbMouseMove(event);
+                        onMouseEnter={(
+                          event
+                        ) => {
+                          setShowImdbTooltip(
+                            true
+                          );
+
+                          handleImdbMouseMove(
+                            event
+                          );
                         }}
                         onMouseMove={
                           handleImdbMouseMove
                         }
                         onMouseLeave={() =>
-                          setShowImdbTooltip(false)
+                          setShowImdbTooltip(
+                            false
+                          )
                         }
                         className="absolute bottom-2 right-0 z-[3] flex h-4 w-4 cursor-pointer items-center justify-center opacity-35 transition-opacity hover:opacity-100 md:right-1"
                       >
@@ -698,6 +723,7 @@ export default function PostProductionCredits({
           </div>
         </div>
       </div>
+
       {/* IMDb cursor tooltip */}
       <span
         ref={imdbTooltipRef}
@@ -721,7 +747,6 @@ export default function PostProductionCredits({
         </span>
       </span>
     </div>
-
   );
 }
 
@@ -753,6 +778,9 @@ function CreditContent({
   notes,
   showPlay = false,
 }: CreditContentProps) {
+  const isLeoNominee =
+    credit.id === "stand-in";
+
   return (
     <div className="grid w-full min-w-0 grid-cols-[24px_minmax(0,1fr)_24px] items-start gap-x-2 gap-y-0 py-2">
       {/* Number */}
@@ -765,13 +793,29 @@ function CreditContent({
       >
         {String(
           index + 1
-        ).padStart(2, "0")}
+        ).padStart(
+          2,
+          "0"
+        )}
       </span>
 
-      {/* Title */}
-      <p className="font-retro col-start-2 row-start-1 min-w-0 truncate text-[11px] font-bold uppercase tracking-[0.03em]">
-        {credit.title}
-      </p>
+      {/* Title + Leo Awards nomination */}
+      <div className="col-start-2 row-start-1 flex min-w-0 items-center gap-2">
+        <p className="font-retro min-w-0 truncate text-[11px] font-bold uppercase tracking-[0.03em]">
+          {credit.title}
+        </p>
+
+        {isLeoNominee && (
+          <Image
+            src="/images/awards/leo-awards-2025-nominee.png"
+            alt="2025 Leo Awards Nominee"
+            width={56}
+            height={20}
+            sizes="56px"
+            className="h-[18px] w-auto shrink-0 object-contain opacity-75 md:h-[20px]"
+          />
+        )}
+      </div>
 
       {/* Play / Pause indicator */}
       {showPlay && (

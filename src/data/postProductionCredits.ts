@@ -33,7 +33,7 @@ export const postProductionCredits: PostProductionCredit[] = [
 
     reel: {
       src: "/video/sound/reel/fifa-spec.mp4",
-      order: 5,
+      order: 2,
     },
   },
 
@@ -82,6 +82,7 @@ export const postProductionCredits: PostProductionCredit[] = [
       "soundDesigner",
     ],
     link: "https://www.imdb.com/es-es/title/tt34076541/?ref_=ext_shr_lnk",
+    note: "leoAwardNominee2025",
   },
 
   {
@@ -123,7 +124,7 @@ export const postProductionCredits: PostProductionCredit[] = [
 
     reel: {
       src: "/video/sound/reel/paper-samurai.mp4",
-      order: 2,
+      order: 5,
     },
   },
 

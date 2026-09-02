@@ -1,4 +1,5 @@
 export type PostProductionNoteKey =
   | "soundRedesignFinalProject"
   | "gameAudioFinalProject"
-  | "soundRedesignProject";
+  | "soundRedesignProject"
+  | "leoAwardNominee2025"
