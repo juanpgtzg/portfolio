@@ -77,15 +77,16 @@ export default function SoundIntro() {
       <hr className="retro-divider-strong my-5 md:my-7" />
 
       {/* =====================================================
-          DEMO REEL CONSOLE
+          DEMO REEL
           ===================================================== */}
 
-      <section className="w-full overflow-hidden border border-[var(--line)] bg-[var(--paper-light)]">
+      <section className="w-full">
         {/* ===================================================
-            CONSOLE HEADER
+            SECTION HEADING
+            Outside the media box
             =================================================== */}
 
-        <div className="flex items-end justify-between gap-4 border-b border-[var(--line)] px-4 py-4 md:px-6 md:py-5">
+        <div className="mb-5 flex items-end justify-between gap-4 md:mb-6">
           <div className="min-w-0">
             <span className="retro-tag retro-tag-lilac">
               {reel.tag}
@@ -126,7 +127,7 @@ export default function SoundIntro() {
               ${
                 isReelPlaying
                   ? "bg-[var(--lilac)]"
-                  : "bg-[var(--paper)] hover:bg-[var(--lilac)]"
+                  : "bg-[var(--paper-light)] hover:bg-[var(--lilac)]"
               }
             `}
           >
@@ -139,7 +140,6 @@ export default function SoundIntro() {
               className="h-3.5 w-3.5"
             />
 
-            {/* Desktop only */}
             <span className="hidden md:inline">
               {isReelPlaying
                 ? reel.pause
@@ -149,104 +149,102 @@ export default function SoundIntro() {
         </div>
 
         {/* ===================================================
-            CONSOLE BODY
-          
-            Desktop:
-            The VIDEO determines the height.
-            The left panel is positioned inside that same
-            height so the credits scroll instead of expanding
-            the entire console.
+            MEDIA CONSOLE
             =================================================== */}
 
-        <div className="relative min-w-0">
-          {/* ===============================================
-              VIDEO PANEL
+        <div className="w-full overflow-hidden border border-[var(--line)] bg-[var(--paper-light)]">
+          {/* =================================================
+              CONSOLE BODY
 
-              Mobile: first
-              Desktop: right 58.14% of console
-              =============================================== */}
+              Desktop:
+              video establishes the height;
+              left panel is constrained to it.
+              ================================================= */}
 
-          <div className="w-full min-w-0 bg-black md:ml-[41.86%] md:w-[58.14%]">
-            <DemoReel
-              embedded
-              activeCreditId={
-                activeCreditId
-              }
-              playRequest={
-                reelPlayRequest
-              }
-              transportRequest={
-                transportRequest
-              }
-              onActiveCreditChange={
-                setActiveCreditId
-              }
-              onPlayingChange={
-                setIsReelPlaying
-              }
-            />
-          </div>
+          <div className="relative min-w-0">
+            {/* ===============================================
+                VIDEO
+                =============================================== */}
 
-          {/* ===============================================
-              LEFT PANEL
-
-              Mobile: normal document flow
-              Desktop: exactly matches video height
-              =============================================== */}
-
-          <div
-            className="
-              flex min-w-0 flex-col
-              border-t border-[var(--line)]
-              md:absolute
-              md:inset-y-0
-              md:left-0
-              md:w-[41.86%]
-              md:min-h-0
-              md:overflow-hidden
-              md:border-r
-              md:border-t-0
-            "
-          >
-            {/* Description */}
-            <div className="shrink-0 px-4 py-5 md:px-6 md:py-5">
-              <p className="max-w-md text-sm leading-relaxed opacity-70">
-                {reel.description}
-              </p>
-            </div>
-
-            {/* Credits */}
-            <div className="min-h-0 border-t border-[var(--line-light)] px-4 pb-4 pt-3 md:flex md:flex-1 md:flex-col md:overflow-hidden md:px-6 md:pb-4">
-              <PostProductionCredits
+            <div className="w-full min-w-0 bg-black md:ml-[41.86%] md:w-[58.14%]">
+              <DemoReel
+                embedded
                 activeCreditId={
                   activeCreditId
                 }
-                onSelectReelCredit={
-                  handleSelectReelCredit
+                playRequest={
+                  reelPlayRequest
+                }
+                transportRequest={
+                  transportRequest
+                }
+                onActiveCreditChange={
+                  setActiveCreditId
+                }
+                onPlayingChange={
+                  setIsReelPlaying
                 }
               />
             </div>
+
+            {/* ===============================================
+                INFORMATION / CREDITS
+                =============================================== */}
+
+            <div
+              className="
+                flex min-w-0 flex-col
+                border-t border-[var(--line)]
+                md:absolute
+                md:inset-y-0
+                md:left-0
+                md:w-[41.86%]
+                md:min-h-0
+                md:overflow-hidden
+                md:border-r
+                md:border-t-0
+              "
+            >
+              {/* Description */}
+              <div className="shrink-0 px-4 py-5 md:px-6 md:py-5">
+                <p className="max-w-md text-sm leading-relaxed opacity-70">
+                  {reel.description}
+                </p>
+              </div>
+
+              {/* Credits */}
+              <div className="min-h-0 border-t border-[var(--line-light)] px-4 pb-4 pt-3 md:flex md:flex-1 md:flex-col md:overflow-hidden md:px-6 md:pb-4">
+                <PostProductionCredits
+                  activeCreditId={
+                    activeCreditId
+                  }
+                  onSelectReelCredit={
+                    handleSelectReelCredit
+                  }
+                />
+              </div>
+            </div>
           </div>
-        </div>
 
-        {/* ===================================================
-            CONSOLE FOOTER
-            =================================================== */}
+          {/* =================================================
+              TECHNICAL FOOTER
+              ================================================= */}
 
-        <div className="font-retro grid gap-2 border-t border-[var(--line)] px-4 py-3 text-[9px] uppercase tracking-[0.06em] opacity-50 md:grid-cols-[1fr_auto] md:items-center md:px-6 md:text-[10px]">
-          <span>
-            {reel.disciplines}
-          </span>
-
-          <span className="whitespace-nowrap">
-            Stereo / 48 kHz
-
-            <span className="mx-2 opacity-40">
-              /
+          <div className="font-retro grid gap-2 border-t border-[var(--line)] px-4 py-3 text-[9px] uppercase tracking-[0.06em] opacity-50 md:grid-cols-[1fr_auto] md:items-center md:px-6 md:text-[10px]">
+            <span>
+              {reel.disciplines}
             </span>
 
-            {reel.technicalLabel}
-          </span>
+            <span className="whitespace-nowrap">
+              Stereo / 48 kHz
+
+              <span className="mx-2 opacity-40">
+                /
+              </span>
+
+              {reel.technicalLabel}
+            </span>
+          </div>
         </div>
       </section>
 

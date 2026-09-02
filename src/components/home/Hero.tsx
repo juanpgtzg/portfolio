@@ -5,41 +5,69 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 import LanguageSelector from "@/components/language/LanguageSelector";
+import ArrowIcon from "@/components/ui/ArrowIcon";
 import { useLanguage } from "@/context/LanguageContext";
 import { translations } from "@/data/translations";
-import ArrowIcon from "@/components/ui/ArrowIcon";
 
 type Side = "sound" | "podcast" | null;
 
 export default function Hero() {
   const router = useRouter();
 
-  const { language } = useLanguage();
+  const {
+    language,
+    localizedPath,
+  } = useLanguage();
+
   const t = translations[language];
 
-  const { localizedPath } = useLanguage();
+  const [
+    activeSide,
+    setActiveSide,
+  ] = useState<Side>(null);
 
-  const [activeSide, setActiveSide] = useState<Side>(null);
-  const [isPressed, setIsPressed] = useState(false);
+  const [
+    isPressed,
+    setIsPressed,
+  ] = useState(false);
 
-  const [exitDirection, setExitDirection] = useState<
+  const [
+    exitDirection,
+    setExitDirection,
+  ] = useState<
     "left" | "right" | null
   >(null);
 
-  const [transportDirection, setTransportDirection] =
-  useState<"sound" | "podcast">("sound");
+  const [
+    transportDirection,
+    setTransportDirection,
+  ] = useState<
+    "sound" | "podcast"
+  >("sound");
 
-  const navigateTo = (side: "sound" | "podcast") => {
+  const navigateTo = (
+    side: "sound" | "podcast"
+  ) => {
     if (exitDirection) return;
 
-    sessionStorage.setItem("portfolio-transition", side);
+    sessionStorage.setItem(
+      "portfolio-transition",
+      side
+    );
 
-    // Lock the selected side during the exit animation
+    /*
+     * Lock the selected side during
+     * the exit animation.
+     */
     setActiveSide(side);
     setTransportDirection(side);
     setIsPressed(true);
 
-    setExitDirection(side === "sound" ? "right" : "left");
+    setExitDirection(
+      side === "sound"
+        ? "right"
+        : "left"
+    );
 
     window.setTimeout(() => {
       router.push(
@@ -50,7 +78,7 @@ export default function Hero() {
 
   return (
     <section
-      className="retro-texture flex min-h-screen items-center justify-center px-6 py-10 md:px-10"
+      className="language-hero retro-texture flex min-h-screen items-center justify-center px-6 py-10 md:px-10"
       style={{
         transform:
           exitDirection === "right"
@@ -58,14 +86,17 @@ export default function Hero() {
             : exitDirection === "left"
               ? "translateX(-100%)"
               : "translateX(0)",
-        opacity: exitDirection ? 0 : 1,
+        opacity:
+          exitDirection
+            ? 0
+            : 1,
         transition:
           "transform 400ms cubic-bezier(0.76, 0, 0.24, 1), opacity 300ms ease",
-        willChange: "transform, opacity",
+        willChange:
+          "transform, opacity",
       }}
     >
       <div className="w-full max-w-5xl">
-
         {/* =====================================================
             INTRO
             ===================================================== */}
@@ -106,27 +137,27 @@ export default function Hero() {
 
         <div
           id="hero-cassette"
-          className="relative mx-auto aspect-[1.62/1] w-full max-w-4xl overflow-hidden rounded-[24px] border-2 border-[var(--line)] bg-[var(--paper-dark)] shadow-[8px_10px_0_rgba(60,48,45,0.12)] transition-transform duration-300 ease-out"
+          className="hero-cassette-shell relative mx-auto aspect-[1.62/1] w-full max-w-4xl overflow-hidden rounded-[24px] border-2 border-[var(--line)] bg-[var(--paper-dark)] shadow-[8px_10px_0_rgba(60,48,45,0.12)] transition-transform duration-300 ease-out"
           style={{
             transform: isPressed
               ? "perspective(1200px) scale(0.992)"
-              : activeSide === "sound"
+              : activeSide ===
+                  "sound"
                 ? "perspective(1200px) rotateZ(-0.35deg) translateX(-2px)"
-                : activeSide === "podcast"
+                : activeSide ===
+                    "podcast"
                   ? "perspective(1200px) rotateZ(0.35deg) translateX(2px)"
                   : "perspective(1200px) rotateZ(0deg)",
           }}
         >
-
           {/* Outer inset line */}
-          <div className="pointer-events-none absolute inset-[2.2%] rounded-[18px] border border-[var(--line)] opacity-30" />
+          <div className="hero-cassette-inset pointer-events-none absolute inset-[2.2%] rounded-[18px] border border-[var(--line)] opacity-30" />
 
           {/* =================================================
               TOP LABEL
               ================================================= */}
 
-          <div className="absolute left-[7%] right-[7%] top-[7%] h-[29%] overflow-hidden rounded-[7px] border border-[var(--line)] bg-[var(--paper-light)]">
-
+          <div className="hero-cassette-label absolute left-[7%] right-[7%] top-[7%] h-[29%] overflow-hidden rounded-[7px] border border-[var(--line)] bg-[var(--paper-light)]">
             {/* Pastel upper strip */}
             <div className="absolute inset-x-0 top-0 flex h-[31%]">
               <div className="w-1/2 bg-[var(--lilac)]" />
@@ -154,6 +185,7 @@ export default function Hero() {
 
             {/* Ruled lines */}
             <div className="absolute bottom-[18%] left-[6%] right-[6%] border-t border-[var(--line)] opacity-25" />
+
             <div className="absolute bottom-[9%] left-[6%] right-[6%] border-t border-[var(--line)] opacity-15" />
           </div>
 
@@ -163,8 +195,9 @@ export default function Hero() {
 
           {/* Left reel */}
           <div
-            className={`absolute left-[19%] top-[34%] aspect-square w-[18%] rounded-full border-[3px] border-[var(--line)] bg-[var(--paper-light)] ${
-              transportDirection === "sound"
+            className={`hero-cassette-reel absolute left-[19%] top-[34%] aspect-square w-[18%] rounded-full border-[3px] border-[var(--line)] bg-[var(--paper-light)] ${
+              transportDirection ===
+              "sound"
                 ? "cassette-reel-spin"
                 : "cassette-reel-spin-reverse"
             } ${
@@ -176,8 +209,11 @@ export default function Hero() {
             <div className="absolute inset-[18%] rounded-full border-2 border-[var(--line)] opacity-60" />
 
             <div className="absolute left-1/2 top-[10%] h-[25%] w-[8%] -translate-x-1/2 bg-[var(--line)] opacity-70" />
+
             <div className="absolute bottom-[10%] left-1/2 h-[25%] w-[8%] -translate-x-1/2 bg-[var(--line)] opacity-70" />
+
             <div className="absolute left-[10%] top-1/2 h-[8%] w-[25%] -translate-y-1/2 bg-[var(--line)] opacity-70" />
+
             <div className="absolute right-[10%] top-1/2 h-[8%] w-[25%] -translate-y-1/2 bg-[var(--line)] opacity-70" />
 
             <div className="absolute inset-[39%] rounded-full bg-[var(--line)]" />
@@ -185,8 +221,9 @@ export default function Hero() {
 
           {/* Right reel */}
           <div
-            className={`absolute right-[19%] top-[34%] aspect-square w-[18%] rounded-full border-[3px] border-[var(--line)] bg-[var(--paper-light)] ${
-              transportDirection === "sound"
+            className={`hero-cassette-reel absolute right-[19%] top-[34%] aspect-square w-[18%] rounded-full border-[3px] border-[var(--line)] bg-[var(--paper-light)] ${
+              transportDirection ===
+              "sound"
                 ? "cassette-reel-spin"
                 : "cassette-reel-spin-reverse"
             } ${
@@ -198,8 +235,11 @@ export default function Hero() {
             <div className="absolute inset-[18%] rounded-full border-2 border-[var(--line)] opacity-60" />
 
             <div className="absolute left-1/2 top-[10%] h-[25%] w-[8%] -translate-x-1/2 bg-[var(--line)] opacity-70" />
+
             <div className="absolute bottom-[10%] left-1/2 h-[25%] w-[8%] -translate-x-1/2 bg-[var(--line)] opacity-70" />
+
             <div className="absolute left-[10%] top-1/2 h-[8%] w-[25%] -translate-y-1/2 bg-[var(--line)] opacity-70" />
+
             <div className="absolute right-[10%] top-1/2 h-[8%] w-[25%] -translate-y-1/2 bg-[var(--line)] opacity-70" />
 
             <div className="absolute inset-[39%] rounded-full bg-[var(--line)]" />
@@ -207,11 +247,11 @@ export default function Hero() {
 
           {/* Tape window */}
           <div className="absolute left-1/2 top-[42%] h-[12%] w-[29%] -translate-x-1/2 overflow-hidden rounded-full border-2 border-[var(--line)] bg-[var(--paper)]">
-
             {/* Moving tape */}
             <div
               className={`absolute top-1/2 h-[3px] w-[160%] -translate-y-1/2 opacity-55 ${
-                transportDirection === "sound"
+                transportDirection ===
+                "sound"
                   ? "cassette-tape-move"
                   : "cassette-tape-move-reverse"
               } ${
@@ -237,13 +277,14 @@ export default function Hero() {
               ================================================= */}
 
           <div
-            className="absolute bottom-[7%] left-1/2 h-[19%] w-[59%] -translate-x-1/2 border-2 border-[var(--line)] bg-[#c9bfad]"
+            className="hero-cassette-mechanism absolute bottom-[7%] left-1/2 h-[19%] w-[59%] -translate-x-1/2 border-2 border-[var(--line)] bg-[#c9bfad]"
             style={{
               clipPath:
                 "polygon(8% 0, 92% 0, 100% 100%, 0 100%)",
             }}
           >
             <div className="absolute bottom-[23%] left-[25%] h-2.5 w-2.5 rounded-full border border-[var(--line)] bg-[var(--paper-light)]" />
+
             <div className="absolute bottom-[23%] right-[25%] h-2.5 w-2.5 rounded-full border border-[var(--line)] bg-[var(--paper-light)]" />
 
             <div className="absolute bottom-[28%] left-1/2 h-[8px] w-[23%] -translate-x-1/2 border border-[var(--line)] bg-[var(--paper)]" />
@@ -252,13 +293,17 @@ export default function Hero() {
           {/* Hover color washes */}
           <div
             className={`pointer-events-none absolute inset-y-0 left-0 z-[1] w-1/2 bg-[var(--lilac)] transition-opacity duration-300 ${
-              activeSide === "sound" ? "opacity-[0.10]" : "opacity-0"
+              activeSide === "sound"
+                ? "opacity-[0.10]"
+                : "opacity-0"
             }`}
           />
 
           <div
             className={`pointer-events-none absolute inset-y-0 right-0 z-[1] w-1/2 bg-[var(--sage)] transition-opacity duration-300 ${
-              activeSide === "podcast" ? "opacity-[0.10]" : "opacity-0"
+              activeSide === "podcast"
+                ? "opacity-[0.10]"
+                : "opacity-0"
             }`}
           />
 
@@ -267,27 +312,43 @@ export default function Hero() {
               ================================================= */}
 
           <Link
-            href={localizedPath("/sound")}
+            href={localizedPath(
+              "/sound"
+            )}
             aria-label="View sound portfolio"
             onClick={(event) => {
               event.preventDefault();
+
               navigateTo("sound");
             }}
             onMouseEnter={() => {
-              if (exitDirection) return;
+              if (exitDirection)
+                return;
 
-              setActiveSide("sound");
-              setTransportDirection("sound");
+              setActiveSide(
+                "sound"
+              );
+
+              setTransportDirection(
+                "sound"
+              );
             }}
             onMouseLeave={() => {
-              if (exitDirection) return;
+              if (exitDirection)
+                return;
 
               setActiveSide(null);
               setIsPressed(false);
             }}
-            onPointerDown={() => setIsPressed(true)}
-            onPointerUp={() => setIsPressed(false)}
-            onPointerCancel={() => setIsPressed(false)}
+            onPointerDown={() =>
+              setIsPressed(true)
+            }
+            onPointerUp={() =>
+              setIsPressed(false)
+            }
+            onPointerCancel={() =>
+              setIsPressed(false)
+            }
             className="group absolute inset-y-0 left-0 z-10 w-1/2"
           >
             <div
@@ -314,7 +375,8 @@ export default function Hero() {
 
                 <div
                   className={`absolute -bottom-1 left-0 h-px bg-[var(--line)] transition-all duration-300 ${
-                    activeSide === "sound"
+                    activeSide ===
+                    "sound"
                       ? "w-full opacity-60"
                       : "w-0 opacity-0"
                   }`}
@@ -339,39 +401,59 @@ export default function Hero() {
           </Link>
 
           <Link
-            href={localizedPath("/podcast")}
+            href={localizedPath(
+              "/podcast"
+            )}
             aria-label="View podcast portfolio"
             onClick={(event) => {
               event.preventDefault();
-              navigateTo("podcast");
+
+              navigateTo(
+                "podcast"
+              );
             }}
             onMouseEnter={() => {
-              if (exitDirection) return;
+              if (exitDirection)
+                return;
 
-              setActiveSide("podcast");
-              setTransportDirection("podcast");
+              setActiveSide(
+                "podcast"
+              );
+
+              setTransportDirection(
+                "podcast"
+              );
             }}
             onMouseLeave={() => {
-              if (exitDirection) return;
+              if (exitDirection)
+                return;
 
               setActiveSide(null);
               setIsPressed(false);
             }}
-            onPointerDown={() => setIsPressed(true)}
-            onPointerUp={() => setIsPressed(false)}
-            onPointerCancel={() => setIsPressed(false)}
+            onPointerDown={() =>
+              setIsPressed(true)
+            }
+            onPointerUp={() =>
+              setIsPressed(false)
+            }
+            onPointerCancel={() =>
+              setIsPressed(false)
+            }
             className="group absolute inset-y-0 right-0 z-10 w-1/2"
           >
             <div
               className={`absolute bottom-[24%] right-[10%] text-right transition-transform duration-200 ${
-                activeSide === "podcast"
+                activeSide ===
+                "podcast"
                   ? "translate-y-[2px]"
                   : ""
               }`}
             >
               <span
                 className={`retro-tag transition-all duration-200 ${
-                  activeSide === "podcast"
+                  activeSide ===
+                  "podcast"
                     ? "bg-[var(--sage)] shadow-[inset_0_2px_0_rgba(60,48,45,0.15)]"
                     : "bg-[var(--paper-light)]"
                 }`}
@@ -386,7 +468,8 @@ export default function Hero() {
 
                 <div
                   className={`absolute -bottom-1 right-0 h-px bg-[var(--line)] transition-all duration-300 ${
-                    activeSide === "podcast"
+                    activeSide ===
+                    "podcast"
                       ? "w-full opacity-60"
                       : "w-0 opacity-0"
                   }`}
@@ -395,7 +478,8 @@ export default function Hero() {
 
               <span
                 className={`font-retro mt-2 block text-[9px] uppercase tracking-[0.12em] transition-all duration-200 ${
-                  activeSide === "podcast"
+                  activeSide ===
+                  "podcast"
                     ? "-translate-x-1 opacity-50"
                     : "opacity-0"
                 }`}
@@ -444,7 +528,9 @@ export default function Hero() {
               className="h-2.5 w-2.5"
             />
 
-            <span className="mx-1">/</span>
+            <span className="mx-1">
+              /
+            </span>
 
             <ArrowIcon
               name="right"

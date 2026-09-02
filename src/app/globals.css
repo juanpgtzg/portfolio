@@ -530,3 +530,1270 @@ input[type="range"]::-moz-range-thumb {
     transform: translateY(-4px);
   }
 }
+
+/* =========================================================
+   SPANISH VISUAL LANGUAGE
+   Mesoamerican-inspired / carved / mineral / geometric
+   ========================================================= */
+
+html[data-language="es"] {
+  /* Limestone / amate-like surfaces */
+  --paper: #e7ddc5;
+  --paper-light: #f0e6cf;
+  --paper-dark: #c9b891;
+
+  /* Obsidian / dark earth */
+  --ink: #2d2922;
+  --ink-soft: #665d4e;
+
+  /* Structure */
+  --line: #393229;
+  --line-light: rgba(45, 41, 34, 0.22);
+
+  /* Mineral / historic-inspired accents */
+  --pink: #b44d3d;
+  --lilac: #2f7770;
+  --sage: #6f8c54;
+  --yellow: #d3a83b;
+  --red: #9b3f32;
+
+  --background: var(--paper);
+  --foreground: var(--ink);
+  --muted: var(--ink-soft);
+  --border: var(--line-light);
+
+  /* Less soft / more architectural */
+  --radius-small: 2px;
+  --radius-medium: 4px;
+  --radius-large: 6px;
+}
+
+/* ---------------------------------------------------------
+   PAPER / BACKGROUND
+   --------------------------------------------------------- */
+
+html[data-language="es"] body {
+  background:
+    linear-gradient(
+      rgba(45, 41, 34, 0.025),
+      rgba(45, 41, 34, 0.025)
+    ),
+    var(--paper);
+}
+
+html[data-language="es"] .retro-texture {
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(45, 41, 34, 0.035) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      rgba(45, 41, 34, 0.025) 1px,
+      transparent 1px
+    ),
+    radial-gradient(
+      rgba(45, 41, 34, 0.11) 0.45px,
+      transparent 0.45px
+    );
+
+  background-size:
+    32px 32px,
+    32px 32px,
+    5px 5px;
+}
+
+/* ---------------------------------------------------------
+   TAGS
+   Same component hierarchy, completely different silhouette.
+   --------------------------------------------------------- */
+
+html[data-language="es"] .retro-tag {
+  border-radius: 0;
+
+  clip-path: polygon(
+    7px 0,
+    calc(100% - 7px) 0,
+    100% 7px,
+    100% calc(100% - 7px),
+    calc(100% - 7px) 100%,
+    7px 100%,
+    0 calc(100% - 7px),
+    0 7px
+  );
+
+  padding-left: 14px;
+  padding-right: 14px;
+
+  letter-spacing: 0.09em;
+}
+
+html[data-language="es"] .retro-tag-pink {
+  background: #b44d3d;
+  color: #f0e6cf;
+}
+
+html[data-language="es"] .retro-tag-lilac {
+  background: #2f7770;
+  color: #f0e6cf;
+}
+
+html[data-language="es"] .retro-tag-sage {
+  background: #6f8c54;
+  color: #f0e6cf;
+}
+
+html[data-language="es"] .retro-tag-yellow {
+  background: #d3a83b;
+  color: #2d2922;
+}
+
+/* ---------------------------------------------------------
+   HERO
+   --------------------------------------------------------- */
+
+html[data-language="es"] .language-hero {
+  position: relative;
+}
+
+/*
+  Broad stepped bands at top/bottom.
+  Decorative only — no effect on interaction.
+*/
+
+html[data-language="es"] .language-hero::before,
+html[data-language="es"] .language-hero::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+
+  height: 9px;
+
+  opacity: 0.42;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--red) 0 8%,
+      var(--yellow) 8% 16%,
+      var(--lilac) 16% 24%,
+      transparent 24% 28%
+    );
+
+  background-size: 180px 100%;
+}
+
+html[data-language="es"] .language-hero::before {
+  top: 0;
+}
+
+html[data-language="es"] .language-hero::after {
+  bottom: 0;
+  transform: rotate(180deg);
+}
+
+/* ---------------------------------------------------------
+   DESKTOP CASSETTE
+   --------------------------------------------------------- */
+
+html[data-language="es"] .hero-cassette-shell {
+  border-radius: 3px !important;
+
+  border-width: 3px !important;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(211, 168, 59, 0.12),
+      transparent 34%
+    ),
+    var(--paper-dark) !important;
+
+  box-shadow:
+    9px 9px 0 rgba(45, 41, 34, 0.16) !important;
+
+  clip-path: polygon(
+    2% 0,
+    98% 0,
+    100% 4%,
+    100% 96%,
+    98% 100%,
+    2% 100%,
+    0 96%,
+    0 4%
+  );
+}
+
+html[data-language="es"] .hero-cassette-inset {
+  border-radius: 0 !important;
+}
+
+/* Label becomes flatter and more architectural */
+
+html[data-language="es"] .hero-cassette-label {
+  border-radius: 0 !important;
+
+  border-width: 2px !important;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent 0 4%,
+      rgba(45, 41, 34, 0.06) 4% 4.5%,
+      transparent 4.5% 95.5%,
+      rgba(45, 41, 34, 0.06) 95.5% 96%,
+      transparent 96%
+    ),
+    var(--paper-light) !important;
+}
+
+/* Reels become more like carved / solar discs */
+
+html[data-language="es"] .hero-cassette-reel {
+  border-radius: 50%;
+
+  border-width: 3px !important;
+
+  background:
+    radial-gradient(
+      circle at center,
+      transparent 0 44%,
+      rgba(45, 41, 34, 0.1) 44% 46%,
+      transparent 46%
+    ),
+    conic-gradient(
+      from 22.5deg,
+
+      rgba(180, 77, 61, 0.11) 0deg 45deg,
+      rgba(240, 230, 207, 0.96) 45deg 90deg,
+
+      rgba(47, 119, 112, 0.1) 90deg 135deg,
+      rgba(240, 230, 207, 0.96) 135deg 180deg,
+
+      rgba(211, 168, 59, 0.12) 180deg 225deg,
+      rgba(240, 230, 207, 0.96) 225deg 270deg,
+
+      rgba(111, 140, 84, 0.1) 270deg 315deg,
+      rgba(240, 230, 207, 0.96) 315deg 360deg
+    ) !important;
+}
+
+/* Lower mechanical section */
+
+html[data-language="es"] .hero-cassette-mechanism {
+  background: #ad8761 !important;
+}
+
+/* ---------------------------------------------------------
+   MOBILE DEVICE
+   Same interaction model, different physical object.
+   --------------------------------------------------------- */
+
+html[data-language="es"] .mobile-hero-device {
+  border-radius: 6px !important;
+
+  border-width: 3px !important;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(211, 168, 59, 0.15),
+      transparent 38%
+    ),
+    var(--paper-dark) !important;
+
+  box-shadow:
+    7px 8px 0 rgba(45, 41, 34, 0.17) !important;
+
+  clip-path: polygon(
+    5% 0,
+    95% 0,
+    100% 5%,
+    100% 95%,
+    95% 100%,
+    5% 100%,
+    0 95%,
+    0 5%
+  );
+}
+
+html[data-language="es"] .mobile-hero-screen {
+  border-radius: 1px !important;
+}
+
+/*
+  Turn the circular click wheel into a more ornamental
+  geometric disc without changing the actual interaction.
+*/
+
+html[data-language="es"] .mobile-hero-wheel {
+  background:
+    radial-gradient(
+      circle at center,
+      transparent 0 43%,
+      rgba(45, 41, 34, 0.12) 43% 45%,
+      transparent 45%
+    ),
+    conic-gradient(
+      from 22.5deg,
+      rgba(180, 77, 61, 0.15) 0deg 45deg,
+      transparent 45deg 90deg,
+      rgba(47, 119, 112, 0.15) 90deg 135deg,
+      transparent 135deg 180deg,
+      rgba(211, 168, 59, 0.16) 180deg 225deg,
+      transparent 225deg 270deg,
+      rgba(111, 140, 84, 0.16) 270deg 315deg,
+      transparent 315deg 360deg
+    ),
+    var(--paper-light) !important;
+}
+
+/* ---------------------------------------------------------
+   BUTTONS / PANELS
+   --------------------------------------------------------- */
+
+html[data-language="es"] .retro-button,
+html[data-language="es"] .retro-panel,
+html[data-language="es"] .retro-panel-soft,
+html[data-language="es"] .retro-media-frame {
+  border-radius: 2px;
+}
+
+/* ---------------------------------------------------------
+   SELECTION
+   --------------------------------------------------------- */
+
+html[data-language="es"] ::selection {
+  background: var(--lilac);
+  color: var(--paper-light);
+}
+
+/* =========================================================
+   FRENCH VISUAL LANGUAGE
+   Retro cycling / technical editorial / race graphics
+   ========================================================= */
+
+html[data-language="fr"] {
+  /* Technical paper / race-card surfaces */
+  --paper: #eeeae2;
+  --paper-light: #f7f4ed;
+  --paper-dark: #d8d4cc;
+
+  /* Graphite */
+  --ink: #25242a;
+  --ink-soft: #6f6b72;
+
+  /* Structure */
+  --line: #37353d;
+  --line-light: rgba(37, 36, 42, 0.17);
+
+  /*
+    Accent mapping:
+    pink   → dusty race pink
+    lilac  → technical purple
+    sage   → cool grey-green
+    yellow → high-vis cream/yellow
+  */
+  --pink: #d7a1b4;
+  --lilac: #7666a6;
+  --sage: #aebbb4;
+  --yellow: #ddd08b;
+  --red: #b85f72;
+
+  --background: var(--paper);
+  --foreground: var(--ink);
+  --muted: var(--ink-soft);
+  --border: var(--line-light);
+
+  /* Precise / engineered */
+  --radius-small: 2px;
+  --radius-medium: 4px;
+  --radius-large: 8px;
+}
+
+/* =========================================================
+   TYPOGRAPHY
+   ========================================================= */
+
+html[data-language="fr"] body {
+  background: var(--paper);
+
+  font-family:
+    "Helvetica Neue",
+    Helvetica,
+    Arial,
+    sans-serif;
+}
+
+/*
+  More technical/editorial than the English typewriter look.
+*/
+
+html[data-language="fr"] h1,
+html[data-language="fr"] h2,
+html[data-language="fr"] h3 {
+  font-family:
+    "Arial Narrow",
+    "Helvetica Neue",
+    Helvetica,
+    Arial,
+    sans-serif;
+
+  font-weight: 700;
+
+  letter-spacing: -0.045em;
+}
+
+/*
+  Small interface text stays monospaced,
+  like timing sheets / race computers.
+*/
+
+html[data-language="fr"] .font-retro {
+  font-family:
+    ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    Monaco,
+    Consolas,
+    monospace;
+}
+
+/* =========================================================
+   TECHNICAL GRID BACKGROUND
+   ========================================================= */
+
+html[data-language="fr"] .retro-texture {
+  background-image:
+    linear-gradient(
+      rgba(37, 36, 42, 0.035) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(37, 36, 42, 0.035) 1px,
+      transparent 1px
+    ),
+    radial-gradient(
+      rgba(37, 36, 42, 0.065) 0.45px,
+      transparent 0.45px
+    );
+
+  background-size:
+    28px 28px,
+    28px 28px,
+    5px 5px;
+}
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+html[data-language="fr"] .language-hero {
+  position: relative;
+}
+
+/*
+  Race-stripe edge treatment.
+*/
+
+html[data-language="fr"] .language-hero::before,
+html[data-language="fr"] .language-hero::after {
+  content: "";
+
+  pointer-events: none;
+
+  position: absolute;
+
+  left: 0;
+  right: 0;
+
+  height: 8px;
+
+  opacity: 0.7;
+
+  background:
+    linear-gradient(
+      90deg,
+
+      var(--lilac) 0 13%,
+      transparent 13% 15%,
+
+      var(--pink) 15% 23%,
+      transparent 23% 25%,
+
+      var(--ink) 25% 27%,
+      transparent 27% 72%,
+
+      var(--ink) 72% 74%,
+      transparent 74% 76%,
+
+      var(--pink) 76% 84%,
+      transparent 84% 86%,
+
+      var(--lilac) 86% 100%
+    );
+}
+
+html[data-language="fr"] .language-hero::before {
+  top: 0;
+}
+
+html[data-language="fr"] .language-hero::after {
+  bottom: 0;
+  transform: rotate(180deg);
+}
+
+/* =========================================================
+   TAGS
+   Race-number / technical-label treatment
+   ========================================================= */
+
+html[data-language="fr"] .retro-tag {
+  min-height: 25px;
+
+  border-radius: 2px;
+
+  padding: 4px 12px;
+
+  letter-spacing: 0.1em;
+
+  font-size: 0.64rem;
+
+  box-shadow:
+    inset 3px 0 0 rgba(37, 36, 42, 0.16);
+}
+
+html[data-language="fr"] .retro-tag-pink {
+  background: var(--pink);
+}
+
+html[data-language="fr"] .retro-tag-lilac {
+  background: var(--lilac);
+  color: var(--paper-light);
+}
+
+html[data-language="fr"] .retro-tag-sage {
+  background: var(--sage);
+}
+
+html[data-language="fr"] .retro-tag-yellow {
+  background: var(--yellow);
+}
+
+/* =========================================================
+   DESKTOP CASSETTE
+   Technical equipment / cycling computer language
+   ========================================================= */
+
+html[data-language="fr"] .hero-cassette-shell {
+  border-radius: 4px !important;
+
+  border-width: 2px !important;
+
+  background:
+    linear-gradient(
+      120deg,
+      rgba(118, 102, 166, 0.08) 0 18%,
+      transparent 18% 80%,
+      rgba(215, 161, 180, 0.08) 80% 100%
+    ),
+    var(--paper-dark) !important;
+
+  box-shadow:
+    9px 9px 0 rgba(37, 36, 42, 0.13) !important;
+
+  clip-path: polygon(
+    2% 0,
+    98% 0,
+    100% 3%,
+    100% 97%,
+    98% 100%,
+    2% 100%,
+    0 97%,
+    0 3%
+  );
+}
+
+/* =========================================================
+   CASSETTE INSET
+   ========================================================= */
+
+html[data-language="fr"] .hero-cassette-inset {
+  border-radius: 1px !important;
+
+  opacity: 0.32 !important;
+}
+
+/* =========================================================
+   CASSETTE LABEL
+   ========================================================= */
+
+html[data-language="fr"] .hero-cassette-label {
+  border-radius: 1px !important;
+
+  border-width: 1px !important;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(118, 102, 166, 0.05) 0 49.8%,
+      rgba(37, 36, 42, 0.15) 49.8% 50.2%,
+      rgba(215, 161, 180, 0.05) 50.2% 100%
+    ),
+    var(--paper-light) !important;
+}
+
+/* =========================================================
+   CASSETTE REELS
+   Muted race-dial treatment
+   ========================================================= */
+
+html[data-language="fr"] .hero-cassette-reel {
+  border-width: 3px !important;
+
+  background:
+    radial-gradient(
+      circle at center,
+      transparent 0 44%,
+      rgba(37, 36, 42, 0.1) 44% 46%,
+      transparent 46%
+    ),
+    conic-gradient(
+      from 22.5deg,
+
+      rgba(118, 102, 166, 0.14)
+        0deg 45deg,
+
+      rgba(247, 244, 237, 0.97)
+        45deg 90deg,
+
+      rgba(215, 161, 180, 0.13)
+        90deg 135deg,
+
+      rgba(247, 244, 237, 0.97)
+        135deg 180deg,
+
+      rgba(174, 187, 180, 0.13)
+        180deg 225deg,
+
+      rgba(247, 244, 237, 0.97)
+        225deg 270deg,
+
+      rgba(118, 102, 166, 0.1)
+        270deg 315deg,
+
+      rgba(247, 244, 237, 0.97)
+        315deg 360deg
+    ) !important;
+}
+
+/* =========================================================
+   LOWER CASSETTE MECHANISM
+   ========================================================= */
+
+html[data-language="fr"] .hero-cassette-mechanism {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(118, 102, 166, 0.09),
+      transparent 42%,
+      rgba(215, 161, 180, 0.08)
+    ),
+    #bbb8b0 !important;
+}
+
+/* =========================================================
+   MOBILE DEVICE
+   Cycling computer / race instrument
+   ========================================================= */
+
+html[data-language="fr"] .mobile-hero-device {
+  border-radius: 12px !important;
+
+  border-width: 2px !important;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(118, 102, 166, 0.09),
+      transparent 42%,
+      rgba(215, 161, 180, 0.08)
+    ),
+    var(--paper-dark) !important;
+
+  box-shadow:
+    7px 8px 0 rgba(37, 36, 42, 0.13) !important;
+
+  clip-path: polygon(
+    4% 0,
+    96% 0,
+    100% 4%,
+    100% 96%,
+    96% 100%,
+    4% 100%,
+    0 96%,
+    0 4%
+  );
+}
+
+/* =========================================================
+   MOBILE SCREEN
+   ========================================================= */
+
+html[data-language="fr"] .mobile-hero-screen {
+  border-radius: 3px !important;
+
+  background:
+    linear-gradient(
+      rgba(118, 102, 166, 0.025),
+      rgba(118, 102, 166, 0.025)
+    ),
+    var(--paper-light) !important;
+}
+
+/* =========================================================
+   MOBILE WHEEL
+   Race-computer dial
+   ========================================================= */
+
+html[data-language="fr"] .mobile-hero-wheel {
+  border-width: 2px !important;
+
+  background:
+    radial-gradient(
+      circle at center,
+      transparent 0 43%,
+      rgba(37, 36, 42, 0.09)
+        43% 45%,
+      transparent 45%
+    ),
+    conic-gradient(
+      from 45deg,
+
+      rgba(118, 102, 166, 0.13)
+        0deg 90deg,
+
+      rgba(247, 244, 237, 0.96)
+        90deg 180deg,
+
+      rgba(215, 161, 180, 0.11)
+        180deg 270deg,
+
+      rgba(247, 244, 237, 0.96)
+        270deg 360deg
+    ),
+    var(--paper-light) !important;
+}
+
+/* =========================================================
+   PANELS / MEDIA / BUTTONS
+   ========================================================= */
+
+html[data-language="fr"] .retro-button,
+html[data-language="fr"] .retro-panel,
+html[data-language="fr"] .retro-panel-soft,
+html[data-language="fr"] .retro-media-frame {
+  border-radius: 2px;
+}
+
+/* =========================================================
+   BUTTON FEEL
+   ========================================================= */
+
+html[data-language="fr"] .retro-button {
+  letter-spacing: 0.08em;
+
+  text-transform: uppercase;
+}
+
+html[data-language="fr"] .retro-button:hover {
+  background: var(--lilac);
+  color: var(--paper-light);
+}
+
+/* =========================================================
+   SELECTION
+   ========================================================= */
+
+html[data-language="fr"] ::selection {
+  background: var(--pink);
+  color: var(--ink);
+}
+
+/* =========================================================
+   CHINESE / TAIWANESE VISUAL LANGUAGE
+   Traditional print / rice paper / mineral pigments
+   ========================================================= */
+
+html[data-language="zh"] {
+  /* Rice-paper surfaces */
+  --paper: #e8dfcd;
+  --paper-light: #f3ecdd;
+  --paper-dark: #c9baa0;
+
+  /* Ink */
+  --ink: #292721;
+  --ink-soft: #655f55;
+
+  /* Structure */
+  --line: #4b463d;
+  --line-light: rgba(41, 39, 33, 0.19);
+
+  /*
+    Accent mapping:
+    pink   → cinnabar
+    lilac  → indigo
+    sage   → celadon
+    yellow → muted ochre
+  */
+  --pink: #a64b3f;
+  --lilac: #58687c;
+  --sage: #879b8d;
+  --yellow: #b79555;
+  --red: #8f4038;
+
+  --background: var(--paper);
+  --foreground: var(--ink);
+  --muted: var(--ink-soft);
+  --border: var(--line-light);
+
+  /* More architectural than English */
+  --radius-small: 2px;
+  --radius-medium: 4px;
+  --radius-large: 6px;
+}
+
+/* =========================================================
+   TYPOGRAPHY
+   ========================================================= */
+
+html[data-language="zh"] body {
+  background: var(--paper);
+
+  font-family:
+    "PingFang TC",
+    "Noto Sans TC",
+    "Microsoft JhengHei",
+    Arial,
+    sans-serif;
+}
+
+/*
+  Traditional Ming / Song-style headings.
+
+  Songti TC is available on macOS,
+  with sensible fallbacks elsewhere.
+*/
+
+html[data-language="zh"] h1,
+html[data-language="zh"] h2,
+html[data-language="zh"] h3 {
+  font-family:
+    "Songti TC",
+    "Noto Serif TC",
+    "PMingLiU",
+    "MingLiU",
+    serif;
+
+  letter-spacing: -0.025em;
+}
+
+/*
+  Keep tiny interface text mechanical,
+  while allowing Chinese glyph fallback.
+*/
+
+html[data-language="zh"] .font-retro {
+  font-family:
+    ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    Monaco,
+    Consolas,
+    "PingFang TC",
+    "Microsoft JhengHei",
+    monospace;
+}
+
+/* =========================================================
+   PAPER TEXTURE
+   ========================================================= */
+
+html[data-language="zh"] .retro-texture {
+  background-image:
+    repeating-linear-gradient(
+      90deg,
+      rgba(41, 39, 33, 0.018) 0,
+      rgba(41, 39, 33, 0.018) 1px,
+      transparent 1px,
+      transparent 18px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      rgba(41, 39, 33, 0.012) 0,
+      rgba(41, 39, 33, 0.012) 1px,
+      transparent 1px,
+      transparent 26px
+    ),
+    radial-gradient(
+      rgba(41, 39, 33, 0.09) 0.45px,
+      transparent 0.45px
+    );
+
+  background-size:
+    auto,
+    auto,
+    6px 6px;
+}
+
+/* =========================================================
+   HERO ORNAMENT
+   ========================================================= */
+
+html[data-language="zh"] .language-hero {
+  position: relative;
+}
+
+/*
+  Thin decorative bands referencing traditional
+  printed borders / window lattice geometry.
+*/
+
+html[data-language="zh"] .language-hero::before,
+html[data-language="zh"] .language-hero::after {
+  content: "";
+
+  pointer-events: none;
+
+  position: absolute;
+
+  left: 0;
+  right: 0;
+
+  height: 7px;
+
+  opacity: 0.3;
+
+  background:
+    repeating-linear-gradient(
+      90deg,
+      var(--ink) 0 18px,
+      transparent 18px 24px,
+      var(--pink) 24px 31px,
+      transparent 31px 37px,
+      var(--sage) 37px 55px,
+      transparent 55px 61px
+    );
+}
+
+html[data-language="zh"] .language-hero::before {
+  top: 0;
+}
+
+html[data-language="zh"] .language-hero::after {
+  bottom: 0;
+
+  transform: rotate(180deg);
+}
+
+/* =========================================================
+   TAGS
+   Seal / printed-label treatment
+   ========================================================= */
+
+html[data-language="zh"] .retro-tag {
+  border-radius: 2px;
+
+  padding-left: 12px;
+  padding-right: 12px;
+
+  font-family:
+    "Songti TC",
+    "Noto Serif TC",
+    "PMingLiU",
+    serif;
+
+  font-weight: 600;
+
+  letter-spacing: 0.07em;
+
+  text-transform: none;
+
+  box-shadow:
+    inset 0 0 0 1px
+    rgba(243, 236, 221, 0.18);
+}
+
+html[data-language="zh"] .retro-tag-pink {
+  background: var(--pink);
+
+  color: var(--paper-light);
+}
+
+html[data-language="zh"] .retro-tag-lilac {
+  background: var(--lilac);
+
+  color: var(--paper-light);
+}
+
+html[data-language="zh"] .retro-tag-sage {
+  background: var(--sage);
+
+  color: var(--ink);
+}
+
+html[data-language="zh"] .retro-tag-yellow {
+  background: var(--yellow);
+
+  color: var(--ink);
+}
+
+/* =========================================================
+   DESKTOP CASSETTE SHELL
+   ========================================================= */
+
+html[data-language="zh"] .hero-cassette-shell {
+  border-radius: 3px !important;
+
+  border-width: 2px !important;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(88, 104, 124, 0.06),
+      transparent 28%,
+      transparent 72%,
+      rgba(135, 155, 141, 0.07)
+    ),
+    var(--paper-dark) !important;
+
+  box-shadow:
+    7px 9px 0
+    rgba(41, 39, 33, 0.14),
+    inset 0 0 0 4px
+    rgba(243, 236, 221, 0.15) !important;
+
+  /*
+    Small cut corners:
+    architectural, but not aggressively geometric.
+  */
+  clip-path: polygon(
+    1.5% 0,
+    98.5% 0,
+    100% 2.5%,
+    100% 97.5%,
+    98.5% 100%,
+    1.5% 100%,
+    0 97.5%,
+    0 2.5%
+  );
+}
+
+html[data-language="zh"] .hero-cassette-inset {
+  border-radius: 0 !important;
+
+  border-style: double;
+
+  opacity: 0.34 !important;
+}
+
+/* =========================================================
+   CASSETTE LABEL
+   ========================================================= */
+
+html[data-language="zh"] .hero-cassette-label {
+  border-radius: 1px !important;
+
+  border-width: 1px !important;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--pink) 0 3px,
+      transparent 3px
+        calc(100% - 3px),
+      var(--pink)
+        calc(100% - 3px)
+        100%
+    ),
+    linear-gradient(
+      rgba(88, 104, 124, 0.035),
+      rgba(88, 104, 124, 0.035)
+    ),
+    var(--paper-light) !important;
+
+  box-shadow:
+    inset 0 0 0 3px
+    rgba(41, 39, 33, 0.035);
+}
+
+/* =========================================================
+   CASSETTE REELS
+   Muted porcelain / jade-disc treatment
+   ========================================================= */
+
+html[data-language="zh"] .hero-cassette-reel {
+  border-width: 3px !important;
+
+  background:
+    radial-gradient(
+      circle at center,
+      transparent 0 43%,
+      rgba(41, 39, 33, 0.11)
+        43% 45%,
+      transparent 45%
+    ),
+    conic-gradient(
+      from 22.5deg,
+
+      rgba(135, 155, 141, 0.16)
+        0deg 45deg,
+
+      rgba(243, 236, 221, 0.96)
+        45deg 90deg,
+
+      rgba(88, 104, 124, 0.13)
+        90deg 135deg,
+
+      rgba(243, 236, 221, 0.96)
+        135deg 180deg,
+
+      rgba(135, 155, 141, 0.13)
+        180deg 225deg,
+
+      rgba(243, 236, 221, 0.96)
+        225deg 270deg,
+
+      rgba(88, 104, 124, 0.11)
+        270deg 315deg,
+
+      rgba(243, 236, 221, 0.96)
+        315deg 360deg
+    ) !important;
+}
+
+/* =========================================================
+   LOWER CASSETTE MECHANISM
+   ========================================================= */
+
+html[data-language="zh"] .hero-cassette-mechanism {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(88, 104, 124, 0.08),
+      transparent 40%,
+      rgba(166, 75, 63, 0.06)
+    ),
+    #ad9d80 !important;
+}
+
+/* =========================================================
+   MOBILE DEVICE
+   ========================================================= */
+
+html[data-language="zh"] .mobile-hero-device {
+  border-radius: 8px !important;
+
+  border-width: 2px !important;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(88, 104, 124, 0.09),
+      transparent 38%,
+      rgba(135, 155, 141, 0.08)
+    ),
+    var(--paper-dark) !important;
+
+  box-shadow:
+    6px 8px 0
+    rgba(41, 39, 33, 0.14) !important;
+
+  clip-path: polygon(
+    4% 0,
+    96% 0,
+    100% 4%,
+    100% 96%,
+    96% 100%,
+    4% 100%,
+    0 96%,
+    0 4%
+  );
+}
+
+/* =========================================================
+   MOBILE SCREEN
+   ========================================================= */
+
+html[data-language="zh"] .mobile-hero-screen {
+  border-radius: 2px !important;
+
+  background:
+    linear-gradient(
+      rgba(88, 104, 124, 0.025),
+      rgba(88, 104, 124, 0.025)
+    ),
+    var(--paper-light) !important;
+
+  box-shadow:
+    inset 0 0 0 2px
+    rgba(41, 39, 33, 0.035);
+}
+
+/* =========================================================
+   MOBILE WHEEL
+   Pale carved-jade / porcelain disc
+   ========================================================= */
+
+html[data-language="zh"] .mobile-hero-wheel {
+  border-width: 2px !important;
+
+  background:
+    radial-gradient(
+      circle at center,
+      transparent 0 43%,
+      rgba(41, 39, 33, 0.1)
+        43% 45%,
+      transparent 45%
+    ),
+    conic-gradient(
+      from 45deg,
+
+      rgba(135, 155, 141, 0.14)
+        0deg 90deg,
+
+      rgba(243, 236, 221, 0.95)
+        90deg 180deg,
+
+      rgba(88, 104, 124, 0.11)
+        180deg 270deg,
+
+      rgba(243, 236, 221, 0.95)
+        270deg 360deg
+    ),
+    var(--paper-light) !important;
+}
+
+/* =========================================================
+   PANELS / BUTTONS
+   ========================================================= */
+
+html[data-language="zh"] .retro-button,
+html[data-language="zh"] .retro-panel,
+html[data-language="zh"] .retro-panel-soft,
+html[data-language="zh"] .retro-media-frame {
+  border-radius: 2px;
+}
+
+/* =========================================================
+   TEXT SELECTION
+   ========================================================= */
+
+html[data-language="zh"] ::selection {
+  background: var(--pink);
+
+  color: var(--paper-light);
+}
