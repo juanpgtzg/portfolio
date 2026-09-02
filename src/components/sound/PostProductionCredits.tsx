@@ -6,21 +6,122 @@ import {
   useState,
 } from "react";
 
-import { postProductionCredits } from "@/data/postProductionCredits";
+import {
+  postProductionCredits,
+  type PostProductionCredit,
+} from "@/data/postProductionCredits";
+
 import ArrowIcon from "@/components/ui/ArrowIcon";
 import { useLanguage } from "@/context/LanguageContext";
 import { translations } from "@/data/translations";
 
+import type { SoundRoleKey } from "@/types/soundRoles";
+import type { PostProductionNoteKey } from "@/types/postProductionNotes";
+
 interface PostProductionCreditsProps {
   activeCreditId?: string | null;
+
+  isReelPlaying?: boolean;
 
   onSelectReelCredit?: (
     creditId: string
   ) => void;
 }
 
+const creditUi = {
+  en: {
+    reelCredits:
+      "Demo Reel Credits",
+
+    additionalCredits:
+      "Additional Credits",
+
+    restrictedNote:
+      "Some projects cannot be included in this reel due to NDA, distribution, or footage-use restrictions.",
+
+    playProject:
+      "Play",
+  },
+
+  es: {
+    reelCredits:
+      "Créditos del Demo Reel",
+
+    additionalCredits:
+      "Créditos Adicionales",
+
+    restrictedNote:
+      "Algunos proyectos no pueden incluirse en este demo reel debido a acuerdos de confidencialidad, distribución o restricciones de uso de material.",
+
+    playProject:
+      "Reproducir",
+  },
+
+  fr: {
+    reelCredits:
+      "Crédits du Demo Reel",
+
+    additionalCredits:
+      "Crédits Supplémentaires",
+
+    restrictedNote:
+      "Certains projets ne peuvent pas être inclus dans ce demo reel en raison d’accords de confidentialité, de restrictions de distribution ou de droits d’utilisation des images.",
+
+    playProject:
+      "Lire",
+  },
+
+  zh: {
+    reelCredits:
+      "Demo Reel 作品",
+
+    additionalCredits:
+      "其他後期作品",
+
+    restrictedNote:
+      "部分專案因保密協議、發行限制或影像使用權限制，無法收錄於 Demo Reel。",
+
+    playProject:
+      "播放",
+  },
+} as const;
+
+type ReelCredit =
+  PostProductionCredit & {
+    reel: {
+      src: string;
+      order: number;
+    };
+  };
+
+const reelCredits =
+  postProductionCredits
+    .filter(
+      (
+        credit
+      ): credit is ReelCredit =>
+        credit.reel !== undefined
+    )
+    .sort(
+      (a, b) =>
+        a.reel.order -
+        b.reel.order
+    );
+
+const additionalCredits =
+  postProductionCredits.filter(
+    (credit) =>
+      credit.reel === undefined
+  );
+
+const displayCredits = [
+  ...reelCredits,
+  ...additionalCredits,
+];
+
 export default function PostProductionCredits({
   activeCreditId = null,
+  isReelPlaying = false,
   onSelectReelCredit,
 }: PostProductionCreditsProps) {
   const { language } =
@@ -37,6 +138,9 @@ export default function PostProductionCredits({
   const notes =
     translations[language].sound
       .postProductionNotes;
+
+  const ui =
+    creditUi[language];
 
   const scrollRef =
     useRef<HTMLDivElement>(null);
@@ -57,11 +161,15 @@ export default function PostProductionCredits({
     setThumbHeight,
   ] = useState(0);
 
-  const [thumbTop, setThumbTop] =
-    useState(0);
+  const [
+    thumbTop,
+    setThumbTop,
+  ] = useState(0);
 
-  const [canScroll, setCanScroll] =
-    useState(false);
+  const [
+    canScroll,
+    setCanScroll,
+  ] = useState(false);
 
   const [
     showAllMobile,
@@ -81,11 +189,16 @@ export default function PostProductionCredits({
     } = element;
 
     const scrollable =
-      scrollHeight > clientHeight;
+      scrollHeight >
+      clientHeight;
 
-    setCanScroll(scrollable);
+    setCanScroll(
+      scrollable
+    );
 
-    if (!scrollable) return;
+    if (!scrollable) {
+      return;
+    }
 
     const track =
       trackRef.current;
@@ -113,7 +226,8 @@ export default function PostProductionCredits({
 
     const newThumbTop =
       maxScroll > 0
-        ? (scrollTop / maxScroll) *
+        ? (scrollTop /
+            maxScroll) *
           maxThumbTravel
         : 0;
 
@@ -145,7 +259,9 @@ export default function PostProductionCredits({
         );
       });
 
-    observer.observe(element);
+    observer.observe(
+      element
+    );
 
     requestAnimationFrame(
       updateScrollbar
@@ -155,10 +271,6 @@ export default function PostProductionCredits({
       observer.disconnect();
   }, []);
 
-  /*
-   * Keep the active reel credit
-   * visible as playback advances.
-   */
   useEffect(() => {
     if (!activeCreditId) {
       return;
@@ -173,27 +285,19 @@ export default function PostProductionCredits({
       return;
     }
 
-    /*
-     * If the currently playing project
-     * is below the four-credit mobile
-     * cutoff, reveal the complete list.
-     */
     const activeIndex =
-      postProductionCredits.findIndex(
+      displayCredits.findIndex(
         (credit) =>
           credit.id ===
           activeCreditId
       );
 
     if (activeIndex >= 4) {
-      setShowAllMobile(true);
+      setShowAllMobile(
+        true
+      );
     }
 
-    /*
-     * Desktop:
-     * gently keep the active project
-     * inside the credits viewport.
-     */
     activeElement.scrollIntoView({
       behavior: "smooth",
       block: "nearest",
@@ -277,18 +381,86 @@ export default function PostProductionCredits({
     );
   };
 
+  const imdbTooltipRef =
+  useRef<HTMLSpanElement>(null);
+
+  const [
+    showImdbTooltip,
+    setShowImdbTooltip,
+  ] = useState(false);
+
+  const [
+    imdbTooltipPosition,
+    setImdbTooltipPosition,
+  ] = useState({
+    x: 0,
+    y: 0,
+  });
+
+  const filmCard =
+  translations[language].sound
+    .filmCard;
+
+  const handleImdbMouseMove = (
+    event: React.MouseEvent<HTMLAnchorElement>
+  ) => {
+    const tooltip =
+      imdbTooltipRef.current;
+
+    const offset = 12;
+
+    let x =
+      event.clientX + offset;
+
+    let y =
+      event.clientY + offset;
+
+    if (tooltip) {
+      const rect =
+        tooltip.getBoundingClientRect();
+
+      if (
+        x + rect.width >
+        window.innerWidth - 8
+      ) {
+        x =
+          event.clientX -
+          rect.width -
+          offset;
+      }
+
+      if (
+        y + rect.height >
+        window.innerHeight - 8
+      ) {
+        y =
+          event.clientY -
+          rect.height -
+          offset;
+      }
+    }
+
+    setImdbTooltipPosition({
+      x,
+      y,
+    });
+  };
+
   return (
     <div className="mt-0 flex flex-col md:mt-6 md:min-h-0 md:flex-1 md:overflow-hidden">
       {/* Header */}
       <div className="mb-2 flex items-center justify-between">
         <span className="font-retro text-[12px] font-bold uppercase tracking-[0.04em] opacity-55 md:text-[13px]">
-          {t.creditsTitle}
+          {ui.reelCredits}
         </span>
 
         <span className="font-retro text-[9px] uppercase tracking-[0.06em] opacity-30">
           {String(
             postProductionCredits.length
-          ).padStart(2, "0")}{" "}
+          ).padStart(
+            2,
+            "0"
+          )}{" "}
           {t.projects}
         </span>
       </div>
@@ -302,174 +474,167 @@ export default function PostProductionCredits({
           }
           className="retro-scroll-hidden md:h-full md:min-h-0 md:flex-1 md:overflow-y-auto md:pr-5"
         >
-          {postProductionCredits.map(
+          {displayCredits.map(
             (
               credit,
               index
             ) => {
               const hasReel =
-                Boolean(
-                  credit.reel
-                );
+                credit.reel !==
+                undefined;
 
               const isActive =
                 activeCreditId ===
                 credit.id;
+              
+              const isActivePlaying =
+                isActive &&
+                isReelPlaying;
 
-              const rowClasses = `
-                relative
-                ${
-                  !showAllMobile &&
-                  index >= 4
-                    ? "hidden md:block"
-                    : ""
-                }
-                ${
-                  index !==
-                  postProductionCredits.length -
-                    1
-                    ? "border-b border-[var(--line-light)]"
-                    : ""
-                }
-              `;
+              const isFirstAdditional =
+                !hasReel &&
+                index ===
+                  reelCredits.length;
 
-              const content = (
-                <div className="grid grid-cols-[24px_minmax(0,1fr)_auto] items-start gap-x-2 gap-y-0 py-2">
-                  {/* Number */}
-                  <span
-                    className={`font-retro col-start-1 row-start-1 pt-[1px] text-[9px] transition-opacity ${
-                      isActive
-                        ? "opacity-100"
-                        : "opacity-30"
-                    }`}
-                  >
-                    {String(
-                      index + 1
-                    ).padStart(
-                      2,
-                      "0"
-                    )}
-                  </span>
+              const isLastReelCredit =
+                hasReel &&
+                index === reelCredits.length - 1;
 
-                  {/* Title */}
-                  <p className="font-retro col-start-2 row-start-1 min-w-0 truncate text-[11px] font-bold uppercase tracking-[0.03em]">
-                    {credit.title}
-                  </p>
-
-                  {/* Reel indicator */}
-                  {hasReel && (
-                    <span
-                      className={`col-start-3 row-start-1 flex h-4 w-4 items-center justify-center transition-opacity ${
-                        isActive
-                          ? "opacity-100"
-                          : "opacity-25"
-                      }`}
-                      aria-hidden="true"
-                    >
-                      <ArrowIcon
-                        name={
-                          isActive
-                            ? "play"
-                            : "right"
-                        }
-                        className="h-2.5 w-2.5"
-                      />
-                    </span>
-                  )}
-
-                  {/* Role */}
-                  <p
-                    className={`col-start-2 col-span-2 row-start-2 mt-0.5 min-w-0 text-[10px] transition-opacity ${
-                      isActive
-                        ? "opacity-75"
-                        : "opacity-45"
-                    }`}
-                  >
-                    {
-                      roles[
-                        credit.role
-                      ]
-                    }
-                  </p>
-
-                  {/* Optional note */}
-                  {credit.note && (
-                    <p
-                      className={`font-retro col-start-2 col-span-2 row-start-3 mt-1 min-w-0 text-[8px] leading-relaxed tracking-[0.03em] transition-opacity md:text-[9px] ${
-                        isActive
-                          ? "opacity-50"
-                          : "opacity-30"
-                      }`}
-                    >
-                      {
-                        notes[
-                          credit.note
-                        ]
-                      }
-                    </p>
-                  )}
-                </div>
-              );
+              const hiddenOnMobile =
+                !showAllMobile &&
+                index >= 4;
 
               return (
                 <div
-                  key={credit.id}
-                  ref={(element) => {
-                    creditRefs.current[
-                      credit.id
-                    ] = element;
-                  }}
-                  className={rowClasses}
+                  key={
+                    credit.id
+                  }
+                  className={
+                    hiddenOnMobile
+                      ? "hidden md:block"
+                      : ""
+                  }
                 >
-                  {/* Active background */}
-                  <div
-                    className={`pointer-events-none absolute inset-0 transition-opacity duration-200 ${
-                      isActive
-                        ? "bg-[var(--lilac)] opacity-25"
-                        : "opacity-0"
-                    }`}
-                  />
+                  {/* Additional credits separator */}
+                  {isFirstAdditional && (
+                    <div className="relative py-4 md:py-5">
+                      {/* Single full-width section divider */}
+                      <div className="pointer-events-none absolute left-0 right-0 top-0 h-px bg-[var(--line)] md:-right-5" />
 
-                  {hasReel ? (
-                    <button
-                      type="button"
-                      onClick={() =>
-                        onSelectReelCredit?.(
-                          credit.id
-                        )
-                      }
-                      aria-pressed={
-                        isActive
-                      }
-                      aria-label={`Play ${credit.title}`}
-                      className="relative z-[1] block w-full text-left transition-opacity hover:opacity-75"
-                    >
-                      {content}
-                    </button>
-                  ) : (
-                    <div className="relative z-[1]">
-                      {content}
+                      <p className="font-retro text-[9px] font-bold uppercase tracking-[0.07em] opacity-50 md:text-[10px]">
+                        {ui.additionalCredits}
+                      </p>
+
+                      <p className="mt-2 max-w-sm text-[9px] leading-relaxed opacity-40 md:text-[10px]">
+                        {ui.restrictedNote}
+                      </p>
                     </div>
                   )}
 
-                  {/* External link stays separate
-                      so we never nest <a> inside <button> */}
-                  {credit.link && (
-                    <a
-                      href={
-                        credit.link
-                      }
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`${t.openProject}: ${credit.title}`}
-                      className="absolute right-0 top-2 z-[2] flex h-4 w-4 items-center justify-center opacity-30 transition-opacity hover:opacity-80 md:right-1"
-                    >
-                      <ArrowIcon
-                        name="external"
-                        className="h-3 w-3"
-                      />
-                    </a>
-                  )}
+                  <div
+                    ref={(
+                      element
+                    ) => {
+                      creditRefs.current[
+                        credit.id
+                      ] =
+                        element;
+                    }}
+                    className="group relative"
+                  >
+                    {/* Active background */}
+                    <div
+                      className={`pointer-events-none absolute inset-y-0 left-0 right-0 md:-right-5 transition-opacity duration-200 ${
+                        isActive
+                          ? "bg-[var(--lilac)] opacity-25"
+                          : "opacity-0"
+                      }`}
+                    />
+
+                    {/* Hover background */}
+                    {hasReel && (
+                      <div className="pointer-events-none absolute inset-y-0 left-0 right-0 bg-[var(--lilac)] opacity-0 transition-opacity duration-150 group-hover:opacity-10 md:-right-5" />
+                    )}
+
+                    {/* Row divider */}
+                    {index !== displayCredits.length - 1 &&
+                      !isLastReelCredit && (
+                        <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-px bg-[var(--line-light)] md:-right-5" />
+                    )}
+
+                    {hasReel ? (
+                      <button
+                        type="button"
+                        onClick={() =>
+                          onSelectReelCredit?.(
+                            credit.id
+                          )
+                        }
+                        aria-pressed={
+                          isActive
+                        }
+                        aria-label={`${ui.playProject}: ${credit.title}`}
+                        className="relative z-[1] block w-full cursor-pointer text-left"
+                      >
+                        <CreditContent
+                          credit={credit}
+                          index={index}
+                          isActive={isActive}
+                          isPlaying={
+                            isActivePlaying
+                          }
+                          roles={roles}
+                          notes={notes}
+                          showPlay
+                        />
+                      </button>
+                    ) : (
+                      <div className="relative z-[1]">
+                        <CreditContent
+                          credit={
+                            credit
+                          }
+                          index={
+                            index
+                          }
+                          isActive={
+                            false
+                          }
+                          roles={
+                            roles
+                          }
+                          notes={
+                            notes
+                          }
+                        />
+                      </div>
+                    )}
+
+                    {credit.link && (
+                      <a
+                        href={credit.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`${filmCard.viewOnImdb}: ${credit.title}`}
+                        onMouseEnter={(event) => {
+                          setShowImdbTooltip(true);
+                          handleImdbMouseMove(event);
+                        }}
+                        onMouseMove={
+                          handleImdbMouseMove
+                        }
+                        onMouseLeave={() =>
+                          setShowImdbTooltip(false)
+                        }
+                        className="absolute bottom-2 right-0 z-[3] flex h-4 w-4 cursor-pointer items-center justify-center opacity-35 transition-opacity hover:opacity-100 md:right-1"
+                      >
+                        <ArrowIcon
+                          name="external"
+                          className="h-3 w-3"
+                        />
+                      </a>
+                    )}
+                  </div>
                 </div>
               );
             }
@@ -477,33 +642,36 @@ export default function PostProductionCredits({
         </div>
 
         {/* Mobile View More / Less */}
-        <div className="mt-2 flex justify-center md:hidden">
-          <button
-            type="button"
-            onClick={() =>
-              setShowAllMobile(
-                (current) =>
-                  !current
-              )
-            }
-            className="font-retro origin-center scale-[0.72] appearance-none border-0 bg-transparent p-0 text-[8px] font-bold uppercase leading-none tracking-[0.04em] opacity-45 transition-opacity hover:opacity-70"
-          >
-            <span className="flex items-center gap-1">
-              {showAllMobile
-                ? t.viewLess
-                : t.viewMore}
+        {additionalCredits.length >
+          0 && (
+          <div className="mt-2 flex justify-center md:hidden">
+            <button
+              type="button"
+              onClick={() =>
+                setShowAllMobile(
+                  (current) =>
+                    !current
+                )
+              }
+              className="font-retro origin-center scale-[0.72] appearance-none border-0 bg-transparent p-0 text-[8px] font-bold uppercase leading-none tracking-[0.04em] opacity-45 transition-opacity hover:opacity-70"
+            >
+              <span className="flex items-center gap-1">
+                {showAllMobile
+                  ? t.viewLess
+                  : t.viewMore}
 
-              <ArrowIcon
-                name={
-                  showAllMobile
-                    ? "up"
-                    : "down"
-                }
-                className="h-2.5 w-2.5"
-              />
-            </span>
-          </button>
-        </div>
+                <ArrowIcon
+                  name={
+                    showAllMobile
+                      ? "up"
+                      : "down"
+                  }
+                  className="h-2.5 w-2.5"
+                />
+              </span>
+            </button>
+          </div>
+        )}
 
         {/* Custom scrollbar */}
         <div
@@ -530,6 +698,138 @@ export default function PostProductionCredits({
           </div>
         </div>
       </div>
+      {/* IMDb cursor tooltip */}
+      <span
+        ref={imdbTooltipRef}
+        style={{
+          left: `${imdbTooltipPosition.x}px`,
+          top: `${imdbTooltipPosition.y}px`,
+        }}
+        className={`pointer-events-none fixed z-50 border border-[var(--line)] bg-[var(--paper-light)] px-3 py-2 font-retro text-[9px] font-bold uppercase tracking-[0.08em] transition-opacity duration-150 ${
+          showImdbTooltip
+            ? "opacity-100"
+            : "opacity-0"
+        }`}
+      >
+        <span className="flex items-center gap-1.5">
+          {filmCard.viewOnImdb}
+
+          <ArrowIcon
+            name="external"
+            className="h-2.5 w-2.5"
+          />
+        </span>
+      </span>
+    </div>
+
+  );
+}
+
+interface CreditContentProps {
+  credit: PostProductionCredit;
+  index: number;
+  isActive: boolean;
+  isPlaying?: boolean;
+
+  roles: Record<
+    SoundRoleKey,
+    string
+  >;
+
+  notes: Record<
+    PostProductionNoteKey,
+    string
+  >;
+
+  showPlay?: boolean;
+}
+
+function CreditContent({
+  credit,
+  index,
+  isActive,
+  isPlaying = false,
+  roles,
+  notes,
+  showPlay = false,
+}: CreditContentProps) {
+  return (
+    <div className="grid w-full min-w-0 grid-cols-[24px_minmax(0,1fr)_24px] items-start gap-x-2 gap-y-0 py-2">
+      {/* Number */}
+      <span
+        className={`font-retro col-start-1 row-start-1 pt-[1px] text-[9px] transition-opacity ${
+          isActive
+            ? "opacity-100"
+            : "opacity-30"
+        }`}
+      >
+        {String(
+          index + 1
+        ).padStart(2, "0")}
+      </span>
+
+      {/* Title */}
+      <p className="font-retro col-start-2 row-start-1 min-w-0 truncate text-[11px] font-bold uppercase tracking-[0.03em]">
+        {credit.title}
+      </p>
+
+      {/* Play / Pause indicator */}
+      {showPlay && (
+        <span
+          className={`col-start-3 row-start-1 flex h-4 w-4 items-center justify-center justify-self-end transition-opacity ${
+            isActive
+              ? "opacity-100"
+              : "opacity-30"
+          }`}
+          aria-hidden="true"
+        >
+          <ArrowIcon
+            name={
+              isPlaying
+                ? "pause"
+                : "play"
+            }
+            className="h-2.5 w-2.5"
+          />
+        </span>
+      )}
+
+      {/* Roles */}
+      <p
+        className={`col-start-2 col-end-4 row-start-2 mt-0.5 min-w-0 text-[10px] leading-relaxed transition-opacity ${
+          credit.link
+            ? "pr-6"
+            : ""
+        } ${
+          isActive
+            ? "opacity-75"
+            : "opacity-45"
+        }`}
+      >
+        {credit.roles
+          .map(
+            (role) =>
+              roles[role]
+          )
+          .join(" · ")}
+      </p>
+
+      {/* Optional note */}
+      {credit.note && (
+        <p
+          className={`font-retro col-start-2 col-end-4 row-start-3 mt-1 min-w-0 text-[8px] leading-relaxed tracking-[0.03em] transition-opacity md:text-[9px] ${
+            credit.link
+              ? "pr-6"
+              : ""
+          } ${
+            isActive
+              ? "opacity-50"
+              : "opacity-30"
+          }`}
+        >
+          {notes[credit.note]}
+        </p>
+      )}
     </div>
   );
 }

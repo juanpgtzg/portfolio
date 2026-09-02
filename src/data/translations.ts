@@ -114,6 +114,12 @@ export const translations: Record<
         soundDesigner: string;
         postSoundMixer: string;
         gameAudioDesigner: string;
+
+        adrRecordist: string,
+        foleyArtist: string,
+        dialogueEditor: string,
+        musicEditor: string,
+        dialogueScriptEditor: string,
       };
 
       formats: {
@@ -308,6 +314,12 @@ export const translations: Record<
 
         gameAudioDesigner:
           "Game Audio Designer",
+
+        adrRecordist: "ADR Recordist",
+        foleyArtist: "Foley Artist",
+        dialogueEditor: "Dialogue Editor",
+        musicEditor: "Music Editor",
+        dialogueScriptEditor: "Dialogue Script Editor",
       },
 
       formats: {
@@ -536,6 +548,12 @@ export const translations: Record<
 
         gameAudioDesigner:
           "Diseño de Audio para Videojuegos",
+
+        adrRecordist: "Técnico de Grabación ADR",
+        foleyArtist: "Artista Foley",
+        dialogueEditor: "Editor de Diálogo",
+        musicEditor: "Editor de Música",
+        dialogueScriptEditor: "Editor de Guion",
       },
 
       formats: {
@@ -763,6 +781,12 @@ export const translations: Record<
 
         gameAudioDesigner:
           "Conception Audio pour Jeu Vidéo",
+
+        adrRecordist: "Ingénieur d’Enregistrement ADR",
+        foleyArtist: "Bruiteur",
+        dialogueEditor: "Monteur Dialogue",
+        musicEditor: "Monteur Musique",
+        dialogueScriptEditor: "Monteur du Script Dialogue",
       },
 
       formats: {
@@ -991,6 +1015,12 @@ export const translations: Record<
 
         gameAudioDesigner:
           "遊戲音訊設計",
+
+        adrRecordist: "ADR 錄音師",
+        foleyArtist: "擬音師",
+        dialogueEditor: "對白剪輯",
+        musicEditor: "音樂剪輯",
+        dialogueScriptEditor: "對白腳本編輯",
       },
 
       formats: {

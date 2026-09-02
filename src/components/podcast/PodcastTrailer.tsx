@@ -204,7 +204,7 @@ export default function PodcastTrailer() {
         <button
           type="button"
           onClick={togglePlay}
-          className="flex h-10 items-center justify-center border-r border-[var(--line)] transition-colors hover:bg-[var(--lilac)] md:h-12"
+          className="flex h-10 cursor-pointer items-center justify-center border-r border-[var(--line)] transition-colors hover:bg-[var(--lilac)] md:h-12"
           aria-label={
             isPlaying
               ? t.pause

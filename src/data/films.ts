@@ -14,39 +14,6 @@ export const films: Film[] = [
 
   {
     id: 2,
-    title: "Comeback Play",
-    role: "locationSoundMixerBoomOperator",
-    format: "webMiniseries",
-    year: 2026,
-    productionCompany: "Raven Crew Production",
-    poster: "/images/films/comeback-play.jpg",
-    link: "https://www.imdb.com/es-es/title/tt42065213/?ref_=ext_shr_lnk",
-  },
-
-  {
-    id: 3,
-    title: "Loser Husband",
-    role: "locationSoundMixerBoomOperator",
-    format: "webMiniseries",
-    year: 2026,
-    productionCompany: "Sparkland Pictures",
-    poster: "/images/films/loser-husband.jpg",
-    link: "https://www.imdb.com/es-es/title/tt41022243/?ref_=ext_shr_lnk",
-  },
-
-  {
-    id: 4,
-    title: "Core Superhero",
-    role: "locationSoundMixerBoomOperator",
-    format: "webMiniseries",
-    year: 2026,
-    productionCompany: "Raven Crew Production",
-    poster: "/images/films/core-superhero.jpg",
-    link: "https://www.imdb.com/es-es/title/tt41379668/?ref_=ext_shr_lnk",
-  },
-
-  {
-    id: 5,
     title: "Lupe Q and the Galactic Earworms",
     role: "locationSoundMixerBoomOperator",
     format: "featureFilm",
@@ -57,7 +24,18 @@ export const films: Film[] = [
   },
 
   {
-    id: 6,
+    id: 3,
+    title: "Pumpkinhead",
+    role: "boomOperator",
+    format: "featureFilm",
+    year: 2025,
+    productionCompany: "R.L. Stine’s TV Production",
+    poster: "/images/films/pumpkinhead.jpg",
+    link: "https://www.imdb.com/es-es/title/tt38218065/?ref_=ext_shr_lnk",
+  },
+
+  {
+    id: 4,
     title: "Riley",
     role: "locationSoundMixerBoomOperator",
     format: "shortFilm",
@@ -68,14 +46,36 @@ export const films: Film[] = [
   },
 
   {
+    id: 5,
+    title: "Comeback Play",
+    role: "locationSoundMixerBoomOperator",
+    format: "webMiniseries",
+    year: 2026,
+    productionCompany: "Raven Crew Production",
+    poster: "/images/films/comeback-play.jpg",
+    link: "https://www.imdb.com/es-es/title/tt42065213/?ref_=ext_shr_lnk",
+  },
+
+  {
+    id: 6,
+    title: "Loser Husband",
+    role: "locationSoundMixerBoomOperator",
+    format: "webMiniseries",
+    year: 2026,
+    productionCompany: "Sparkland Pictures",
+    poster: "/images/films/loser-husband.jpg",
+    link: "https://www.imdb.com/es-es/title/tt41022243/?ref_=ext_shr_lnk",
+  },
+
+  {
     id: 7,
-    title: "Pumpkinhead",
-    role: "boomOperator",
-    format: "featureFilm",
-    year: 2025,
-    productionCompany: "R.L. Stine’s TV Production",
-    poster: "/images/films/pumpkinhead.jpg",
-    link: "https://www.imdb.com/es-es/title/tt38218065/?ref_=ext_shr_lnk",
+    title: "Core Superhero",
+    role: "locationSoundMixerBoomOperator",
+    format: "webMiniseries",
+    year: 2026,
+    productionCompany: "Raven Crew Production",
+    poster: "/images/films/core-superhero.jpg",
+    link: "https://www.imdb.com/es-es/title/tt41379668/?ref_=ext_shr_lnk",
   },
 
   {

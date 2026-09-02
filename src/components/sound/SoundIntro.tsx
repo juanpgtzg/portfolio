@@ -37,13 +37,34 @@ export default function SoundIntro() {
   ] = useState(false);
 
   const handleSelectReelCredit = (
-    creditId: string
-  ) => {
-    setActiveCreditId(creditId);
+      creditId: string
+    ) => {
+      /*
+      * Clicking the currently selected reel
+      * toggles Play / Pause instead of
+      * restarting the clip.
+      */
+      if (
+        creditId === activeCreditId
+      ) {
+        setTransportRequest(
+          (current) => current + 1
+        );
 
-    setReelPlayRequest(
-      (current) => current + 1
-    );
+        return;
+      }
+
+      /*
+      * Selecting another reel switches to
+      * that project and starts playback.
+      */
+      setActiveCreditId(
+        creditId
+      );
+
+      setReelPlayRequest(
+        (current) => current + 1
+      );
   };
 
   return (
@@ -116,6 +137,7 @@ export default function SoundIntro() {
             }
             className={`
               font-retro
+              cursor-pointer
               flex h-11 w-11 shrink-0
               items-center justify-center
               border border-[var(--line)]
@@ -155,18 +177,14 @@ export default function SoundIntro() {
         <div className="w-full overflow-hidden border border-[var(--line)] bg-[var(--paper-light)]">
           {/* =================================================
               CONSOLE BODY
-
-              Desktop:
-              video establishes the height;
-              left panel is constrained to it.
               ================================================= */}
 
-          <div className="relative min-w-0">
+          <div className="relative min-w-0 md:aspect-[3.057/1]">
             {/* ===============================================
                 VIDEO
                 =============================================== */}
 
-            <div className="w-full min-w-0 bg-black md:ml-[41.86%] md:w-[58.14%]">
+            <div className="w-full min-w-0 bg-black md:absolute md:inset-y-0 md:right-0 md:w-[58.14%]">
               <DemoReel
                 embedded
                 activeCreditId={
@@ -199,7 +217,6 @@ export default function SoundIntro() {
                 md:inset-y-0
                 md:left-0
                 md:w-[41.86%]
-                md:min-h-0
                 md:overflow-hidden
                 md:border-r
                 md:border-t-0
@@ -218,6 +235,9 @@ export default function SoundIntro() {
                   activeCreditId={
                     activeCreditId
                   }
+                  isReelPlaying={
+                    isReelPlaying
+                  }
                   onSelectReelCredit={
                     handleSelectReelCredit
                   }
@@ -231,7 +251,7 @@ export default function SoundIntro() {
               ================================================= */}
 
           <div className="font-retro grid gap-2 border-t border-[var(--line)] px-4 py-3 text-[9px] uppercase tracking-[0.06em] opacity-50 md:grid-cols-[1fr_auto] md:items-center md:px-6 md:text-[10px]">
-            <span>
+            <span className="whitespace-nowrap text-[8px] tracking-[0.03em] sm:text-[9px] md:text-[10px]">
               {reel.disciplines}
             </span>
 

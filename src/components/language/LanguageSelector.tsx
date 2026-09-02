@@ -41,7 +41,7 @@ export default function LanguageSelector() {
             type="button"
             onClick={() => setLanguage(item.code)}
             aria-pressed={language === item.code}
-            className={`font-retro text-[8px] font-bold tracking-[0.08em] transition-opacity ${
+            className={`font-retro cursor-pointer text-[8px] font-bold tracking-[0.08em] transition-opacity ${
               item.code !== "zh"
                 ? "uppercase"
                 : ""
